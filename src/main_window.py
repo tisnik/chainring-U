@@ -3,6 +3,10 @@
 import tkinter
 from tkinter import ttk
 
+from canvas import *
+from toolbar import *
+from menubar import *
+
 
 def test():
     print("Test!")
@@ -10,24 +14,15 @@ def test():
 
 root = tkinter.Tk()
 
-menubar = tkinter.Menu(root)
+canvas = Canvas(root, 800, 600)
 
-filemenu = tkinter.Menu(menubar, tearoff=0)
-filemenu.add_command(label="Importovat nový výkres")
-filemenu.add_command(label="Otevřít výkres")
-filemenu.add_separator()
-filemenu.add_command(label="Konec", command=root.quit)
-
-menubar.add_cascade(label="Soubor", menu=filemenu)
-
-drawing = tkinter.Menu(menubar, tearoff=0)
-drawing.add_command(label="Seznam místností")
-menubar.add_cascade(label="Výkres", menu=drawing)
-
-helpmenu = tkinter.Menu(menubar, tearoff=0)
-helpmenu.add_command(label="O programu")
-menubar.add_cascade(label="Nápověda", menu=helpmenu)
+menubar = Menubar(root)
 
 root.config(menu=menubar)
+
+toolbar = Toolbar(root)
+
+toolbar.grid(column=1, row=1, columnspan=2, sticky="WE")
+canvas.grid(column=2, row=2, sticky="NWSE")
 
 root.mainloop()
