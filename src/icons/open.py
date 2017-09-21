@@ -1,0 +1,14 @@
+# This icon was converted from the Oxygen Icon Theme
+# Please see copyright for further informations
+
+icon="""
+R0lGODlhFgAWAPU6AAAAABMTEwIbOAohPgAAegMiRxUzVR88YSI/ZShHbS1OdTRUejVYgztll0Ne
+g0Rrm1Brj1t0lUZvok53qUd6tVF5qFJ+tWJ7nFyDr1eDulyT0WKYzm6c03edynWc0X6l2Jubm46a
+qJWeqZehr5qksqCfn6WlpqWxv7i5uoSp2ZGxzpS00Zm84IPg/7nBy6jK6K3R7av//7P//8rJytfX
+19/g4ejo6O3u8fDv7/n5+f///wAAAAAAAAAAAAAAAAAAACH5BAEAADoALAAAAAAWABYAAAboQJ0u
+ACgaj8KkUgjIOZ9OGwiwXDZxTizONpuZqFVdJpF9bmeg3DdscUC13LTNxLDYM0KJG5rb0tJbJhUf
+HxMbOg0Lb302NCZZNiUNHA94C4p8ODg0KHwmDwwaOgoKfJCcJiYlICgoCC06CWSZmjY1NLg0MzkF
+MTIJBlA3LiQkI8fHIiEhJwI6BAYFyMcrL9bX2DAwKh3a2SwrKeLj5CkXFeXp6uIR6Ovv4ufkH+L0
+8CntKYT0+/36+yk84HNnr1zBdBEaZKDAsKHDhw4XYLh3kNyFCR4yatyokcOHjh4gGBhJsqTJkwaC
+AAA7
+"""
