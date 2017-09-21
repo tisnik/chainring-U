@@ -54,6 +54,41 @@ class DxfImporter():
                 lines += 1
         print(lines)
 
+    def process_beginning(self, code, data):
+        if code == 0:
+            if data == "SECTION":
+                self.state = DxfReaderState.BEGINNING_SECTION
+                print("section")
+            elif data == "EOF":
+                self.state = DxfReaderState.EOF
+                print("eof")
+        elif code == 999:
+            print(data)
+        else:
+            raise Exception("unknown code {c} for state BEGINNING".format(c=code))
+
+    def process_beginning_section(self, code, data):
+        if code == 2:
+            if data == "HEADER":
+                self.state = DxfReaderState.SECTION_HEADER
+                print("    section header")
+            elif data == "TABLES":
+                self.state = DxfReaderState.SECTION_TABLES
+                print("    section tables")
+            elif data == "BLOCKS":
+                self.state = DxfReaderState.SECTION_BLOCKS
+                print("    section blocks")
+            elif data == "ENTITIES":
+                self.state = DxfReaderState.SECTION_ENTITIES
+                print("    section entities")
+            elif data == "OBJECTS":
+                self.state = DxfReaderState.SECTION_OBJECTS
+                print("    section tables")
+            else:
+                raise Exception("unknown data {d} for state BEGINNING_SECTION".format(d=data))
+        else:
+            raise Exception("unknown code {c} for state BEGINNING_SECTION".format(c=code))
+
 
 
 if __name__ == "__main__":
