@@ -11,6 +11,8 @@
 #
 
 import tkinter
+import icons.exit
+import icons.open
 
 
 class Menubar(tkinter.Menu):
@@ -18,18 +20,29 @@ class Menubar(tkinter.Menu):
     def __init__(self, parent):
         super().__init__(tearoff=0)
 
+        self.exit_icon = tkinter.PhotoImage(data=icons.exit.icon)
+        self.open_icon = tkinter.PhotoImage(data=icons.open.icon)
+
         filemenu = tkinter.Menu(self, tearoff=0)
         filemenu.add_command(label="Importovat nový výkres")
-        filemenu.add_command(label="Otevřít výkres")
+        filemenu.add_command(label="Otevřít výkres", image=self.open_icon,
+                             compound="left", underline=0)
         filemenu.add_separator()
-        filemenu.add_command(label="Konec", command=parent.quit)
+        filemenu.add_command(label="Konec", image=self.exit_icon,
+                             compound="left", underline=0,
+                             command=parent.quit)
 
-        self.add_cascade(label="Soubor", menu=filemenu)
+        edit = tkinter.Menu(self, tearoff=0)
+        view = tkinter.Menu(self, tearoff=0)
 
-        drawing = tkinter.Menu(self, tearoff=0)
-        drawing.add_command(label="Seznam místností")
-        self.add_cascade(label="Výkres", menu=drawing)
+        tools = tkinter.Menu(self, tearoff=0)
+        tools.add_command(label="Seznam místností")
 
         helpmenu = tkinter.Menu(self, tearoff=0)
         helpmenu.add_command(label="O programu")
+
+        self.add_cascade(label="Soubor", menu=filemenu)
+        self.add_cascade(label="Úpravy", menu=edit)
+        self.add_cascade(label="Zobrazit", menu=view)
+        self.add_cascade(label="Nástroje", menu=tools)
         self.add_cascade(label="Nápověda", menu=helpmenu)
