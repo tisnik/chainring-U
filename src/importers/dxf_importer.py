@@ -14,42 +14,48 @@ from dxf_reader_state import *
 from dxf_entity_type import *
 
 
-def dxf_entry(fin):
-    """Generate pair dxf_code + dxf_data for each iteration."""
-    while True:
-        line1 = fin.readline()
-        line2 = fin.readline()
-        if not line1 or not line2:
-            break
-        code = int(line1.strip())
-        data = line2.strip()
-        yield code, data
+class DxfImporter():
 
+    def __init__(self, filename):
+        self.filename = filename
+        self.state_switcher = {
+            DxfReaderState.BEGINNING: DxfImporter.process_beginning,
+            DxfReaderState.BEGINNING_SECTION: DxfImporter.process_beginning_section,
+            DxfReaderState.SECTION_HEADER: DxfImporter.process_section_header,
+            DxfReaderState.SECTION_TABLES: DxfImporter.process_section_tables,
+            DxfReaderState.SECTION_BLOCKS: DxfImporter.process_section_blocks,
+            DxfReaderState.SECTION_ENTITIES: DxfImporter.process_section_entities,
+            DxfReaderState.SECTION_OBJECTS: DxfImporter.process_section_objects,
+        }
 
-def import_dxf(filename):
-    state = DxfReaderState.BEGINNING
-    entity_type = DxfEntityType.UNKNOWN
-    codeStr = None
-    dataStr = None
-    blockName = None
+    def dxf_entry(self, fin):
+        """Generate pair dxf_code + dxf_data for each iteration."""
+        while True:
+            line1 = fin.readline()
+            line2 = fin.readline()
+            if not line1 or not line2:
+                break
+            code = int(line1.strip())
+            data = line2.strip()
+            yield code, data
 
-    with open(filename) as fin:
-        lines = 0
-        for code, data in dxf_entry(fin):
-            if state == DxfReaderState.BEGINNING:
-                if code == 0:
-                    if data == "SECTION":
-                        state = DxfReaderState.BEGINNING_SECTION
-                    elif data == "EOF":
-                        state = DxfReaderState.EOF
-                        print("eof")
-                elif code == 999:
-                    print(data)
-                else:
-                    raise Error("unknown code {c} for state BEGINNING".format(c=code))
-            lines += 1
-    print(lines)
+    def import_dxf(self):
+        self.state = DxfReaderState.BEGINNING
+        self.entity_type = DxfEntityType.UNKNOWN
+        codeStr = None
+        dataStr = None
+        blockName = None
+
+        with open(self.filename) as fin:
+            lines = 0
+            for code, data in self.dxf_entry(fin):
+                function = self.state_switcher.get(self.state, lambda self, code, data: "nothing")
+                function(self, code, data)
+                lines += 1
+        print(lines)
+
 
 
 if __name__ == "__main__":
-    import_dxf("Branna_3np.dxf")
+    importer = DxfImporter("Branna_3np.dxf")
+    importer.import_dxf()
