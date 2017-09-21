@@ -89,6 +89,26 @@ class DxfImporter():
         else:
             raise Exception("unknown code {c} for state BEGINNING_SECTION".format(c=code))
 
+    def process_section_header(self, code, data):
+        if code == 0:
+            if data == "ENDSEC":
+                self.state = DxfReaderState.BEGINNING
+                print("    end section header")
+
+    def process_section_tables(self, code, data):
+        if code == 0:
+            if data == "ENDSEC":
+                self.state = DxfReaderState.BEGINNING
+                print("    end section tables")
+
+    def process_section_blocks(self, code, data):
+        pass
+
+    def process_section_entities(self, code, data):
+        pass
+
+    def process_section_objects(self, code, data):
+        pass
 
 
 if __name__ == "__main__":
