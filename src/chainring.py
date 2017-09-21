@@ -10,5 +10,5 @@
 #      Pavel Tisnovsky
 #
 
-from main_window import *
-from src.dxf_importer import *
+from gui.main_window import *
+from importers.dxf_importer import *
