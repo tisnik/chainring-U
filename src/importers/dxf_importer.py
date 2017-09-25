@@ -10,8 +10,12 @@
 #      Pavel Tisnovsky
 #
 
-from dxf_reader_state import *
-from dxf_entity_type import *
+from importers.dxf_reader_state import *
+from importers.dxf_entity_type import *
+from entities.line import *
+from entities.circle import *
+from entities.arc import *
+from entities.text import *
 
 
 class DxfImporter():
@@ -26,6 +30,8 @@ class DxfImporter():
             DxfReaderState.SECTION_BLOCKS: DxfImporter.process_section_blocks,
             DxfReaderState.SECTION_ENTITIES: DxfImporter.process_section_entities,
             DxfReaderState.SECTION_OBJECTS: DxfImporter.process_section_objects,
+            DxfReaderState.SECTION_BLOCK: DxfImporter.process_section_block,
+            DxfReaderState.ENTITY: DxfImporter.process_entity,
         }
 
     def dxf_entry(self, fin):
@@ -42,9 +48,14 @@ class DxfImporter():
     def import_dxf(self):
         self.state = DxfReaderState.BEGINNING
         self.entity_type = DxfEntityType.UNKNOWN
-        codeStr = None
-        dataStr = None
-        blockName = None
+        self.blockName = None
+        self.statistic = {
+            DxfEntityType.LINE: 0,
+            DxfEntityType.CIRCLE: 0,
+            DxfEntityType.ARC: 0,
+            DxfEntityType.TEXT: 0,
+        }
+        self.entities = []
 
         with open(self.filename) as fin:
             lines = 0
@@ -53,6 +64,7 @@ class DxfImporter():
                 function(self, code, data)
                 lines += 1
         print(lines)
+        print(self.statistic)
 
     def process_beginning(self, code, data):
         if code == 0:
