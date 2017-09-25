@@ -114,10 +114,38 @@ class DxfImporter():
                 print("    end section tables")
 
     def process_section_blocks(self, code, data):
-        pass
+        if code == 0:
+            if data == "BLOCK":
+                self.state = DxfReaderState.SECTION_BLOCK
+                print("    block")
+            elif data == "ENDSEC":
+                self.state = DxfReaderState.BEGINNING
+                print("    end section blocks")
+
+    def process_section_block(self, code, data):
+        if code == 0:
+            if data == "ENDBLK":
+                print("        end block")
+                self.state = DxfReaderState.SECTION_BLOCKS
+        elif code == 2:
+            self.state = DxfReaderState.SECTION_BLOCK
+            self.blockName = data
+            print("        begin block '{b}'".format(b=self.blockName))
 
     def process_section_entities(self, code, data):
-        pass
+        if code == 0:
+            if data == "LINE":
+                self.state = DxfReaderState.ENTITY
+                self.entityType = DxfEntityType.LINE
+            elif data == "CIRCLE":
+                self.state = DxfReaderState.ENTITY
+                self.entityType = DxfEntityType.CIRCLE
+            elif data == "ARC":
+                self.state = DxfReaderState.ENTITY
+                self.entityType = DxfEntityType.ARC
+            elif data == "MTEXT" or data == "TEXT":
+                self.state = DxfReaderState.ENTITY
+                self.entityType = DxfEntityType.TEXT
 
     def process_section_objects(self, code, data):
         pass
