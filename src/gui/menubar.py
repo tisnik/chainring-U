@@ -31,6 +31,7 @@ class Menubar(tkinter.Menu):
         self.exit_icon = tkinter.PhotoImage(data=icons.application_exit.icon)
         self.file_import_icon = tkinter.PhotoImage(data=icons.file_import.icon)
         self.file_open_icon = tkinter.PhotoImage(data=icons.file_open.icon)
+        self.file_save_icon = tkinter.PhotoImage(data=icons.file_save.icon)
         self.zoom_in_icon = tkinter.PhotoImage(data=icons.zoom_in.icon)
         self.zoom_out_icon = tkinter.PhotoImage(data=icons.zoom_out.icon)
         self.zoom_original_icon = tkinter.PhotoImage(
@@ -39,10 +40,13 @@ class Menubar(tkinter.Menu):
         self.help_faq_icon = tkinter.PhotoImage(data=icons.help_faq.icon)
 
         filemenu = tkinter.Menu(self, tearoff=0)
+        filemenu.add_command(label="Otevřít výkres", image=self.file_open_icon,
+                             compound="left", underline=0)
+        filemenu.add_command(label="Uložit výkres", image=self.file_save_icon,
+                             compound="left", underline=0)
+        filemenu.add_separator()
         filemenu.add_command(label="Importovat nový výkres",
                              image=self.file_import_icon,
-                             compound="left", underline=0)
-        filemenu.add_command(label="Otevřít výkres", image=self.file_open_icon,
                              compound="left", underline=0)
         filemenu.add_separator()
         filemenu.add_command(label="Konec", image=self.exit_icon,
