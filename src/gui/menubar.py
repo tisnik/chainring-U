@@ -21,6 +21,7 @@ import icons.zoom_out
 import icons.zoom_original
 import icons.help_about
 import icons.help_faq
+import icons.room_list
 
 
 class Menubar(tkinter.Menu):
@@ -38,6 +39,7 @@ class Menubar(tkinter.Menu):
             data=icons.zoom_original.icon)
         self.help_about_icon = tkinter.PhotoImage(data=icons.help_about.icon)
         self.help_faq_icon = tkinter.PhotoImage(data=icons.help_faq.icon)
+        self.room_list_icon = tkinter.PhotoImage(data=icons.room_list.icon)
 
         filemenu = tkinter.Menu(self, tearoff=0)
         filemenu.add_command(label="Otevřít výkres", image=self.file_open_icon,
@@ -64,7 +66,8 @@ class Menubar(tkinter.Menu):
                          compound="left", underline=0)
 
         tools = tkinter.Menu(self, tearoff=0)
-        tools.add_command(label="Seznam místností")
+        tools.add_command(label="Seznam místností", image=self.room_list_icon,
+                          compound="left", underline=0)
 
         helpmenu = tkinter.Menu(self, tearoff=0)
         helpmenu.add_command(label="Nápověda", image=self.help_faq_icon,
@@ -72,8 +75,8 @@ class Menubar(tkinter.Menu):
         helpmenu.add_command(label="O programu", image=self.help_about_icon,
                              compound="left", underline=0)
 
-        self.add_cascade(label="Soubor", menu=filemenu)
-        self.add_cascade(label="Úpravy", menu=edit)
-        self.add_cascade(label="Zobrazit", menu=view)
-        self.add_cascade(label="Nástroje", menu=tools)
-        self.add_cascade(label="Nápověda", menu=helpmenu)
+        self.add_cascade(label="Soubor", menu=filemenu, underline=0)
+        self.add_cascade(label="Upravit", menu=edit, underline=0)
+        self.add_cascade(label="Zobrazit", menu=view, underline=0)
+        self.add_cascade(label="Nástroje", menu=tools, underline=3)
+        self.add_cascade(label="Nápověda", menu=helpmenu, underline=0)
