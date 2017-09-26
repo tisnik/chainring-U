@@ -148,9 +148,79 @@ class DxfImporter():
                 self.entityType = DxfEntityType.TEXT
 
     def process_section_objects(self, code, data):
-        pass
+        if code == 0:
+            if data == "ENDSEC":
+                print("    end section objects")
 
+    def process_entity(self, code, data):
+        if code == 8:
+            self.layer = data
+        elif code == 10:
+            self.x1 = float(data)
+        elif code == 20:
+            self.y1 = float(data)
+        elif code == 11:
+            self.x2 = float(data)
+        elif code == 21:
+            self.y2 = float(data)
+        elif code == 40:
+            self.radius = float(data)
+        elif code == 50:
+            self.angle1 = float(data)
+        elif code == 51:
+            self.angle2 = float(data)
+        elif code == 1:
+            self.text = data
+        elif code == 0:
+            self.statistic[self.entityType] += 1
+            self.store_entity()
+            self.state = DxfReaderState.SECTION_ENTITIES
+            self.entityType = DxfEntityType.UNKNOWN
+            if data == "LINE":
+                self.state = DxfReaderState.ENTITY
+                self.entityType = DxfEntityType.LINE
+            elif data == "CIRCLE":
+                self.state = DxfReaderState.ENTITY
+                self.entityType = DxfEntityType.CIRCLE
+            elif data == "ARC":
+                self.state = DxfReaderState.ENTITY
+                self.entityType = DxfEntityType.ARC
+            elif data == "MTEXT" or data == "TEXT":
+                self.state = DxfReaderState.ENTITY
+                self.entityType = DxfEntityType.TEXT
+            elif data == "ENDSEC":
+                self.state = DxfReaderState.BEGINNING
+                self.entityType = DxfEntityType.UNKNOWN
+                print("    end entities")
+
+    def store_entity(self):
+        if self.entityType == DxfEntityType.LINE:
+            self.store_line()
+        elif self.entityType == DxfEntityType.CIRCLE:
+            self.store_circle()
+        elif self.entityType == DxfEntityType.ARC:
+            self.store_arc()
+        elif self.entityType == DxfEntityType.TEXT:
+            self.store_text()
+        else:
+            print("unknown entity?")
+
+    def store_line(self):
+        self.entities.append(Line(self.x1, -self.y1, self.x2, -self.y2))
+
+    def store_circle(self):
+        self.entities.append(Circle(self.x1, -self.y1, self.radius))
+
+    def store_arc(self):
+        self.entities.append(Arc(self.x1, -self.y1, self.radius, self.angle1, self.angle2))
+
+    def store_text(self):
+        self.entities.append(Text(self.x1, -self.y1, self.text))
 
 if __name__ == "__main__":
     importer = DxfImporter("Branna_3np.dxf")
-    importer.import_dxf()
+    entities, statistic, lines = importer.import_dxf()
+    print(lines)
+    print(statistic)
+    exporter = DrawingExporter("Branna_3np.drawing", entities)
+    exporter.export()
