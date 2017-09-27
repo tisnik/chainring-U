@@ -10,6 +10,7 @@
 #      Pavel Tisnovsky
 #
 
+
 class Text:
     def __init__(self, x, y, text):
         self.x = x
@@ -18,3 +19,7 @@ class Text:
 
     def str(self):
         return "T"
+        return "T {x} {y} {t}".format(
+            x=self.x,
+            y=self.y,
+            t=self.text)
