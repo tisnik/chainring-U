@@ -10,6 +10,7 @@
 #      Pavel Tisnovsky
 #
 
+
 class Circle:
     def __init__(self, x, y, radius):
         self.x = x
@@ -17,4 +18,7 @@ class Circle:
         self.radius = radius
 
     def str(self):
-        return "C"
+        return "C {x} {y} {r}".format(
+            x=self.x,
+            y=self.y,
+            r=self.radius)
