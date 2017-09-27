@@ -10,6 +10,7 @@
 #      Pavel Tisnovsky
 #
 
+
 class Line:
     def __init__(self, x1, y1, x2, y2):
         self.x1 = x1
@@ -19,3 +20,8 @@ class Line:
 
     def str(self):
         return "L"
+        return "L {x1} {y1} {x2} {y2}".format(
+            x1=self.x1,
+            y1=self.y1,
+            x2=self.x2,
+            y2=self.y2)
