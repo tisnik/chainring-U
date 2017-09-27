@@ -10,6 +10,7 @@
 #      Pavel Tisnovsky
 #
 
+
 class Arc:
     def __init__(self, x, y, radius, angle1, angle2):
         self.x = x
@@ -19,4 +20,9 @@ class Arc:
         self.angle2 = angle2
 
     def str(self):
-        return "A"
+        return "A {x} {y} {r} {a1} {a2}".format(
+            x=self.x,
+            y=self.y,
+            r=self.radius,
+            a1=self.angle1,
+            a2=self.angle2)
