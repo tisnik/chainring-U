@@ -23,6 +23,8 @@ import icons.help_about
 import icons.help_faq
 import icons.room_list
 
+from gui.about_dialog import *
+
 
 class Menubar(tkinter.Menu):
 
@@ -73,7 +75,7 @@ class Menubar(tkinter.Menu):
         helpmenu.add_command(label="Nápověda", image=self.help_faq_icon,
                              compound="left", underline=0)
         helpmenu.add_command(label="O programu", image=self.help_about_icon,
-                             compound="left", underline=0)
+                             compound="left", underline=0, command=about)
 
         self.add_cascade(label="Soubor", menu=filemenu, underline=0)
         self.add_cascade(label="Upravit", menu=edit, underline=0)
