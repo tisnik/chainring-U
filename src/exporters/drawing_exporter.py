@@ -22,9 +22,12 @@ class DrawingExporter:
     def get_timestamp():
         return datetime.now().isoformat(sep=' ')
 
+    def output_timestamp(fout):
+        fout.write("created: {c}\n".format(c=DrawingExporter.get_timestamp()))
+
     def export(self):
         with open(self.filename, "w") as fout:
-            fout.write("created: {c}\n".format(c=DrawingExporter.get_timestamp()))
+            DrawingExporter.output_timestamp(fout)
             fout.write("entities: {e}\n".format(e=len(self.entities)))
             for entity in self.entities:
                 fout.write(entity.str())
