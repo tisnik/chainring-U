@@ -10,8 +10,10 @@
 #      Pavel Tisnovsky
 #
 
+from entities.entity import Entity
 
-class Circle:
+
+class Circle(Entity):
     def __init__(self, x, y, radius):
         self.x = x
         self.y = y
