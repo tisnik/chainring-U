@@ -10,8 +10,10 @@
 #      Pavel Tisnovsky
 #
 
+from entities.entity import Entity
 
-class Line:
+
+class Line(Entity):
     def __init__(self, x1, y1, x2, y2):
         self.x1 = x1
         self.x1 = x1
