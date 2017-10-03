@@ -1,7 +1,7 @@
 # This icon was converted from the Oxygen Icon Theme
 # Please see copyright for further informations
 
-icon="""
+icon = """
 iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAMAAADzapwJAAABL1BMVEV4eHgAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAC/v7MAAAAAAAAAAAAAAAAAAAA+PjYAAAA5OTIAAAAAAAAAAAD7+/sa
 GhoVFRX8/Pz6+vr8/Py8v7m+wbtwcW5NTktMTUr///++wLtoaWZ3eXS9wLi9wLlnaGX///////+X
