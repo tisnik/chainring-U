@@ -10,8 +10,10 @@
 #      Pavel Tisnovsky
 #
 
+from entities.entity import Entity
 
-class Arc:
+
+class Arc(Entity):
     def __init__(self, x, y, radius, angle1, angle2):
         self.x = x
         self.y = y
