@@ -10,8 +10,10 @@
 #      Pavel Tisnovsky
 #
 
+from entities.entity import Entity
 
-class Text:
+
+class Text(Entity):
     def __init__(self, x, y, text):
         self.x = x
         self.y = y
