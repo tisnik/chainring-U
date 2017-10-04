@@ -23,15 +23,24 @@ class DxfImporter():
     def __init__(self, filename):
         self.filename = filename
         self.state_switcher = {
-            DxfReaderState.BEGINNING: DxfImporter.process_beginning,
-            DxfReaderState.BEGINNING_SECTION: DxfImporter.process_beginning_section,
-            DxfReaderState.SECTION_HEADER: DxfImporter.process_section_header,
-            DxfReaderState.SECTION_TABLES: DxfImporter.process_section_tables,
-            DxfReaderState.SECTION_BLOCKS: DxfImporter.process_section_blocks,
-            DxfReaderState.SECTION_ENTITIES: DxfImporter.process_section_entities,
-            DxfReaderState.SECTION_OBJECTS: DxfImporter.process_section_objects,
-            DxfReaderState.SECTION_BLOCK: DxfImporter.process_section_block,
-            DxfReaderState.ENTITY: DxfImporter.process_entity,
+            DxfReaderState.BEGINNING:
+                DxfImporter.process_beginning,
+            DxfReaderState.BEGINNING_SECTION:
+                DxfImporter.process_beginning_section,
+            DxfReaderState.SECTION_HEADER:
+                DxfImporter.process_section_header,
+            DxfReaderState.SECTION_TABLES:
+                DxfImporter.process_section_tables,
+            DxfReaderState.SECTION_BLOCKS:
+                DxfImporter.process_section_blocks,
+            DxfReaderState.SECTION_ENTITIES:
+                DxfImporter.process_section_entities,
+            DxfReaderState.SECTION_OBJECTS:
+                DxfImporter.process_section_objects,
+            DxfReaderState.SECTION_BLOCK:
+                DxfImporter.process_section_block,
+            DxfReaderState.ENTITY:
+                DxfImporter.process_entity,
         }
 
     def dxf_entry(self, fin):
@@ -65,7 +74,8 @@ class DxfImporter():
         with open(self.filename) as fin:
             lines = 0
             for code, data in self.dxf_entry(fin):
-                function = self.state_switcher.get(self.state, lambda self, code, data: "nothing")
+                function = self.state_switcher.get(self.state, lambda self,
+                                                   code, data: "nothing")
                 function(self, code, data)
                 lines += 1
         print(lines)
@@ -83,7 +93,8 @@ class DxfImporter():
         elif code == 999:
             print(data)
         else:
-            raise Exception("unknown code {c} for state BEGINNING".format(c=code))
+            raise Exception("unknown code {c} for state "
+                            "BEGINNING".format(c=code))
 
     def process_beginning_section(self, code, data):
         '''Part of the DXF import state machine.'''
@@ -104,9 +115,11 @@ class DxfImporter():
                 self.state = DxfReaderState.SECTION_OBJECTS
                 print("    section tables")
             else:
-                raise Exception("unknown data {d} for state BEGINNING_SECTION".format(d=data))
+                raise Exception("unknown data {d} for state "
+                                "BEGINNING_SECTION".format(d=data))
         else:
-            raise Exception("unknown code {c} for state BEGINNING_SECTION".format(c=code))
+            raise Exception("unknown code {c} for state "
+                            "BEGINNING_SECTION".format(c=code))
 
     def process_section_header(self, code, data):
         '''Part of the DXF import state machine.'''
@@ -226,7 +239,8 @@ class DxfImporter():
         self.entities.append(Circle(self.x1, -self.y1, self.radius))
 
     def store_arc(self):
-        self.entities.append(Arc(self.x1, -self.y1, self.radius, self.angle1, self.angle2))
+        self.entities.append(Arc(self.x1, -self.y1,
+                                 self.radius, self.angle1, self.angle2))
 
     def store_text(self):
         self.entities.append(Text(self.x1, -self.y1, self.text))
