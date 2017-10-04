@@ -21,6 +21,7 @@ import icons.zoom_out
 import icons.zoom_original
 
 import icons.room_list
+import icons.image
 
 
 class Toolbar(tkinter.LabelFrame):
@@ -36,6 +37,7 @@ class Toolbar(tkinter.LabelFrame):
         self.zoom_original_icon = tkinter.PhotoImage(data=icons.zoom_original.icon)
 
         self.room_list_icon = tkinter.PhotoImage(data=icons.room_list.icon)
+        self.image_icon = tkinter.PhotoImage(data=icons.image.icon)
 
         button_import = tkinter.Button(self, text="Import", image=self.file_import_icon)
         button_open = tkinter.Button(self, text="Otevřít", image=self.file_open_icon)
@@ -46,9 +48,12 @@ class Toolbar(tkinter.LabelFrame):
         button_zoom_11 = tkinter.Button(self, text="1:1", image=self.zoom_original_icon)
 
         button_room_list = tkinter.Button(self, text="Room list", image=self.room_list_icon)
+        button_new_room = tkinter.Button(self, text="New room", image=self.image_icon)
+
 
         spacer1 = tkinter.Label(self, text="  ")
         spacer2 = tkinter.Label(self, text="  ")
+        spacer3 = tkinter.Label(self, text="  ")
 
         button_import.grid(column=1, row=1)
         button_open.grid(column=2, row=1)
@@ -63,3 +68,8 @@ class Toolbar(tkinter.LabelFrame):
         spacer2.grid(column=8, row=1)
 
         button_room_list.grid(column=9, row=1)
+
+        spacer3.grid(column=10, row=1)
+
+        button_new_room.grid(column=11, row=1)
+
