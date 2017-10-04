@@ -4,4 +4,5 @@ from tkinter import messagebox
 
 
 def help():
-    pass
+    messagebox.showinfo("Nápověda",
+                        "")
