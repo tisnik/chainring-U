@@ -9,3 +9,14 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
+
+
+class SvgExporter:
+
+    def __init__(self, filename, entities):
+        self.filename = filename
+        self.entities = entities
+
+    def export(self):
+        #  with open(self.filename, "w") as fout:
+        pass
