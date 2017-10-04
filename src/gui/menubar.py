@@ -22,8 +22,11 @@ import icons.zoom_original
 import icons.help_about
 import icons.help_faq
 import icons.room_list
+import icons.system_run
+import icons.image
 
 from gui.about_dialog import *
+from gui.help_dialog import *
 
 
 class Menubar(tkinter.Menu):
@@ -42,6 +45,8 @@ class Menubar(tkinter.Menu):
         self.help_about_icon = tkinter.PhotoImage(data=icons.help_about.icon)
         self.help_faq_icon = tkinter.PhotoImage(data=icons.help_faq.icon)
         self.room_list_icon = tkinter.PhotoImage(data=icons.room_list.icon)
+        self.system_run_icon = tkinter.PhotoImage(data=icons.system_run.icon)
+        self.image_icon = tkinter.PhotoImage(data=icons.image.icon)
 
         filemenu = tkinter.Menu(self, tearoff=0)
         filemenu.add_command(label="Otevřít výkres", image=self.file_open_icon,
@@ -58,6 +63,8 @@ class Menubar(tkinter.Menu):
                              command=parent.quit)
 
         edit = tkinter.Menu(self, tearoff=0)
+        edit.add_command(label="Nakreslit místnost", image=self.image_icon,
+                         compound="left", underline=0)
 
         view = tkinter.Menu(self, tearoff=0)
         view.add_command(label="Zvětšit", image=self.zoom_in_icon,
@@ -73,7 +80,7 @@ class Menubar(tkinter.Menu):
 
         helpmenu = tkinter.Menu(self, tearoff=0)
         helpmenu.add_command(label="Nápověda", image=self.help_faq_icon,
-                             compound="left", underline=0)
+                             compound="left", underline=0, command=help)
         helpmenu.add_command(label="O programu", image=self.help_about_icon,
                              compound="left", underline=0, command=about)
 
