@@ -22,17 +22,21 @@ def test():
     print("Test!")
 
 
-root = tkinter.Tk()
+class MainWindow:
 
-canvas = Canvas(root, 800, 600)
+    def __init__(self):
+        self.root = tkinter.Tk()
 
-menubar = Menubar(root)
+        self.canvas = Canvas(self.root, 800, 600)
 
-root.config(menu=menubar)
+        self.menubar = Menubar(self.root)
 
-toolbar = Toolbar(root)
+        self.root.config(menu=self.menubar)
 
-toolbar.grid(column=1, row=1, columnspan=2, sticky="WE")
-canvas.grid(column=2, row=2, sticky="NWSE")
+        self.toolbar = Toolbar(self.root)
 
-root.mainloop()
+        self.toolbar.grid(column=1, row=1, columnspan=2, sticky="WE")
+        self.canvas.grid(column=2, row=2, sticky="NWSE")
+
+    def show(self):
+        self.root.mainloop()
