@@ -16,6 +16,7 @@ from tkinter import ttk
 from gui.canvas import *
 from gui.toolbar import *
 from gui.menubar import *
+from gui.palette import *
 
 
 def test():
@@ -28,14 +29,15 @@ class MainWindow:
         self.root = tkinter.Tk()
 
         self.canvas = Canvas(self.root, 800, 600)
+        self.toolbar = Toolbar(self.root)
+        self.palette = Palette(self.root)
 
         self.menubar = Menubar(self.root)
 
         self.root.config(menu=self.menubar)
 
-        self.toolbar = Toolbar(self.root)
-
         self.toolbar.grid(column=1, row=1, columnspan=2, sticky="WE")
+        self.palette.grid(column=1, row=2, sticky="NWSE")
         self.canvas.grid(column=2, row=2, sticky="NWSE")
 
     def show(self):
