@@ -80,6 +80,7 @@ class DxfImporter():
                 lines += 1
         print(lines)
         print(self.statistic)
+        return self.entities, self.statistic, lines
 
     def process_beginning(self, code, data):
         '''Part of the DXF import state machine.'''
