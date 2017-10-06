@@ -14,5 +14,10 @@ from gui.main_window import *
 from importers.dxf_importer import *
 
 importer = DxfImporter("Branna_3np.dxf")
-importer.import_dxf()
+print("here")
+
+mainWindow = MainWindow()
+mainWindow.show()
+
+#importer.import_dxf()
 
