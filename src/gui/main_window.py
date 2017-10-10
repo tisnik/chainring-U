@@ -42,3 +42,6 @@ class MainWindow:
 
     def show(self):
         self.root.mainloop()
+
+    def draw_entities(self, entities, xoffset, yoffset, scale):
+        self.canvas.draw_entities(entities, xoffset, yoffset, scale)
