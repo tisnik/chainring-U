@@ -12,12 +12,22 @@
 
 from gui.main_window import *
 from importers.dxf_importer import *
+from entities.bounds import Bounds
 
-importer = DxfImporter("Branna_3np.dxf")
-print("here")
+import sys
+
+
+def computeBounds(entities):
+    bounds = Bounds()
+    for entity in entities:
+        bounds.enlarge(entity.getBounds())
+    print(bounds)
+
+
+importer = DxfImporter("test-data/Building_1np.dxf")
+entities, statistic, lines = importer.import_dxf()
+bounds = computeBounds(entities)
 
 mainWindow = MainWindow()
+mainWindow.draw_entities(entities, -96817, 39874, 1/50.0)
 mainWindow.show()
-
-#importer.import_dxf()
-
