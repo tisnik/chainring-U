@@ -11,6 +11,7 @@
 #
 
 from entities.entity import Entity
+from entities.bounds import Bounds
 
 
 class Circle(Entity):
@@ -24,3 +25,10 @@ class Circle(Entity):
             x=self.x,
             y=self.y,
             r=self.radius)
+
+    def draw(self, canvas, xoffset, yoffset, scale):
+        pass
+
+    def getBounds(self):
+        return Bounds(self.x - self.radius, self.y - self.radius,
+                      self.x + self.radius, self.y + self.radius)
