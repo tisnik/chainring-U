@@ -27,3 +27,7 @@ class Canvas(tkinter.Canvas):
             self.create_line(x, 0, x, height, dash=7, fill="gray")
         for y in range(0, height, grid_size):
             self.create_line(0, y, width, y, dash=7, fill="gray")
+
+    def draw_entities(self, entities, xoffset, yoffset, scale):
+        for entity in entities:
+            entity.draw(self, xoffset, yoffset, scale)
