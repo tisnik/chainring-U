@@ -11,6 +11,7 @@
 #
 
 from entities.entity import Entity
+from entities.bounds import Bounds
 
 
 class Arc(Entity):
@@ -28,3 +29,10 @@ class Arc(Entity):
             r=self.radius,
             a1=self.angle1,
             a2=self.angle2)
+
+    def draw(self, canvas, xoffset, yoffset, scale):
+        pass
+
+    def getBounds(self):
+        return Bounds(self.x - self.radius, self.y - self.radius,
+                      self.x + self.radius, self.y + self.radius)
