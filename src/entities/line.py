@@ -11,19 +11,34 @@
 #
 
 from entities.entity import Entity
+from entities.bounds import Bounds
 
 
 class Line(Entity):
     def __init__(self, x1, y1, x2, y2):
         self.x1 = x1
-        self.x1 = x1
-        self.y2 = y2
+        self.y1 = y1
+        self.x2 = x2
         self.y2 = y2
 
     def str(self):
-        return "L"
         return "L {x1} {y1} {x2} {y2}".format(
             x1=self.x1,
             y1=self.y1,
             x2=self.x2,
             y2=self.y2)
+
+    def draw(self, canvas, xoffset, yoffset, scale):
+        x1 = self.x1 + xoffset
+        y1 = self.y1 + yoffset
+        x2 = self.x2 + xoffset
+        y2 = self.y2 + yoffset
+        x1 *= scale
+        y1 *= scale
+        x2 *= scale
+        y2 *= scale
+        canvas.create_line(x1, y1, x2, y2, fill="black")
+
+    def getBounds(self):
+        return Bounds(min(self.x1, self.x2), min(self.y1, self.y2),
+                      max(self.x1, self.x2), max(self.y1, self.y2))
