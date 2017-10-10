@@ -11,6 +11,7 @@
 #
 
 from entities.entity import Entity
+from entities.bounds import Bounds
 
 
 class Text(Entity):
@@ -20,8 +21,14 @@ class Text(Entity):
         self.text = text
 
     def str(self):
-        return "T"
         return "T {x} {y} {t}".format(
             x=self.x,
             y=self.y,
             t=self.text)
+
+    def draw(self, canvas, xoffset, yoffset, scale):
+        return (self.x, self.y, self.x, self.y)
+
+    def getBounds(self):
+        return Bounds(self.x, self.y,
+                      self.x, self.y)
