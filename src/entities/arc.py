@@ -31,7 +31,15 @@ class Arc(Entity):
             a2=self.angle2)
 
     def draw(self, canvas, xoffset, yoffset, scale):
-        pass
+        extent = self.angle2 - self.angle1
+
+        if extent < 0:
+            extent += 360
+
+        canvas.create_arc(self.x-self.radius, self.y-self.radius,
+                          self.x+self.radius, self.y+self.radius,
+                          start=self.angle1, extent=extent,
+                          outline="black", style="arc")
 
     def getBounds(self):
         return Bounds(self.x - self.radius, self.y - self.radius,
