@@ -27,7 +27,8 @@ class Circle(Entity):
             r=self.radius)
 
     def draw(self, canvas, xoffset, yoffset, scale):
-        pass
+        canvas.create_oval(self.x-self.radius, self.y-self.radius,
+                           self.x+self.radius, self.y+self.radius, fill="red")
 
     def getBounds(self):
         return Bounds(self.x - self.radius, self.y - self.radius,
