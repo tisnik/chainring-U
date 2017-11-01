@@ -30,6 +30,13 @@ class Circle(Entity):
         canvas.create_oval(self.x-self.radius, self.y-self.radius,
                            self.x+self.radius, self.y+self.radius, fill="red")
 
+    def transform(self, xoffset, yoffset, scale):
+        self.x = self.x + xoffset
+        self.y = self.y + yoffset
+        self.x *= scale
+        self.y *= scale
+        self.radius *= scale
+
     def getBounds(self):
         return Bounds(self.x - self.radius, self.y - self.radius,
                       self.x + self.radius, self.y + self.radius)
