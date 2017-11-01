@@ -17,17 +17,26 @@ from entities.bounds import Bounds
 import sys
 
 
-def computeBounds(entities):
-    bounds = Bounds()
-    for entity in entities:
-        bounds.enlarge(entity.getBounds())
-    print(bounds)
+def computeScale(bounds, canvas):
+    canvas_width = canvas.winfo_reqwidth()
+    canvas_height = canvas.winfo_reqheight()
+    xdist = bounds.xmax - bounds.xmin
+    ydist = bounds.ymax - bounds.ymin
+    xscale = 0.99 * canvas_width / xdist
+    yscale = 0.99 * canvas_height / ydist
+    scale = min(xscale, yscale)
+    return -bounds.xmin, -bounds.ymin, scale
 
+mainWindow = MainWindow()
 
 importer = DxfImporter("test-data/Building_1np.dxf")
 entities, statistic, lines = importer.import_dxf()
-bounds = computeBounds(entities)
+bounds = Bounds.computeBounds(entities)
+xoffset, yoffset, scale = computeScale(bounds, mainWindow.canvas)
 
-mainWindow = MainWindow()
-mainWindow.draw_entities(entities, -96817, 39874, 1/50.0)
+for entity in entities:
+    entity.transform(xoffset, yoffset, scale)
+
+mainWindow.set_entities(entities)
+mainWindow.redraw()
 mainWindow.show()
