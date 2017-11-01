@@ -28,7 +28,7 @@ class Line(Entity):
             x2=self.x2,
             y2=self.y2)
 
-    def draw(self, canvas, xoffset, yoffset, scale):
+    def draw(self, canvas, xoffset=0, yoffset=0, scale=1):
         x1 = self.x1 + xoffset
         y1 = self.y1 + yoffset
         x2 = self.x2 + xoffset
@@ -38,6 +38,16 @@ class Line(Entity):
         x2 *= scale
         y2 *= scale
         canvas.create_line(x1, y1, x2, y2, fill="black")
+
+    def transform(self, xoffset, yoffset, scale):
+        self.x1 = self.x1 + xoffset
+        self.y1 = self.y1 + yoffset
+        self.x2 = self.x2 + xoffset
+        self.y2 = self.y2 + yoffset
+        self.x1 *= scale
+        self.y1 *= scale
+        self.x2 *= scale
+        self.y2 *= scale
 
     def getBounds(self):
         return Bounds(min(self.x1, self.x2), min(self.y1, self.y2),
