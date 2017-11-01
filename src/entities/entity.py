@@ -17,5 +17,8 @@ class Entity:
     def draw(self, canvas, xoffset, yoffset, scale):
         pass
 
+    def transform(self, xoffset, yoffset, scale):
+        pass
+
     def getBounds(self):
         pass
