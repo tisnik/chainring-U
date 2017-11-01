@@ -34,3 +34,10 @@ class Bounds():
             ymin=self.ymin,
             xmax=self.xmax,
             ymax=self.ymax)
+
+    @staticmethod
+    def computeBounds(entities):
+        bounds = Bounds()
+        for entity in entities:
+            bounds.enlarge(entity.getBounds())
+        return bounds
