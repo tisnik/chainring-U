@@ -48,6 +48,36 @@ class MainWindow:
         # scroll on windows
         self.canvas.bind("<MouseWheel>",self.zoom)
 
+    def scroll_start(self, event):
+        self.canvas.scan_mark(event.x, event.y)
+
+    def scroll_move(self, event):
+        self.canvas.scan_dragto(event.x, event.y, gain=1)
+
+    # zoom on Windows
+    def zoom(self,event):
+        if (event.delta > 0):
+            self.canvas.scale("all", event.x, event.y, 1.1, 1.1)
+        elif (event.delta < 0):
+            self.canvas.scale("all", event.x, event.y, 0.9, 0.9)
+        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
+
+    # zoom on Linux
+    def zoom_plus(self, event=None):
+        if event:
+            self.canvas.scale("all", event.x, event.y, 1.1, 1.1)
+        else:
+            self.canvas.scale("all", self.canvas.width/2, self.canvas.height/2, 1.1, 1.1)
+        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
+
+    # zoom on Linux
+    def zoom_minus(self, event=None):
+        if event:
+            self.canvas.scale("all", event.x, event.y, 0.9, 0.9)
+        else:
+            self.canvas.scale("all", self.canvas.width/2, self.canvas.height/2, 0.9, 0.9)
+        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
+
     def quit(self):
         answer = messagebox.askyesno("Skutečně ukončit program?",
                                      "Skutečně ukončit program?")
