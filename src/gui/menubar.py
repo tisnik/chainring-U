@@ -24,6 +24,8 @@ import icons.help_faq
 import icons.room_list
 import icons.system_run
 import icons.image
+import icons.view_grid
+import icons.view_boundary
 
 from gui.about_dialog import *
 from gui.help_dialog import *
@@ -31,7 +33,7 @@ from gui.help_dialog import *
 
 class Menubar(tkinter.Menu):
 
-    def __init__(self, parent):
+    def __init__(self, parent, main_window, canvas):
         super().__init__(tearoff=0)
 
         self.exit_icon = tkinter.PhotoImage(data=icons.application_exit.icon)
@@ -47,6 +49,8 @@ class Menubar(tkinter.Menu):
         self.room_list_icon = tkinter.PhotoImage(data=icons.room_list.icon)
         self.system_run_icon = tkinter.PhotoImage(data=icons.system_run.icon)
         self.image_icon = tkinter.PhotoImage(data=icons.image.icon)
+        self.view_grid_icon = tkinter.PhotoImage(data=icons.view_grid.icon)
+        self.view_boundary_icon = tkinter.PhotoImage(data=icons.view_boundary.icon)
 
         filemenu = tkinter.Menu(self, tearoff=0)
         filemenu.add_command(label="Otevřít výkres", image=self.file_open_icon,
@@ -68,11 +72,16 @@ class Menubar(tkinter.Menu):
 
         view = tkinter.Menu(self, tearoff=0)
         view.add_command(label="Zvětšit", image=self.zoom_in_icon,
-                         compound="left", underline=1)
+                         compound="left", underline=1, command=main_window.zoom_plus)
         view.add_command(label="Zmenšit", image=self.zoom_out_icon,
-                         compound="left", underline=1)
+                         compound="left", underline=1, command=main_window.zoom_minus)
         view.add_command(label="1:1", image=self.zoom_original_icon,
-                         compound="left", underline=0)
+                         compound="left", underline=0, command=main_window.redraw)
+        view.add_separator()
+        view.add_command(label="Mřížka", image=self.view_grid_icon,
+                         compound="left", underline=0, command=canvas.toggle_grid)
+        view.add_command(label="Okraj výkresu", image=self.view_boundary_icon,
+                         compound="left", underline=0, command=canvas.toggle_boundary)
 
         tools = tkinter.Menu(self, tearoff=0)
         tools.add_command(label="Seznam místností", image=self.room_list_icon,
