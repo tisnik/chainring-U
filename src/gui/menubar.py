@@ -56,7 +56,7 @@ class Menubar(tkinter.Menu):
         tools.add_command(label="Seznam místností", image=main_window.icons.room_list_icon,
                           compound="left", underline=0)
         tools.add_separator()
-        tools.add_command(label="Nastavení", image=main_window.icons.image_icon,
+        tools.add_command(label="Nastavení", image=main_window.icons.properties_icon,
                           compound="left", underline=0)
 
         helpmenu = tkinter.Menu(self, tearoff=0)

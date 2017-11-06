@@ -24,6 +24,7 @@ import icons.help_faq
 import icons.room_list
 import icons.system_run
 import icons.image
+import icons.properties
 import icons.view_grid
 import icons.view_boundary
 import icons.edit
@@ -49,3 +50,4 @@ class Icons:
         self.view_boundary_icon = tkinter.PhotoImage(
             data=icons.view_boundary.icon)
         self.edit_icon = tkinter.PhotoImage(data=icons.edit.icon)
+        self.properties_icon = tkinter.PhotoImage(data=icons.properties.icon)
