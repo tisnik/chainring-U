@@ -18,6 +18,8 @@ from gui.toolbar import *
 from gui.menubar import *
 from gui.palette import *
 
+from gui.icons import *
+
 
 def test():
     print("Test!")
@@ -27,6 +29,8 @@ class MainWindow:
 
     def __init__(self):
         self.root = tkinter.Tk()
+
+        self.icons = Icons()
 
         self.canvas = Canvas(self.root, 1000, 700)
         self.toolbar = Toolbar(self.root, self, self.canvas)
