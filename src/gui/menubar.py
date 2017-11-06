@@ -26,6 +26,7 @@ import icons.system_run
 import icons.image
 import icons.view_grid
 import icons.view_boundary
+import icons.edit
 
 from gui.about_dialog import *
 from gui.help_dialog import *
@@ -51,6 +52,7 @@ class Menubar(tkinter.Menu):
         self.image_icon = tkinter.PhotoImage(data=icons.image.icon)
         self.view_grid_icon = tkinter.PhotoImage(data=icons.view_grid.icon)
         self.view_boundary_icon = tkinter.PhotoImage(data=icons.view_boundary.icon)
+        self.edit_icon = tkinter.PhotoImage(data=icons.edit.icon)
 
         filemenu = tkinter.Menu(self, tearoff=0)
         filemenu.add_command(label="Otevřít výkres", image=self.file_open_icon,
@@ -67,7 +69,7 @@ class Menubar(tkinter.Menu):
                              command=parent.quit)
 
         edit = tkinter.Menu(self, tearoff=0)
-        edit.add_command(label="Nakreslit místnost", image=self.image_icon,
+        edit.add_command(label="Nakreslit místnost", image=self.edit_icon,
                          compound="left", underline=0)
 
         view = tkinter.Menu(self, tearoff=0)
@@ -85,6 +87,9 @@ class Menubar(tkinter.Menu):
 
         tools = tkinter.Menu(self, tearoff=0)
         tools.add_command(label="Seznam místností", image=self.room_list_icon,
+                          compound="left", underline=0)
+        tools.add_separator()
+        tools.add_command(label="Nastavení", image=self.image_icon,
                           compound="left", underline=0)
 
         helpmenu = tkinter.Menu(self, tearoff=0)

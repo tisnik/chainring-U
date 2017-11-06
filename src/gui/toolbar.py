@@ -24,6 +24,7 @@ import icons.view_boundary
 
 import icons.room_list
 import icons.image
+import icons.edit
 
 
 class Toolbar(tkinter.LabelFrame):
@@ -43,6 +44,7 @@ class Toolbar(tkinter.LabelFrame):
 
         self.room_list_icon = tkinter.PhotoImage(data=icons.room_list.icon)
         self.image_icon = tkinter.PhotoImage(data=icons.image.icon)
+        self.edit_icon = tkinter.PhotoImage(data=icons.edit.icon)
 
         button_import = tkinter.Button(self, text="Import", image=self.file_import_icon)
         button_open = tkinter.Button(self, text="Otevřít", image=self.file_open_icon)
@@ -56,8 +58,8 @@ class Toolbar(tkinter.LabelFrame):
         button_view_grid = tkinter.Button(self, text="Mřížka", image=self.view_grid_icon, command=canvas.toggle_grid)
         button_view_boundary = tkinter.Button(self, text="Okraj", image=self.view_boundary_icon, command=canvas.toggle_boundary)
 
-        button_room_list = tkinter.Button(self, text="Room list", image=self.room_list_icon)
-        button_new_room = tkinter.Button(self, text="New room", image=self.image_icon)
+        button_room_list = tkinter.Button(self, text="Seznam místností", image=self.room_list_icon)
+        button_new_room = tkinter.Button(self, text="Nakreslit místnost", image=self.edit_icon)
 
         spacer1 = tkinter.Label(self, text="  ")
         spacer2 = tkinter.Label(self, text="  ")
