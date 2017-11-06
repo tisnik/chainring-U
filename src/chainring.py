@@ -12,7 +12,7 @@
 
 from gui.main_window import *
 from importers.dxf_importer import *
-from entities.bounds import Bounds
+from geometry.bounds import Bounds
 
 import sys
 

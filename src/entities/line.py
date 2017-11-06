@@ -11,7 +11,7 @@
 #
 
 from entities.entity import Entity
-from entities.bounds import Bounds
+from geometry.bounds import Bounds
 
 
 class Line(Entity):
