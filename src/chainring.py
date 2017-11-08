@@ -15,6 +15,11 @@ from importers.dxf_importer import *
 from geometry.bounds import Bounds
 
 import sys
+import configparser
+
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 
 def computeScale(bounds, canvas):
@@ -27,7 +32,10 @@ def computeScale(bounds, canvas):
     scale = min(xscale, yscale)
     return -bounds.xmin, -bounds.ymin, scale
 
-mainWindow = MainWindow()
+
+window_width = config.getint('ui', 'window_width')
+window_height = config.getint('ui', 'window_height')
+mainWindow = MainWindow(window_width, window_height)
 
 importer = DxfImporter("test-data/Building_1np.dxf")
 entities, statistic, lines = importer.import_dxf()
