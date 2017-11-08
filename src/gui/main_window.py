@@ -27,12 +27,12 @@ def test():
 
 class MainWindow:
 
-    def __init__(self):
+    def __init__(self, window_width, window_height):
         self.root = tkinter.Tk()
 
         self.icons = Icons()
 
-        self.canvas = Canvas(self.root, 1000, 700)
+        self.canvas = Canvas(self.root, window_width, window_height)
         self.toolbar = Toolbar(self.root, self, self.canvas)
         self.palette = Palette(self.root)
 
