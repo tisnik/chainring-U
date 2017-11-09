@@ -10,12 +10,18 @@
 #      Pavel Tisnovsky
 #
 
+"""Module with class that represents the arc."""
+
+
 from entities.entity import Entity
 from geometry.bounds import Bounds
 
 
 class Arc(Entity):
+    """Class that represents the arc."""
+
     def __init__(self, x, y, radius, angle1, angle2):
+        """Construct new arc from provided coordinates and angles."""
         self.x = x
         self.y = y
         self.radius = radius
@@ -23,6 +29,7 @@ class Arc(Entity):
         self.angle2 = angle2
 
     def str(self):
+        """Return textual representation of arc."""
         return "A {x} {y} {r} {a1} {a2}".format(
             x=self.x,
             y=self.y,
@@ -31,6 +38,7 @@ class Arc(Entity):
             a2=self.angle2)
 
     def draw(self, canvas, xoffset, yoffset, scale):
+        """Draw the entity onto canvas."""
         extent = self.angle2 - self.angle1
 
         if extent < 0:
@@ -42,6 +50,7 @@ class Arc(Entity):
                           outline="black", style="arc")
 
     def transform(self, xoffset, yoffset, scale):
+        """Perform the transformation of the entity into paper space."""
         self.x = self.x + xoffset
         self.y = self.y + yoffset
         self.x *= scale
@@ -49,5 +58,6 @@ class Arc(Entity):
         self.radius *= scale
 
     def getBounds(self):
+        """Compute bounds for given entity."""
         return Bounds(self.x - self.radius, self.y - self.radius,
                       self.x + self.radius, self.y + self.radius)
