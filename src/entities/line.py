@@ -10,18 +10,25 @@
 #      Pavel Tisnovsky
 #
 
+"""Module with class that represents the line."""
+
+
 from entities.entity import Entity
 from geometry.bounds import Bounds
 
 
 class Line(Entity):
+    """Class that represents the line."""
+
     def __init__(self, x1, y1, x2, y2):
+        """Construct new line from provided coordinates."""
         self.x1 = x1
         self.y1 = y1
         self.x2 = x2
         self.y2 = y2
 
     def str(self):
+        """Return textual representation of line."""
         return "L {x1} {y1} {x2} {y2}".format(
             x1=self.x1,
             y1=self.y1,
@@ -29,6 +36,7 @@ class Line(Entity):
             y2=self.y2)
 
     def draw(self, canvas, xoffset=0, yoffset=0, scale=1):
+        """Draw the entity onto canvas."""
         x1 = self.x1 + xoffset
         y1 = self.y1 + yoffset
         x2 = self.x2 + xoffset
@@ -40,6 +48,7 @@ class Line(Entity):
         canvas.create_line(x1, y1, x2, y2, fill="black")
 
     def transform(self, xoffset, yoffset, scale):
+        """Perform the transformation of the entity into paper space."""
         self.x1 = self.x1 + xoffset
         self.y1 = self.y1 + yoffset
         self.x2 = self.x2 + xoffset
@@ -50,5 +59,6 @@ class Line(Entity):
         self.y2 *= scale
 
     def getBounds(self):
+        """Compute bounds for given entity."""
         return Bounds(min(self.x1, self.x2), min(self.y1, self.y2),
                       max(self.x1, self.x2), max(self.y1, self.y2))
