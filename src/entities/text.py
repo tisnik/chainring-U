@@ -10,25 +10,38 @@
 #      Pavel Tisnovsky
 #
 
+"""Module with class that represents the text entity."""
+
+
 from entities.entity import Entity
 from geometry.bounds import Bounds
 
 
 class Text(Entity):
+    """Class that represents the text entity."""
+
     def __init__(self, x, y, text):
+        """Construct new text from provided coordinates and the string."""
         self.x = x
         self.y = y
         self.text = text
 
     def str(self):
+        """Return textual representation of text entity."""
         return "T {x} {y} {t}".format(
             x=self.x,
             y=self.y,
             t=self.text)
 
     def draw(self, canvas, xoffset, yoffset, scale):
+        """Draw the entity onto canvas."""
         return (self.x, self.y, self.x, self.y)
 
+    def transform(self, xoffset, yoffset, scale):
+        """Perform the transformation of the entity into paper space."""
+        pass
+
     def getBounds(self):
+        """Compute bounds for given entity."""
         return Bounds(self.x, self.y,
                       self.x, self.y)
