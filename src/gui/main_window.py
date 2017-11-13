@@ -21,11 +21,10 @@ from gui.palette import *
 from gui.icons import *
 
 
-def test():
-    print("Test!")
-
-
 class MainWindow:
+
+    SCALE_UP_FACTOR = 1.1
+    SCALE_DOWN_FACTOR = 0.9
 
     def __init__(self, window_width, window_height):
         self.root = tkinter.Tk()
@@ -50,7 +49,7 @@ class MainWindow:
         self.canvas.bind("<Button-4>", self.zoom_plus)
         self.canvas.bind("<Button-5>", self.zoom_minus)
         # scroll on windows
-        self.canvas.bind("<MouseWheel>",self.zoom)
+        self.canvas.bind("<MouseWheel>", self.zoom)
 
     def scroll_start(self, event):
         self.canvas.scan_mark(event.x, event.y)
@@ -59,17 +58,19 @@ class MainWindow:
         self.canvas.scan_dragto(event.x, event.y, gain=1)
 
     # zoom on Windows
-    def zoom(self,event):
+    def zoom(self, event):
         if (event.delta > 0):
             self.canvas.scale("all", event.x, event.y, 1.1, 1.1)
         elif (event.delta < 0):
             self.canvas.scale("all", event.x, event.y, 0.9, 0.9)
-        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     # zoom on Linux
     def zoom_plus(self, event=None):
         if event:
-            self.canvas.scale("all", event.x, event.y, 1.1, 1.1)
+            self.canvas.scale("all", event.x, event.y,
+                              MainWindow.SCALE_UP_FACTOR,
+                              MainWindow.SCALE_UP_FACTOR)
         else:
             self.canvas.scale("all", self.canvas.width/2, self.canvas.height/2, 1.1, 1.1)
         self.canvas.configure(scrollregion = self.canvas.bbox("all"))
@@ -77,7 +78,9 @@ class MainWindow:
     # zoom on Linux
     def zoom_minus(self, event=None):
         if event:
-            self.canvas.scale("all", event.x, event.y, 0.9, 0.9)
+            self.canvas.scale("all", event.x, event.y,
+                              MainWindow.SCALE_DOWN_FACTOR,
+                              MainWindow.SCALE_DOWN_FACTOR)
         else:
             self.canvas.scale("all", self.canvas.width/2, self.canvas.height/2, 0.9, 0.9)
         self.canvas.configure(scrollregion = self.canvas.bbox("all"))
