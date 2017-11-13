@@ -20,8 +20,8 @@ class Canvas(tkinter.Canvas):
     def __init__(self, parent, width, height):
         super().__init__(parent, width=width, height=height,
                          background="white")
-        #self.draw_grid(width, height, Canvas.GRID_SIZE)
-        #self.draw_boundary(width, height)
+        # self.draw_grid(width, height, Canvas.GRID_SIZE)
+        # self.draw_boundary(width, height)
         self._grid = True
         self._boundary = True
         self.width = width
