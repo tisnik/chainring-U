@@ -14,6 +14,7 @@ import tkinter
 
 from gui.about_dialog import *
 from gui.help_dialog import *
+from gui.settings_dialog import SettingsDialog
 
 
 class Menubar(tkinter.Menu):
@@ -21,10 +22,14 @@ class Menubar(tkinter.Menu):
     def __init__(self, parent, main_window, canvas):
         super().__init__(tearoff=0)
 
+        self.parent = parent
+
         filemenu = tkinter.Menu(self, tearoff=0)
-        filemenu.add_command(label="Otevřít výkres", image=main_window.icons.file_open_icon,
+        filemenu.add_command(label="Otevřít výkres",
+                             image=main_window.icons.file_open_icon,
                              compound="left", underline=0)
-        filemenu.add_command(label="Uložit výkres", image=main_window.icons.file_save_icon,
+        filemenu.add_command(label="Uložit výkres",
+                             image=main_window.icons.file_save_icon,
                              compound="left", underline=0)
         filemenu.add_separator()
         filemenu.add_command(label="Importovat nový výkres",
@@ -36,28 +41,38 @@ class Menubar(tkinter.Menu):
                              command=parent.quit)
 
         edit = tkinter.Menu(self, tearoff=0)
-        edit.add_command(label="Nakreslit místnost", image=main_window.icons.edit_icon,
+        edit.add_command(label="Nakreslit místnost",
+                         image=main_window.icons.edit_icon,
                          compound="left", underline=0)
 
         view = tkinter.Menu(self, tearoff=0)
-        view.add_command(label="Zvětšit", image=main_window.icons.zoom_in_icon,
-                         compound="left", underline=1, command=main_window.zoom_plus)
-        view.add_command(label="Zmenšit", image=main_window.icons.zoom_out_icon,
-                         compound="left", underline=1, command=main_window.zoom_minus)
-        view.add_command(label="1:1", image=main_window.icons.zoom_original_icon,
-                         compound="left", underline=0, command=main_window.redraw)
+        view.add_command(label="Zvětšit",
+                         image=main_window.icons.zoom_in_icon,
+                         compound="left", underline=1,
+                         command=main_window.zoom_plus)
+        view.add_command(label="Zmenšit",
+                         image=main_window.icons.zoom_out_icon,
+                         compound="left", underline=1,
+                         command=main_window.zoom_minus)
+        view.add_command(label="1:1",
+                         image=main_window.icons.zoom_original_icon,
+                         compound="left", underline=0,
+                         command=main_window.redraw)
         view.add_separator()
         view.add_command(label="Mřížka", image=main_window.icons.view_grid_icon,
-                         compound="left", underline=0, command=canvas.toggle_grid)
-        view.add_command(label="Okraj výkresu", image=main_window.icons.view_boundary_icon,
-                         compound="left", underline=0, command=canvas.toggle_boundary)
+                         compound="left", underline=0,
+                         command=canvas.toggle_grid)
+        view.add_command(label="Okraj výkresu",
+                         image=main_window.icons.view_boundary_icon,
+                         compound="left", underline=0,
+                         command=canvas.toggle_boundary)
 
         tools = tkinter.Menu(self, tearoff=0)
         tools.add_command(label="Seznam místností", image=main_window.icons.room_list_icon,
                           compound="left", underline=0)
         tools.add_separator()
         tools.add_command(label="Nastavení", image=main_window.icons.properties_icon,
-                          compound="left", underline=0)
+                          compound="left", underline=0, command=self.show_settings_dialog)
 
         helpmenu = tkinter.Menu(self, tearoff=0)
         helpmenu.add_command(label="Nápověda", image=main_window.icons.help_faq_icon,
@@ -70,3 +85,6 @@ class Menubar(tkinter.Menu):
         self.add_cascade(label="Zobrazit", menu=view, underline=0)
         self.add_cascade(label="Nástroje", menu=tools, underline=3)
         self.add_cascade(label="Nápověda", menu=helpmenu, underline=0)
+
+    def show_settings_dialog(self):
+        SettingsDialog(self.parent)
