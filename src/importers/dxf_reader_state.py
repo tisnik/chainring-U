@@ -12,6 +12,7 @@
 
 from enum import Enum
 
+
 class DxfReaderState(Enum):
     BEGINNING = 1,
     BEGINNING_SECTION = 2,
