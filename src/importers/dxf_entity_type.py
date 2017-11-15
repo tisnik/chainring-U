@@ -12,6 +12,7 @@
 
 from enum import Enum
 
+
 class DxfEntityType(Enum):
     UNKNOWN = 1,
     LINE = 2,
