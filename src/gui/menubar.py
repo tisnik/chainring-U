@@ -59,7 +59,8 @@ class Menubar(tkinter.Menu):
                          compound="left", underline=0,
                          command=main_window.redraw)
         view.add_separator()
-        view.add_command(label="Mřížka", image=main_window.icons.view_grid_icon,
+        view.add_command(label="Mřížka",
+                         image=main_window.icons.view_grid_icon,
                          compound="left", underline=0,
                          command=canvas.toggle_grid)
         view.add_command(label="Okraj výkresu",
@@ -68,16 +69,22 @@ class Menubar(tkinter.Menu):
                          command=canvas.toggle_boundary)
 
         tools = tkinter.Menu(self, tearoff=0)
-        tools.add_command(label="Seznam místností", image=main_window.icons.room_list_icon,
+        tools.add_command(label="Seznam místností",
+                          image=main_window.icons.room_list_icon,
                           compound="left", underline=0)
         tools.add_separator()
-        tools.add_command(label="Nastavení", image=main_window.icons.properties_icon,
-                          compound="left", underline=0, command=self.show_settings_dialog)
+        tools.add_command(label="Nastavení",
+                          image=main_window.icons.properties_icon,
+                          compound="left", underline=0,
+                          command=self.show_settings_dialog)
 
         helpmenu = tkinter.Menu(self, tearoff=0)
-        helpmenu.add_command(label="Nápověda", image=main_window.icons.help_faq_icon,
-                             compound="left", underline=0, command=help)
-        helpmenu.add_command(label="O programu", image=main_window.icons.help_about_icon,
+        helpmenu.add_command(label="Nápověda",
+                             image=main_window.icons.help_faq_icon,
+                             compound="left", underline=0,
+                             command=help)
+        helpmenu.add_command(label="O programu",
+                             image=main_window.icons.help_about_icon,
                              compound="left", underline=0, command=about)
 
         self.add_cascade(label="Soubor", menu=filemenu, underline=0)

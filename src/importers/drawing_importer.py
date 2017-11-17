@@ -52,7 +52,8 @@ class DrawingImporter:
     def parse_line(self, line):
         parts = line.split(" ")
         command = parts[0]
-        function = self.commands.get(command, DrawingImporter.process_unknown_command)
+        function = self.commands.get(command,
+                                     DrawingImporter.process_unknown_command)
         function(self, parts)
 
     def process_unknown_command(self, parts):

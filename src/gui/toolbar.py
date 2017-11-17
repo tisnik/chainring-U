@@ -21,48 +21,60 @@ class Toolbar(tkinter.LabelFrame):
 
         self.parent = parent
 
-        button_import = tkinter.Button(self, text="Import",
-                                       image=main_window.icons.file_import_icon)
+        button_import = tkinter.Button(
+            self, text="Import",
+            image=main_window.icons.file_import_icon)
 
-        button_open = tkinter.Button(self, text="Otevřít",
-                                     image=main_window.icons.file_open_icon)
+        button_open = tkinter.Button(
+            self, text="Otevřít",
+            image=main_window.icons.file_open_icon)
 
-        button_save = tkinter.Button(self, text="Uložit",
-                                     image=main_window.icons.file_save_icon)
+        button_save = tkinter.Button(
+            self, text="Uložit",
+            image=main_window.icons.file_save_icon)
 
-        button_quit = tkinter.Button(self, text="Ukončit",
-                                     image=main_window.icons.exit_icon,
-                                     command=main_window.quit)
+        button_quit = tkinter.Button(
+            self, text="Ukončit",
+            image=main_window.icons.exit_icon,
+            command=main_window.quit)
 
-        button_zoom_in = tkinter.Button(self, text="Zvětšit",
-                                        image=main_window.icons.zoom_in_icon,
-                                        command=main_window.zoom_plus)
+        button_zoom_in = tkinter.Button(
+            self, text="Zvětšit",
+            image=main_window.icons.zoom_in_icon,
+            command=main_window.zoom_plus)
 
-        button_zoom_out = tkinter.Button(self, text="Zmenšit",
-                                         image=main_window.icons.zoom_out_icon,
-                                         command=main_window.zoom_minus)
+        button_zoom_out = tkinter.Button(
+            self, text="Zmenšit",
+            image=main_window.icons.zoom_out_icon,
+            command=main_window.zoom_minus)
 
-        button_zoom_11 = tkinter.Button(self, text="1:1",
-                                        image=main_window.icons.zoom_original_icon,
-                                        command=main_window.redraw)
+        button_zoom_11 = tkinter.Button(
+            self, text="1:1",
+            image=main_window.icons.zoom_original_icon,
+            command=main_window.redraw)
 
-        button_view_grid = tkinter.Button(self, text="Mřížka",
-                                          image=main_window.icons.view_grid_icon,
-                                          command=canvas.toggle_grid)
+        button_view_grid = tkinter.Button(
+            self, text="Mřížka",
+            image=main_window.icons.view_grid_icon,
+            command=canvas.toggle_grid)
 
-        button_view_boundary = tkinter.Button(self, text="Okraj",
-                                              image=main_window.icons.view_boundary_icon,
-                                              command=canvas.toggle_boundary)
+        button_view_boundary = tkinter.Button(
+            self, text="Okraj",
+            image=main_window.icons.view_boundary_icon,
+            command=canvas.toggle_boundary)
 
-        button_room_list = tkinter.Button(self, text="Seznam místností",
-                                          image=main_window.icons.room_list_icon)
+        button_room_list = tkinter.Button(
+            self, text="Seznam místností",
+            image=main_window.icons.room_list_icon)
 
-        button_new_room = tkinter.Button(self, text="Nakreslit místnost",
-                                         image=main_window.icons.edit_icon)
+        button_new_room = tkinter.Button(
+            self, text="Nakreslit místnost",
+            image=main_window.icons.edit_icon)
 
-        button_settings = tkinter.Button(self, text="Nastavení",
-                                         image=main_window.icons.properties_icon,
-                                         command=self.show_settings_dialog)
+        button_settings = tkinter.Button(
+            self, text="Nastavení",
+            image=main_window.icons.properties_icon,
+            command=self.show_settings_dialog)
 
         spacer1 = tkinter.Label(self, text="  ")
         spacer2 = tkinter.Label(self, text="  ")
