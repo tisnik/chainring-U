@@ -50,9 +50,47 @@ class DrawingImporter:
         return self.entities, self.statistic, lines
 
     def parse_line(self, line):
-        print(line)
         parts = line.split(" ")
         command = parts[0]
         function = self.commands.get(command, DrawingImporter.process_unknown_command)
         function(self, parts)
 
+    def process_unknown_command(self, parts):
+        print("Unknown command: '{c}'".format(c=parts[0]))
+        sys.exit(0)
+
+    def process_version(self, parts):
+        print("Read attribute 'version': {v}".format(v=parts[1]))
+
+    def process_created(self, parts):
+        print("Read attribute 'created': {c}".format(c=parts[1]))
+
+    def process_entities(self, parts):
+        print("Read attribute 'entities': {e}".format(e=parts[1]))
+
+    def process_line(self, parts):
+        x1 = float(parts[1])
+        y1 = float(parts[2])
+        x2 = float(parts[3])
+        y2 = float(parts[4])
+        self.entities.append(Line(x1, y1, x2, y2))
+
+    def process_circle(self, parts):
+        x = float(parts[1])
+        y = float(parts[2])
+        radius = float(parts[3])
+        self.entities.append(Circle(x, y, radius))
+
+    def process_arc(self, parts):
+        x = float(parts[1])
+        y = float(parts[2])
+        radius = float(parts[3])
+        angle1 = float(parts[4])
+        angle2 = float(parts[5])
+        self.entities.append(Arc(x, y, radius, angle1, angle2))
+
+    def process_text(self, parts):
+        x = float(parts[1])
+        y = float(parts[2])
+        text = " ".join(parts[3:]).strip()
+        self.entities.append(Text(x, y, text))
