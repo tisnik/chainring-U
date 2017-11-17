@@ -20,12 +20,15 @@ class DrawingExporter:
         self.filename = filename
         self.entities = entities
 
+    @staticmethod
     def get_timestamp():
         return datetime.now().isoformat(sep=' ')
 
+    @staticmethod
     def output_timestamp(fout):
         fout.write("created: {c}\n".format(c=DrawingExporter.get_timestamp()))
 
+    @staticmethod
     def output_version(fout):
         fout.write("version: {v}\n".format(v=DrawingExporter.VERSION))
 
