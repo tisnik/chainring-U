@@ -18,5 +18,5 @@ class DrawingImporter:
     def __init__(self, filename):
         self.filename = filename
 
-    def import(self):
+    def import_drawing(self):
         pass
