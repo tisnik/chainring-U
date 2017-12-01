@@ -12,13 +12,15 @@
 
 from datetime import *
 
+from drawing import Drawing
+
 
 class DrawingExporter:
     VERSION = 1
 
-    def __init__(self, filename, entities):
+    def __init__(self, filename, drawing):
         self.filename = filename
-        self.entities = entities
+        self.entities = drawing.entities
 
     @staticmethod
     def get_timestamp():
