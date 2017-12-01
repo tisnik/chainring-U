@@ -11,6 +11,7 @@
 #
 
 from importers.dxf_entity_type import *
+from drawing import Drawing
 from entities.line import *
 from entities.circle import *
 from entities.arc import *
@@ -38,6 +39,7 @@ class DrawingImporter:
             DxfEntityType.ARC: 0,
             DxfEntityType.TEXT: 0,
         }
+        self.metadata = {}
         self.entities = []
 
     def import_drawing(self):
@@ -47,7 +49,8 @@ class DrawingImporter:
             for line in fin:
                 self.parse_line(line)
                 lines += 1
-        return self.entities, self.statistic, lines
+        drawing = Drawing(self.entities, self.statistic, lines)
+        return drawing
 
     def parse_line(self, line):
         parts = line.split(" ")
