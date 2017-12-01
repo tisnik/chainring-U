@@ -28,6 +28,7 @@ import icons.properties
 import icons.view_grid
 import icons.view_boundary
 import icons.edit
+import icons.drawing_info
 
 
 class Icons:
@@ -51,3 +52,4 @@ class Icons:
             data=icons.view_boundary.icon)
         self.edit_icon = tkinter.PhotoImage(data=icons.edit.icon)
         self.properties_icon = tkinter.PhotoImage(data=icons.properties.icon)
+        self.drawing_info = tkinter.PhotoImage(data=icons.drawing_info.icon)
