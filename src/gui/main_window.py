@@ -27,6 +27,7 @@ class MainWindow:
     SCALE_DOWN_FACTOR = 0.9
 
     def __init__(self, window_width, window_height):
+        self._drawing = None
         self.root = tkinter.Tk()
 
         self.icons = Icons()
@@ -111,11 +112,16 @@ class MainWindow:
     def show(self):
         self.root.mainloop()
 
-    def set_entities(self, entities):
-        self.entities = entities
+    @property
+    def drawing(self):
+        return self._drawing
+
+    @drawing.setter
+    def drawing(self, drawing):
+        self._drawing = drawing
 
     def redraw(self):
         self.canvas.delete("all")
         self.canvas.draw_grid()
         self.canvas.draw_boundary()
-        self.canvas.draw_entities(self.entities, 0, 0, 1)
+        self.canvas.draw_entities(self.drawing.entities, 0, 0, 1)
