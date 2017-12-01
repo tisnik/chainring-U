@@ -12,6 +12,7 @@
 
 from importers.dxf_reader_state import *
 from importers.dxf_entity_type import *
+from drawing import Drawing
 from entities.line import *
 from entities.circle import *
 from entities.arc import *
@@ -80,7 +81,8 @@ class DxfImporter():
                 lines += 1
         print(lines)
         print(self.statistic)
-        return self.entities, self.statistic, lines
+        drawing = Drawing(self.entities, self.statistic, lines)
+        return drawing
 
     def process_beginning(self, code, data):
         '''Part of the DXF import state machine.'''
