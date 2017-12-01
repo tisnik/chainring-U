@@ -64,25 +64,33 @@ class DrawingImporter:
         sys.exit(0)
 
     def process_version(self, parts):
-        print("Read attribute 'version': {v}".format(v=parts[1]))
+        version = parts[1]
+        print("Read attribute 'version': {v}".format(v=version))
+        self.metadata["version"] = version
 
     def process_created(self, parts):
-        print("Read attribute 'created': {c}".format(c=parts[1]))
+        created = parts[1]
+        print("Read attribute 'created': {c}".format(c=created))
+        self.metadata["created"] = created
 
     def process_entities(self, parts):
-        print("Read attribute 'entities': {e}".format(e=parts[1]))
+        entities = parts[1]
+        print("Read attribute 'entities': {e}".format(e=entities))
+        self.metadata["entities"] = entities
 
     def process_line(self, parts):
         x1 = float(parts[1])
         y1 = float(parts[2])
         x2 = float(parts[3])
         y2 = float(parts[4])
+        self.statistic[DxfEntityType.LINE] += 1
         self.entities.append(Line(x1, y1, x2, y2))
 
     def process_circle(self, parts):
         x = float(parts[1])
         y = float(parts[2])
         radius = float(parts[3])
+        self.statistic[DxfEntityType.CIRCLE] += 1
         self.entities.append(Circle(x, y, radius))
 
     def process_arc(self, parts):
@@ -91,10 +99,12 @@ class DrawingImporter:
         radius = float(parts[3])
         angle1 = float(parts[4])
         angle2 = float(parts[5])
+        self.statistic[DxfEntityType.ARC] += 1
         self.entities.append(Arc(x, y, radius, angle1, angle2))
 
     def process_text(self, parts):
         x = float(parts[1])
         y = float(parts[2])
         text = " ".join(parts[3:]).strip()
+        self.statistic[DxfEntityType.TEXT] += 1
         self.entities.append(Text(x, y, text))
