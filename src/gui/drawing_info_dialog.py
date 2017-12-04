@@ -12,7 +12,7 @@
 
 import tkinter
 
-from importers.dxf_entity_type import *
+from entities.drawing_entity_type import *
 
 
 class DrawingInfoDialog(tkinter.Toplevel):

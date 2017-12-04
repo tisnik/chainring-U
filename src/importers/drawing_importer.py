@@ -10,8 +10,8 @@
 #      Pavel Tisnovsky
 #
 
-from importers.dxf_entity_type import *
 from drawing import Drawing
+from entities.drawing_entity_type import *
 from entities.line import *
 from entities.circle import *
 from entities.arc import *
