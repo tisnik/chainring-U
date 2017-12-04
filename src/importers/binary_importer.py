@@ -13,7 +13,8 @@
 import pickle
 
 
-class BinaryImporter():
+class BinaryImporter:
+    """Importer for drawings stored in a binary format."""
 
     def __init__(self, filename):
         self.filename = filename

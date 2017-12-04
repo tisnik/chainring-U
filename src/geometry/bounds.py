@@ -15,7 +15,7 @@
 import sys
 
 
-class Bounds():
+class Bounds:
     """Class representing bounds of given entity or group of entitites."""
 
     def __init__(self,
@@ -45,6 +45,8 @@ class Bounds():
     @staticmethod
     def computeBounds(entities):
         """Compute bounds for all given entities."""
+
+        # initial settings - empty bounds area
         bounds = Bounds()
         for entity in entities:
             bounds.enlarge(entity.getBounds())
