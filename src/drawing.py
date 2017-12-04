@@ -17,6 +17,7 @@ class Drawing:
         self._entities = entities
         self._statistic = statistic
         self._lines = lines
+        self._rooms = {}
         self._metadata = metadata or {}
 
     @property
@@ -51,6 +52,20 @@ class Drawing:
     def metadata(self, metadata):
         self._metadata = metadata
 
+    @property
+    def rooms(self):
+        return self._rooms
+
+    @rooms.setter
+    def rooms(self, rooms):
+        self._rooms = rooms
+
     def rescale(self, xoffset, yoffset, scale):
         for entity in self._entities:
             entity.transform(xoffset, yoffset, scale)
+
+    def get_entity_by_id(self, entity_id):
+        for entity in self._entities:
+            if entity._id == entity_id:
+                return entity
+        return None
