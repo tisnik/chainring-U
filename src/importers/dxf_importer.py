@@ -19,7 +19,8 @@ from entities.arc import *
 from entities.text import *
 
 
-class DxfImporter():
+class DxfImporter:
+    """Importer for drawings stored in a DXF format."""
 
     def __init__(self, filename):
         self.filename = filename
@@ -58,13 +59,13 @@ class DxfImporter():
     def init_import(self):
         '''Initialize the object state before import.'''
         self.state = DxfReaderState.BEGINNING
-        self.entity_type = DxfEntityType.UNKNOWN
+        self.entity_type = DrawingEntityType.UNKNOWN
         self.blockName = None
         self.statistic = {
-            DxfEntityType.LINE: 0,
-            DxfEntityType.CIRCLE: 0,
-            DxfEntityType.ARC: 0,
-            DxfEntityType.TEXT: 0,
+            DrawingEntityType.LINE: 0,
+            DrawingEntityType.CIRCLE: 0,
+            DrawingEntityType.ARC: 0,
+            DrawingEntityType.TEXT: 0,
         }
         self.entities = []
 
@@ -164,16 +165,16 @@ class DxfImporter():
         if code == 0:
             if data == "LINE":
                 self.state = DxfReaderState.ENTITY
-                self.entityType = DxfEntityType.LINE
+                self.entityType = DrawingEntityType.LINE
             elif data == "CIRCLE":
                 self.state = DxfReaderState.ENTITY
-                self.entityType = DxfEntityType.CIRCLE
+                self.entityType = DrawingEntityType.CIRCLE
             elif data == "ARC":
                 self.state = DxfReaderState.ENTITY
-                self.entityType = DxfEntityType.ARC
+                self.entityType = DrawingEntityType.ARC
             elif data == "MTEXT" or data == "TEXT":
                 self.state = DxfReaderState.ENTITY
-                self.entityType = DxfEntityType.TEXT
+                self.entityType = DrawingEntityType.TEXT
 
     def process_section_objects(self, code, data):
         '''Part of the DXF import state machine.'''
@@ -205,32 +206,32 @@ class DxfImporter():
             self.statistic[self.entityType] += 1
             self.store_entity()
             self.state = DxfReaderState.SECTION_ENTITIES
-            self.entityType = DxfEntityType.UNKNOWN
+            self.entityType = DrawingEntityType.UNKNOWN
             if data == "LINE":
                 self.state = DxfReaderState.ENTITY
-                self.entityType = DxfEntityType.LINE
+                self.entityType = DrawingEntityType.LINE
             elif data == "CIRCLE":
                 self.state = DxfReaderState.ENTITY
-                self.entityType = DxfEntityType.CIRCLE
+                self.entityType = DrawingEntityType.CIRCLE
             elif data == "ARC":
                 self.state = DxfReaderState.ENTITY
-                self.entityType = DxfEntityType.ARC
+                self.entityType = DrawingEntityType.ARC
             elif data == "MTEXT" or data == "TEXT":
                 self.state = DxfReaderState.ENTITY
-                self.entityType = DxfEntityType.TEXT
+                self.entityType = DrawingEntityType.TEXT
             elif data == "ENDSEC":
                 self.state = DxfReaderState.BEGINNING
-                self.entityType = DxfEntityType.UNKNOWN
+                self.entityType = DrawingEntityType.UNKNOWN
                 print("    end entities")
 
     def store_entity(self):
-        if self.entityType == DxfEntityType.LINE:
+        if self.entityType == DrawingEntityType.LINE:
             self.store_line()
-        elif self.entityType == DxfEntityType.CIRCLE:
+        elif self.entityType == DrawingEntityType.CIRCLE:
             self.store_circle()
-        elif self.entityType == DxfEntityType.ARC:
+        elif self.entityType == DrawingEntityType.ARC:
             self.store_arc()
-        elif self.entityType == DxfEntityType.TEXT:
+        elif self.entityType == DrawingEntityType.TEXT:
             self.store_text()
         else:
             print("unknown entity?")

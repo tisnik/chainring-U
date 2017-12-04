@@ -34,10 +34,10 @@ class DrawingImporter:
         }
 
         self.statistic = {
-            DxfEntityType.LINE: 0,
-            DxfEntityType.CIRCLE: 0,
-            DxfEntityType.ARC: 0,
-            DxfEntityType.TEXT: 0,
+            DrawingEntityType.LINE: 0,
+            DrawingEntityType.CIRCLE: 0,
+            DrawingEntityType.ARC: 0,
+            DrawingEntityType.TEXT: 0,
         }
         self.metadata = {}
         self.entities = []
@@ -83,14 +83,14 @@ class DrawingImporter:
         y1 = float(parts[2])
         x2 = float(parts[3])
         y2 = float(parts[4])
-        self.statistic[DxfEntityType.LINE] += 1
+        self.statistic[DrawingEntityType.LINE] += 1
         self.entities.append(Line(x1, y1, x2, y2))
 
     def process_circle(self, parts):
         x = float(parts[1])
         y = float(parts[2])
         radius = float(parts[3])
-        self.statistic[DxfEntityType.CIRCLE] += 1
+        self.statistic[DrawingEntityType.CIRCLE] += 1
         self.entities.append(Circle(x, y, radius))
 
     def process_arc(self, parts):
@@ -99,12 +99,12 @@ class DrawingImporter:
         radius = float(parts[3])
         angle1 = float(parts[4])
         angle2 = float(parts[5])
-        self.statistic[DxfEntityType.ARC] += 1
+        self.statistic[DrawingEntityType.ARC] += 1
         self.entities.append(Arc(x, y, radius, angle1, angle2))
 
     def process_text(self, parts):
         x = float(parts[1])
         y = float(parts[2])
         text = " ".join(parts[3:]).strip()
-        self.statistic[DxfEntityType.TEXT] += 1
+        self.statistic[DrawingEntityType.TEXT] += 1
         self.entities.append(Text(x, y, text))

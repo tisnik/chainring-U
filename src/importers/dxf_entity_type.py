@@ -13,7 +13,7 @@
 from enum import Enum
 
 
-class DxfEntityType(Enum):
+class DrawingEntityType(Enum):
     UNKNOWN = 1,
     LINE = 2,
     CIRCLE = 3,
