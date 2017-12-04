@@ -27,6 +27,7 @@ class Arc(Entity):
         self.radius = radius
         self.angle1 = angle1
         self.angle2 = angle2
+        self._id = None
 
     def str(self):
         """Return textual representation of arc."""
@@ -44,10 +45,10 @@ class Arc(Entity):
         if extent < 0:
             extent += 360
 
-        canvas.create_arc(self.x-self.radius, self.y-self.radius,
-                          self.x+self.radius, self.y+self.radius,
-                          start=self.angle1, extent=extent,
-                          outline="black", style="arc")
+        self._id = canvas.create_arc(self.x-self.radius, self.y-self.radius,
+                                     self.x+self.radius, self.y+self.radius,
+                                     start=self.angle1, extent=extent,
+                                     outline="black", style="arc")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""

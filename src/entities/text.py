@@ -25,6 +25,7 @@ class Text(Entity):
         self.x = x
         self.y = y
         self.text = text
+        self._id = None
 
     def str(self):
         """Return textual representation of text entity."""

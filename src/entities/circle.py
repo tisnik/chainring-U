@@ -25,6 +25,7 @@ class Circle(Entity):
         self.x = x
         self.y = y
         self.radius = radius
+        self._id = None
 
     def str(self):
         """Return textual representation of circle."""
@@ -35,8 +36,9 @@ class Circle(Entity):
 
     def draw(self, canvas, xoffset, yoffset, scale):
         """Draw the entity onto canvas."""
-        canvas.create_oval(self.x-self.radius, self.y-self.radius,
-                           self.x+self.radius, self.y+self.radius, fill="red")
+        self._id = canvas.create_oval(self.x-self.radius, self.y-self.radius,
+                                      self.x+self.radius, self.y+self.radius,
+                                      fill="red")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
