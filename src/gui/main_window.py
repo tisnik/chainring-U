@@ -58,8 +58,17 @@ class MainWindow:
 
     def scroll_move(self, event):
         self.canvas.scan_dragto(event.x, event.y, gain=1)
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def on_left_button_pressed(self, event):
+        # get the coordinates before canvas scroll
+        x = self.canvas.canvasx(event.x)
+        y = self.canvas.canvasy(event.y)
+        print(event.x, event.y, x, y)
+        item = self.canvas.find_closest(x, y)[0]
+        print(self.canvas.type(item))
+        print(self.canvas.gettags(item))
+        self.canvas.itemconfig(item, fill='red')
         if self.room_draw_mode:
             pass
         else:
@@ -73,9 +82,9 @@ class MainWindow:
 
     # zoom on Windows
     def zoom(self, event):
-        if (event.delta > 0):
+        if event.delta > 0:
             self.canvas.scale("all", event.x, event.y, 1.1, 1.1)
-        elif (event.delta < 0):
+        elif event.delta < 0:
             self.canvas.scale("all", event.x, event.y, 0.9, 0.9)
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 

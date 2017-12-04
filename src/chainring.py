@@ -12,7 +12,12 @@
 
 from gui.main_window import *
 from importers.dxf_importer import *
+#from importers.binary_importer import *
+from importers.drawing_importer import *
+#from exporters.binary_exporter import *
+from exporters.drawing_exporter import *
 from geometry.bounds import Bounds
+from geometry.rescaler import Rescaler
 
 import sys
 import configparser
@@ -21,30 +26,29 @@ import configparser
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-
-def computeScale(bounds, canvas):
-    canvas_width = canvas.winfo_reqwidth()
-    canvas_height = canvas.winfo_reqheight()
-    xdist = bounds.xmax - bounds.xmin
-    ydist = bounds.ymax - bounds.ymin
-    xscale = 0.99 * canvas_width / xdist
-    yscale = 0.99 * canvas_height / ydist
-    scale = min(xscale, yscale)
-    return -bounds.xmin, -bounds.ymin, scale
-
-
 window_width = config.getint('ui', 'window_width')
 window_height = config.getint('ui', 'window_height')
 mainWindow = MainWindow(window_width, window_height)
 
-importer = DxfImporter("test-data/Building_1np.dxf")
-entities, statistic, lines = importer.import_dxf()
-bounds = Bounds.computeBounds(entities)
-xoffset, yoffset, scale = computeScale(bounds, mainWindow.canvas)
+importer = DrawingImporter("output.drw")
+drawing = importer.import_drawing()
+#importer = DxfImporter("test-data/Building_1np.dxf")
+#drawing = importer.import_dxf()
 
-for entity in entities:
-    entity.transform(xoffset, yoffset, scale)
+exporter = DrawingExporter("output2.drw", drawing)
+exporter.export()
 
-mainWindow.set_entities(entities)
+bounds = Bounds.computeBounds(drawing.entities)
+xoffset, yoffset, scale = Rescaler.computeScale(bounds, mainWindow.canvas)
+
+#ex = BinaryExporter("output3.bin", entities)
+#ex.export_binary_drawing()
+
+#with open("output.bin", "wb") as fout:
+#    pickle.dump(entities, fout)
+
+drawing.rescale(xoffset, yoffset, scale)
+
+mainWindow.drawing = drawing
 mainWindow.redraw()
 mainWindow.show()
