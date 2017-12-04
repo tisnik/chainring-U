@@ -15,6 +15,7 @@ import tkinter
 from gui.about_dialog import *
 from gui.help_dialog import *
 from gui.settings_dialog import SettingsDialog
+from gui.drawing_info_dialog import DrawingInfoDialog
 
 
 class Menubar(tkinter.Menu):
@@ -23,6 +24,7 @@ class Menubar(tkinter.Menu):
         super().__init__(tearoff=0)
 
         self.parent = parent
+        self.main_window = main_window
 
         filemenu = tkinter.Menu(self, tearoff=0)
         filemenu.add_command(label="Otevřít výkres",
@@ -69,6 +71,12 @@ class Menubar(tkinter.Menu):
                          command=canvas.toggle_boundary)
 
         tools = tkinter.Menu(self, tearoff=0)
+
+        tools.add_command(label="Informace o výkresu",
+                          image=main_window.icons.drawing_info,
+                          compound="left", underline=0,
+                          command=self.show_drawing_info_dialog)
+
         tools.add_command(label="Seznam místností",
                           image=main_window.icons.room_list_icon,
                           compound="left", underline=0)
@@ -95,3 +103,6 @@ class Menubar(tkinter.Menu):
 
     def show_settings_dialog(self):
         SettingsDialog(self.parent)
+
+    def show_drawing_info_dialog(self):
+        DrawingInfoDialog(self.parent, self.main_window.drawing.statistic)

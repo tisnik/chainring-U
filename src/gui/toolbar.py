@@ -13,6 +13,7 @@
 import tkinter
 
 from gui.settings_dialog import SettingsDialog
+from gui.drawing_info_dialog import DrawingInfoDialog
 
 
 class Toolbar(tkinter.LabelFrame):
@@ -20,6 +21,7 @@ class Toolbar(tkinter.LabelFrame):
         super().__init__(parent, text="Nástroje", padx=5, pady=5)
 
         self.parent = parent
+        self.main_window = main_window
 
         button_import = tkinter.Button(
             self, text="Import",
@@ -63,6 +65,11 @@ class Toolbar(tkinter.LabelFrame):
             image=main_window.icons.view_boundary_icon,
             command=canvas.toggle_boundary)
 
+        button_drawing_info = tkinter.Button(
+            self, text="Informace o výkresu",
+            image=main_window.icons.drawing_info,
+            command=self.show_drawing_info_dialog)
+
         button_room_list = tkinter.Button(
             self, text="Seznam místností",
             image=main_window.icons.room_list_icon)
@@ -95,12 +102,16 @@ class Toolbar(tkinter.LabelFrame):
 
         spacer2.grid(column=11, row=1)
 
-        button_room_list.grid(column=12, row=1)
-        button_settings.grid(column=13, row=1)
+        button_drawing_info.grid(column=12, row=1)
+        button_room_list.grid(column=13, row=1)
+        button_settings.grid(column=14, row=1)
 
-        spacer3.grid(column=14, row=1)
+        spacer3.grid(column=15, row=1)
 
-        button_new_room.grid(column=15, row=1)
+        button_new_room.grid(column=16, row=1)
 
     def show_settings_dialog(self):
         SettingsDialog(self.parent)
+
+    def show_drawing_info_dialog(self):
+        DrawingInfoDialog(self.parent, self.main_window.drawing.statistic)
