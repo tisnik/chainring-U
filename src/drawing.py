@@ -50,3 +50,7 @@ class Drawing:
     @metadata.setter
     def metadata(self, metadata):
         self._metadata = metadata
+
+    def rescale(self, xoffset, yoffset, scale):
+        for entity in self._entities:
+            entity.transform(xoffset, yoffset, scale)
