@@ -76,7 +76,8 @@ class Toolbar(tkinter.LabelFrame):
 
         button_new_room = tkinter.Button(
             self, text="Nakreslit místnost",
-            image=main_window.icons.edit_icon)
+            image=main_window.icons.edit_icon,
+            command=self.main_window.draw_new_room_command)
 
         button_settings = tkinter.Button(
             self, text="Nastavení",

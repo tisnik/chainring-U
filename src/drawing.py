@@ -17,8 +17,9 @@ class Drawing:
         self._entities = entities
         self._statistic = statistic
         self._lines = lines
-        self._rooms = {}
+        self._rooms = []
         self._metadata = metadata or {}
+        self._room_counter = 1
 
     @property
     def entities(self):
@@ -64,8 +65,28 @@ class Drawing:
         for entity in self._entities:
             entity.transform(xoffset, yoffset, scale)
 
-    def get_entity_by_id(self, entity_id):
+    def find_entity_by_id(self, entity_id):
         for entity in self._entities:
             if entity._id == entity_id:
                 return entity
         return None
+
+    def add_new_room(self, canvas_id, polygon):
+        room_id = self._room_counter
+        self._rooms.append({"room_id": room_id,
+                            "canvas_id": canvas_id,
+                            "polygon": polygon})
+        self._room_counter += 1
+        return room_id
+
+    def find_room(self, selector, value):
+        for room in self._rooms:
+            if room[selector] == value:
+                return room
+        return None
+
+    def find_room_by_room_id(self, canvas_id):
+        return self.find_room("room_id", canvas_id)
+
+    def find_room_by_canvas_id(self, canvas_id):
+        return self.find_room("canvas_id", canvas_id)
