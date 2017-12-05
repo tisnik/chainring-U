@@ -15,6 +15,7 @@ import tkinter
 import icons.application_exit
 import icons.file_open
 import icons.file_save
+import icons.file_save_as
 import icons.file_import
 import icons.zoom_in
 import icons.zoom_out
@@ -28,6 +29,9 @@ import icons.properties
 import icons.view_grid
 import icons.view_boundary
 import icons.edit
+import icons.edit_delete
+import icons.edit_delete_shred
+import icons.edit_redo
 import icons.drawing_info
 
 
@@ -38,6 +42,8 @@ class Icons:
         self.file_import_icon = tkinter.PhotoImage(data=icons.file_import.icon)
         self.file_open_icon = tkinter.PhotoImage(data=icons.file_open.icon)
         self.file_save_icon = tkinter.PhotoImage(data=icons.file_save.icon)
+        self.file_save_as_icon = tkinter.PhotoImage(
+            data=icons.file_save_as.icon)
         self.zoom_in_icon = tkinter.PhotoImage(data=icons.zoom_in.icon)
         self.zoom_out_icon = tkinter.PhotoImage(data=icons.zoom_out.icon)
         self.zoom_original_icon = tkinter.PhotoImage(
@@ -51,5 +57,9 @@ class Icons:
         self.view_boundary_icon = tkinter.PhotoImage(
             data=icons.view_boundary.icon)
         self.edit_icon = tkinter.PhotoImage(data=icons.edit.icon)
+        self.edit_delete_icon = tkinter.PhotoImage(data=icons.edit_delete.icon)
+        self.edit_delete_shred_icon = tkinter.PhotoImage(
+            data=icons.edit_delete_shred.icon)
+        self.edit_redo_icon = tkinter.PhotoImage(data=icons.edit_redo.icon)
         self.properties_icon = tkinter.PhotoImage(data=icons.properties.icon)
         self.drawing_info = tkinter.PhotoImage(data=icons.drawing_info.icon)
