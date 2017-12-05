@@ -30,9 +30,17 @@ class Menubar(tkinter.Menu):
         filemenu.add_command(label="Otevřít výkres",
                              image=main_window.icons.file_open_icon,
                              compound="left", underline=0)
+
         filemenu.add_command(label="Uložit výkres",
                              image=main_window.icons.file_save_icon,
-                             compound="left", underline=0)
+                             compound="left", underline=0,
+                             command=main_window.save_drawing_command)
+
+        filemenu.add_command(label="Uložit výkres pod jiným jménem",
+                             image=main_window.icons.file_save_as_icon,
+                             compound="left", underline=0,
+                             command=main_window.save_drawing_as_command)
+
         filemenu.add_separator()
         filemenu.add_command(label="Importovat nový výkres",
                              image=main_window.icons.file_import_icon,
