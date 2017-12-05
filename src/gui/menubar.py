@@ -45,7 +45,8 @@ class Menubar(tkinter.Menu):
         edit = tkinter.Menu(self, tearoff=0)
         edit.add_command(label="Nakreslit místnost",
                          image=main_window.icons.edit_icon,
-                         compound="left", underline=0)
+                         compound="left", underline=0,
+                         command=self.main_window.draw_new_room_command)
 
         view = tkinter.Menu(self, tearoff=0)
         view.add_command(label="Zvětšit",
