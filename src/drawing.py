@@ -20,6 +20,7 @@ class Drawing:
         self._rooms = []
         self._metadata = metadata or {}
         self._room_counter = 1
+        self._filename = None
 
     @property
     def entities(self):
@@ -60,6 +61,14 @@ class Drawing:
     @rooms.setter
     def rooms(self, rooms):
         self._rooms = rooms
+
+    @property
+    def filename(self):
+        return self._filename
+
+    @filename.setter
+    def filename(self, filename):
+        self._filename = filename
 
     def rescale(self, xoffset, yoffset, scale):
         for entity in self._entities:

@@ -25,5 +25,6 @@ class Room:
     def last_point_exist(self):
         return self.last_x and self.last_y
 
-    def polygons(self):
+    def vertexes(self):
+        """Return number of vertexes drawn by user."""
         return len(self.polygon_world)
