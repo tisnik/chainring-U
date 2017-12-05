@@ -16,8 +16,9 @@ import tkinter
 class Canvas(tkinter.Canvas):
 
     GRID_SIZE = 50
+    CROSS_SIZE = 5
 
-    def __init__(self, parent, width, height):
+    def __init__(self, parent, width, height, main_window):
         super().__init__(parent, width=width, height=height,
                          background="white")
         # self.draw_grid(width, height, Canvas.GRID_SIZE)
@@ -26,6 +27,7 @@ class Canvas(tkinter.Canvas):
         self._boundary = True
         self.width = width
         self.height = height
+        self.main_window = main_window
 
     def draw_grid(self):
         for x in range(0, self.width, Canvas.GRID_SIZE):
@@ -78,3 +80,35 @@ class Canvas(tkinter.Canvas):
     def draw_entities(self, entities, xoffset, yoffset, scale):
         for entity in entities:
             entity.draw(self, xoffset, yoffset, scale)
+
+    def draw_new_room_temporary_line(self, x1, y1, x2, y2):
+        self.create_line(x1, y1, x2, y2,
+                         fill='red', tags="new_room_temporary")
+
+    def draw_cross(self, x, y):
+        self.create_line(x-Canvas.CROSS_SIZE, y, x+Canvas.CROSS_SIZE, y,
+                         fill='red', tags="cross")
+        self.create_line(x, y-Canvas.CROSS_SIZE, x, y+Canvas.CROSS_SIZE,
+                         fill='red', tags="cross")
+
+    def delete_entities_with_tag(self, tag):
+        """Delete all entities having given tag."""
+        items = self.find_withtag(tag)
+        for item in items:
+            self.delete(item)
+
+    def delete_temporary_entities(self):
+        """Delete all temporary entities."""
+        self.delete_entities_with_tag("cross")
+        self.delete_entities_with_tag("new_room_temporary")
+
+    def draw_new_room(self, room):
+        new_object = self.create_polygon(room.polygon_canvas, width=2,
+                                         fill="", activefill="#ffff80",
+                                         outline="magenta", stipple="gray50")
+        self.tag_bind(new_object, "<ButtonPress-1>",
+                      lambda event, new_object=new_object: self.on_room_click(new_object))
+        return new_object
+
+    def on_room_click(self, canvas_object_id):
+        self.main_window.on_room_click_canvas(canvas_object_id)
