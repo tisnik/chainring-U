@@ -48,7 +48,8 @@ class Arc(Entity):
         self._id = canvas.create_arc(self.x-self.radius, self.y-self.radius,
                                      self.x+self.radius, self.y+self.radius,
                                      start=self.angle1, extent=extent,
-                                     outline="black", style="arc")
+                                     outline="black", style="arc",
+                                     tags="drawing")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""

@@ -46,7 +46,8 @@ class Line(Entity):
         y1 *= scale
         x2 *= scale
         y2 *= scale
-        self._id = canvas.create_line(x1, y1, x2, y2, fill="black")
+        self._id = canvas.create_line(x1, y1, x2, y2,
+                                      fill="black", tags="drawing")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
