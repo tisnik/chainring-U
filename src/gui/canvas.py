@@ -28,6 +28,7 @@ class Canvas(tkinter.Canvas):
         self.width = width
         self.height = height
         self.main_window = main_window
+        self.selected_room_item = None
 
     def draw_grid(self):
         for x in range(0, self.width, Canvas.GRID_SIZE):
@@ -112,3 +113,12 @@ class Canvas(tkinter.Canvas):
 
     def on_room_click(self, canvas_object_id):
         self.main_window.on_room_click_canvas(canvas_object_id)
+
+    def highlight_room(self, room):
+        """Highlight the given room and remove highlight for previously selected one."""
+        if self.selected_room_item:
+            self.itemconfig(self.selected_room_item, fill="", activefill="#ffff80", outline="magenta")
+        item = room["canvas_id"]
+        if item:
+            self.selected_room_item = item
+            self.itemconfig(self.selected_room_item, fill="#ff8080", activefill="", outline="cyan")
