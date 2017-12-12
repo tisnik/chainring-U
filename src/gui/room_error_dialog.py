@@ -19,6 +19,12 @@ def error_dialog_no_points():
     messagebox.showerror("Chyba při kreslení místnosti",
                          "Nebyl zadán ani jeden bod")
 
+
 def error_dialog_not_enough_points():
     messagebox.showerror("Chyba při kreslení místnosti",
                          "Místnost musí být definována alespoň třemi body")
+
+
+def dialog_store_vertex_with_three_vertexes():
+    return messagebox.askokcancel("Místnost jen se třemi rohy",
+                                  "Opravdu si přejete nakreslit místnost jen se třemi rohy?")
