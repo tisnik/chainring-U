@@ -13,6 +13,8 @@
 import tkinter
 from tkinter import messagebox
 
+from exporters.drawing_exporter import *
+
 from geometry.utils import GeometryUtils
 from gui.canvas import *
 from gui.toolbar import *
@@ -22,6 +24,7 @@ from gui.palette import *
 from gui.icons import *
 from gui.canvas_mode import CanvasMode
 from gui.room_error_dialog import *
+from gui.save_dialogs import SaveDialogs
 from gui.room import Room
 
 
@@ -65,6 +68,32 @@ class MainWindow:
     def draw_new_room_command(self, event=None):
         self.canvas_mode = CanvasMode.DRAW_ROOM
 
+    def save_drawing(self, filename):
+        if filename:
+            # set the new filename
+            self.drawing.filename = filename
+            exporter = DrawingExporter(filename, self.drawing)
+            exporter.export()
+
+    def save_drawing_command(self, event=None):
+        filename = self.drawing.filename
+        if filename is None:
+            filename = SaveDialogs.save_drawing(self.root)
+        self.save_drawing(filename)
+
+    def save_drawing_as_command(self, event=None):
+        filename = SaveDialogs.save_drawing(self.root)
+        self.save_drawing(filename)
+
+    def delete_room_command(self):
+        pass
+
+    def delete_room_polygon_command(self):
+        pass
+
+    def redraw_room_polygon_command(self):
+        pass
+
     def scroll_start(self, event):
         self.canvas.scan_mark(event.x, event.y)
 
@@ -86,13 +115,18 @@ class MainWindow:
 
     def on_right_button_pressed(self, event):
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
-            if self.room.polygons() == 0:
+            vertexes = self.room.vertexes()
+            if vertexes == 0:
                 error_dialog_no_points()
                 return
-            if self.room.polygons() < 3:
+            elif vertexes < 3:
                 error_dialog_not_enough_points()
                 return
-            self.finish_new_room()
+            elif vertexes == 3:
+                if dialog_store_vertex_with_three_vertexes():
+                    self.finish_new_room()
+            else:
+                self.finish_new_room()
 
     def entity_with_endpoints(self, item):
         """Returns the drawing entity for the given canvas item."""
@@ -122,13 +156,17 @@ class MainWindow:
 
     def on_room_click_listbox(self, room_id):
         room = self.drawing.find_room_by_room_id(room_id)
-        print(room_id)
-        print(room)
+        if room:
+            self.palette.enable_all()
+            self.palette.fill_in_room_info(room)
+            self.canvas.highlight_room(room)
 
     def on_room_click_canvas(self, canvas_object_id):
         room = self.drawing.find_room_by_canvas_id(canvas_object_id)
-        print(canvas_object_id)
-        print(room)
+        if room:
+            self.palette.enable_all()
+            self.palette.fill_in_room_info(room)
+            self.canvas.highlight_room(room)
 
     def draw_new_room_line(self, canvas_x, canvas_y):
         if self.room.last_point_exist():
