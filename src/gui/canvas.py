@@ -103,7 +103,11 @@ class Canvas(tkinter.Canvas):
         self.delete_entities_with_tag("cross")
         self.delete_entities_with_tag("new_room_temporary")
 
+    def delete_object_with_id(self, object_id):
+        self.delete(object_id)
+
     def draw_new_room(self, room):
+        print(room)
         new_object = self.create_polygon(room.polygon_canvas, width=2,
                                          fill="", activefill="#ffff80",
                                          outline="magenta", stipple="gray50")
