@@ -24,6 +24,7 @@ from gui.palette import *
 from gui.icons import *
 from gui.canvas_mode import CanvasMode
 from gui.room_error_dialog import *
+from gui.yes_no_dialogs import *
 from gui.save_dialogs import SaveDialogs
 from gui.room import Room
 
@@ -85,11 +86,23 @@ class MainWindow:
         filename = SaveDialogs.save_drawing(self.root)
         self.save_drawing(filename)
 
-    def delete_room_command(self):
-        pass
+    def delete_room_command(self, index, value):
+        #print(index, value)
+        if dialog_delete_whole_room(value):
+            room = self.drawing.find_room_by_room_id(value)
+            if room is not None:
+                self.canvas.delete_object_with_id(room["canvas_id"])
+            # must be deleted after the room is removed from canvas!
+            self.drawing.delete_room(value)
+            self.palette.delete_room_from_list(index)
 
-    def delete_room_polygon_command(self):
-        pass
+    def delete_room_polygon_command(self, index, value):
+        if dialog_delete_room_polygon(value):
+            room = self.drawing.find_room_by_room_id(value)
+            if room is not None:
+                self.canvas.delete_object_with_id(room["canvas_id"])
+            self.drawing.delete_room_polygon(value)
+            self.palette.fill_in_room_info(room)
 
     def redraw_room_polygon_command(self):
         pass
@@ -166,6 +179,7 @@ class MainWindow:
         if room:
             self.palette.enable_all()
             self.palette.fill_in_room_info(room)
+            self.palette.select_room_in_list(room)
             self.canvas.highlight_room(room)
 
     def draw_new_room_line(self, canvas_x, canvas_y):
