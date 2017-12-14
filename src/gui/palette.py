@@ -39,11 +39,11 @@ class Palette(tkinter.LabelFrame):
 
         self.button1 = tkinter.Button(self.group, text="Smazat ze seznamu",
                                       compound="left",
-                                      command=main_window.delete_room_command,
+                                      command=self.delete_room_command,
                                       image=main_window.icons.edit_delete_shred_icon)
         self.button2 = tkinter.Button(self.group, text="Vymazat",
                                       compound="left",
-                                      command=main_window.delete_room_polygon_command,
+                                      command=self.delete_room_polygon_command,
                                       image=main_window.icons.edit_delete_icon)
         self.button3 = tkinter.Button(self.group, text="Překreslit",
                                       compound="left",
@@ -69,14 +69,58 @@ class Palette(tkinter.LabelFrame):
 
     def fill_in_room_info(self, room):
         self.label_id_value["text"] = room["room_id"]
-        self.label_vertexes_value["text"] = len(room["polygon"])
+        if room["polygon"] is not None:
+            self.label_vertexes_value["text"] = len(room["polygon"])
+        else:
+            self.label_vertexes_value["text"] = "nenakresleno!"
 
     def add_new_room(self, canvas_id):
         self.listbox.insert(tkinter.END, canvas_id)
 
-    def on_room_click(self, event):
+    def get_selected_room(self):
         selection = self.listbox.curselection()
         if selection:
             index = selection[0]
             value = self.listbox.get(index)
+            return index, value
+        return None, None
+
+    def find_room_index_in_list(self, room_id):
+        size = self.listbox.size()
+        for index in range(size):
+            if room_id == self.listbox.get(index):
+                return index
+        return None
+
+    def select_room_in_list(self, room):
+        if room is not None:
+            room_id = room["room_id"]
+            index = self.find_room_index_in_list(room_id)
+            if index is not None:
+                self.listbox.activate(index)
+                self.listbox.selection_clear(0, tkinter.END)
+                self.listbox.selection_set(index)
+        # activate(index)
+        #@delete(first, last=None
+        #get(first, last=None)
+        #size()
+
+    def on_room_click(self, event):
+        index, value = self.get_selected_room()
+        if value:
             self.main_window.on_room_click_listbox(value)
+
+    def delete_room_command(self):
+        index, value = self.get_selected_room()
+        if value:
+            self.main_window.delete_room_command(index, value)
+
+    def delete_room_polygon_command(self):
+        index, value = self.get_selected_room()
+        if value:
+            self.main_window.delete_room_polygon_command(index, value)
+
+    def delete_room_from_list(self, index):
+        self.listbox.selection_clear(0, tkinter.END)
+        self.listbox.delete(index)
+
