@@ -99,3 +99,18 @@ class Drawing:
 
     def find_room_by_canvas_id(self, canvas_id):
         return self.find_room("canvas_id", canvas_id)
+
+    def delete_room(self, room_id):
+        room = self.find_room_by_room_id(room_id)
+        if room is not None:
+            #print(self._rooms)
+            self._rooms.remove(room)
+            #print(self._rooms)
+
+    def delete_room_polygon(self, room_id):
+        room = self.find_room_by_room_id(room_id)
+        if room is not None:
+            print(room)
+            room["polygon"] = None
+            print(room)
+            print(self._rooms)
