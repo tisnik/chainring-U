@@ -49,6 +49,8 @@ class MainWindow:
 
         self.root.config(menu=self.menubar)
 
+        self.configure_grid()
+
         self.toolbar.grid(column=1, row=1, columnspan=2, sticky="WE")
         self.palette.grid(column=1, row=2, sticky="NWSE")
         self.canvas.grid(column=2, row=2, sticky="NWSE")
@@ -65,6 +67,10 @@ class MainWindow:
         self.canvas.bind("<MouseWheel>", self.zoom)
 
         self.room = Room()
+
+    def configure_grid(self):
+        tkinter.Grid.rowconfigure(self.root, 2, weight=1)
+        tkinter.Grid.columnconfigure(self.root, 2, weight=1)
 
     def draw_new_room_command(self, event=None):
         self.canvas_mode = CanvasMode.DRAW_ROOM
