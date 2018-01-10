@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -33,6 +33,8 @@ import icons.edit_delete
 import icons.edit_delete_shred
 import icons.edit_redo
 import icons.drawing_info
+import icons.checkbox
+import icons.service
 
 
 class Icons:
@@ -62,4 +64,7 @@ class Icons:
             data=icons.edit_delete_shred.icon)
         self.edit_redo_icon = tkinter.PhotoImage(data=icons.edit_redo.icon)
         self.properties_icon = tkinter.PhotoImage(data=icons.properties.icon)
-        self.drawing_info = tkinter.PhotoImage(data=icons.drawing_info.icon)
+        self.drawing_info_icon = tkinter.PhotoImage(
+            data=icons.drawing_info.icon)
+        self.checkbox_icon = tkinter.PhotoImage(data=icons.checkbox.icon)
+        self.service_icon = tkinter.PhotoImage(data=icons.service.icon)
