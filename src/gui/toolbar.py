@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -29,7 +29,8 @@ class Toolbar(tkinter.LabelFrame):
 
         button_open = tkinter.Button(
             self, text="Otevřít",
-            image=main_window.icons.file_open_icon)
+            image=main_window.icons.file_open_icon,
+            command=main_window.open_drawing_command)
 
         button_save = tkinter.Button(
             self, text="Uložit",
@@ -73,7 +74,7 @@ class Toolbar(tkinter.LabelFrame):
 
         button_drawing_info = tkinter.Button(
             self, text="Informace o výkresu",
-            image=main_window.icons.drawing_info,
+            image=main_window.icons.drawing_info_icon,
             command=self.show_drawing_info_dialog)
 
         button_room_list = tkinter.Button(

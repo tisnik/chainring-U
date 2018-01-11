@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -17,6 +17,8 @@ from gui.help_dialog import *
 from gui.settings_dialog import SettingsDialog
 from gui.drawing_info_dialog import DrawingInfoDialog
 
+from draw_service import DrawServiceInterface
+
 
 class Menubar(tkinter.Menu):
 
@@ -29,7 +31,8 @@ class Menubar(tkinter.Menu):
         filemenu = tkinter.Menu(self, tearoff=0)
         filemenu.add_command(label="Otevřít výkres",
                              image=main_window.icons.file_open_icon,
-                             compound="left", underline=0)
+                             compound="left", underline=0,
+                             command=main_window.open_drawing_command)
 
         filemenu.add_command(label="Uložit výkres",
                              image=main_window.icons.file_save_icon,
@@ -82,7 +85,7 @@ class Menubar(tkinter.Menu):
         tools = tkinter.Menu(self, tearoff=0)
 
         tools.add_command(label="Informace o výkresu",
-                          image=main_window.icons.drawing_info,
+                          image=main_window.icons.drawing_info_icon,
                           compound="left", underline=0,
                           command=self.show_drawing_info_dialog)
 
@@ -94,6 +97,15 @@ class Menubar(tkinter.Menu):
                           image=main_window.icons.properties_icon,
                           compound="left", underline=0,
                           command=self.show_settings_dialog)
+        tools.add_separator()
+        tools.add_command(label="Zkontrolovat připojení k serveru",
+                          image=main_window.icons.checkbox_icon,
+                          compound="left", underline=0,
+                          command=self.check_server_connectivity)
+        tools.add_command(label="Verze rozhraní serveru",
+                          image=main_window.icons.service_icon,
+                          compound="left", underline=0,
+                          command=self.check_service_versions)
 
         helpmenu = tkinter.Menu(self, tearoff=0)
         helpmenu.add_command(label="Nápověda",
@@ -115,3 +127,14 @@ class Menubar(tkinter.Menu):
 
     def show_drawing_info_dialog(self):
         DrawingInfoDialog(self.parent, self.main_window.drawing.statistic)
+
+    def check_server_connectivity(self):
+        drawServiceInterface = DrawServiceInterface()
+        status, message = drawServiceInterface.check_liveness()
+        if status:
+            messagebox.showinfo("Ok", "Ok")
+        else:
+            messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
+
+    def check_service_versions(self):
+        drawServiceInterface = DrawServiceInterface()

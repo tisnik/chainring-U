@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -26,6 +26,7 @@ from gui.canvas_mode import CanvasMode
 from gui.room_error_dialog import *
 from gui.yes_no_dialogs import *
 from gui.save_dialogs import SaveDialogs
+from gui.floor_select_dialog import FloorSelectDialog
 from gui.room import Room
 
 
@@ -91,6 +92,9 @@ class MainWindow:
     def save_drawing_as_command(self, event=None):
         filename = SaveDialogs.save_drawing(self.root)
         self.save_drawing(filename)
+
+    def open_drawing_command(self, event=None):
+        FloorSelectDialog(self.root)
 
     def delete_room_command(self, index, value):
         #print(index, value)
