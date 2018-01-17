@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -10,15 +10,20 @@
 #      Pavel Tisnovsky
 #
 
+"""Module to export drawing into a binary file."""
+
 import pickle
 
 
 class BinaryExporter:
+    """Class to export drawing into a binary file."""
 
     def __init__(self, filename, entities):
+        """Initialize the exporter."""
         self.filename = filename
         self.entities = entities
 
     def export_binary_drawing(self):
+        """Export (serialize) the drawing into a binary file."""
         with open(self.filename, "wb") as fout:
             pickle.dump(self.entities, fout)
