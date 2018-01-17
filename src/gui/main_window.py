@@ -20,6 +20,7 @@ from gui.canvas import *
 from gui.toolbar import *
 from gui.menubar import *
 from gui.palette import *
+from gui.status_bar import *
 
 from gui.icons import *
 from gui.canvas_mode import CanvasMode
@@ -45,6 +46,7 @@ class MainWindow:
         self.canvas = Canvas(self.root, window_width, window_height, self)
         self.toolbar = Toolbar(self.root, self, self.canvas)
         self.palette = Palette(self.root, self)
+        self.statusbar = StatusBar(self.root)
 
         self.menubar = Menubar(self.root, self, self.canvas)
 
@@ -55,6 +57,7 @@ class MainWindow:
         self.toolbar.grid(column=1, row=1, columnspan=2, sticky="WE")
         self.palette.grid(column=1, row=2, sticky="NWSE")
         self.canvas.grid(column=2, row=2, sticky="NWSE")
+        self.statusbar.grid(column=1, row=3, columnspan=2, sticky="WE")
 
         self.canvas.bind("<ButtonPress-1>", self.on_left_button_pressed)
         self.canvas.bind("<B1-Motion>", self.on_left_button_drag)
@@ -68,6 +71,7 @@ class MainWindow:
         self.canvas.bind("<MouseWheel>", self.zoom)
 
         self.room = Room()
+        self.edited_room_id = None
 
     def configure_grid(self):
         tkinter.Grid.rowconfigure(self.root, 2, weight=1)
@@ -114,8 +118,12 @@ class MainWindow:
             self.drawing.delete_room_polygon(value)
             self.palette.fill_in_room_info(room)
 
-    def redraw_room_polygon_command(self):
-        pass
+    def redraw_room_polygon_command(self, index, value):
+        room = self.drawing.find_room_by_room_id(value)
+        if room is not None:
+            self.canvas.delete_object_with_id(room["canvas_id"])
+        self.canvas_mode = CanvasMode.DRAW_ROOM
+        self.edited_room_id = value
 
     def scroll_start(self, event):
         self.canvas.scan_mark(event.x, event.y)
@@ -129,8 +137,13 @@ class MainWindow:
 
     def finish_new_room(self):
         canvas_id = self.canvas.draw_new_room(self.room)
-        room_id = self._drawing.add_new_room(canvas_id, self.room.polygon_world)
-        self.palette.add_new_room(room_id)
+        if self.edited_room_id is None:
+            room_id = self._drawing.add_new_room(canvas_id, self.room.polygon_world)
+            self.palette.add_new_room(room_id)
+        else:
+            room_id = self.edited_room_id
+            self._drawing.update_room_polygon(room_id, canvas_id, self.room.polygon_world)
+        self.edited_room_id = None
         self.canvas.delete_temporary_entities()
         # cleanup
         self.room.cleanup()
