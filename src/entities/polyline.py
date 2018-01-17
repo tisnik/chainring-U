@@ -24,6 +24,7 @@ class Polyline(Entity):
         """Construct new text from provided starting coordinates."""
         self.x = x
         self.y = y
+        # graphics entity ID on the canvas
         self._id = None
 
     def str(self):
