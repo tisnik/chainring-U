@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -87,6 +87,15 @@ class Drawing:
                             "polygon": polygon})
         self._room_counter += 1
         return room_id
+
+    def update_room_polygon(self, room_id, canvas_id, polygon):
+        print("HERE")
+        room = self.find_room("room_id", room_id)
+        print(room)
+        if room is not None:
+            print("updating")
+            room["canvas_id"] = canvas_id
+            room["polygon"] = polygon
 
     def find_room(self, selector, value):
         for room in self._rooms:
