@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -27,6 +27,7 @@ class Arc(Entity):
         self.radius = radius
         self.angle1 = angle1
         self.angle2 = angle2
+        # graphics entity ID on the canvas
         self._id = None
 
     def str(self):
@@ -42,6 +43,7 @@ class Arc(Entity):
         """Draw the entity onto canvas."""
         extent = self.angle2 - self.angle1
 
+        # don't use negative angle, not well supported in Tkinter
         if extent < 0:
             extent += 360
 
