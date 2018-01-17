@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -47,7 +47,7 @@ class Palette(tkinter.LabelFrame):
                                       image=main_window.icons.edit_delete_icon)
         self.button3 = tkinter.Button(self.group, text="Překreslit",
                                       compound="left",
-                                      command=main_window.redraw_room_polygon_command,
+                                      command=self.redraw_room_polygon_command,
                                       image=main_window.icons.edit_redo_icon)
         self.button1.grid(column=1, row=3, sticky="W", columnspan=2)
         self.button2.grid(column=1, row=5, sticky="W")
@@ -119,6 +119,11 @@ class Palette(tkinter.LabelFrame):
         index, value = self.get_selected_room()
         if value:
             self.main_window.delete_room_polygon_command(index, value)
+
+    def redraw_room_polygon_command(self):
+        index, value = self.get_selected_room()
+        if value:
+            self.main_window.redraw_room_polygon_command(index, value)
 
     def delete_room_from_list(self, index):
         self.listbox.selection_clear(0, tkinter.END)
