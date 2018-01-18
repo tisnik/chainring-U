@@ -10,11 +10,11 @@
 #      Pavel Tisnovsky
 #
 
-"""Drawing exporter to SVG format."""
+"""Drawing exporter to DXF format."""
 
 
-class SvgExporter:
-    """Drawing exporter to SVG format."""
+class DXFExporter:
+    """Drawing exporter to DXF format."""
 
     def __init__(self, filename, entities):
         """Initialize the exporter, set the filename to be created and a sequence of entities."""
