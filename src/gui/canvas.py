@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -41,11 +41,11 @@ class Canvas(tkinter.Canvas):
             self.hide_grid()
 
     def draw_boundary(self):
-        self.create_line(0, 0,
-                         self.width, 0,
+        self.create_line(2, 2,
+                         self.width, 2,
                          self.width, self.height,
-                         0, self.height,
-                         0, 0,
+                         2, self.height,
+                         2, 2,
                          tags="boundary")
         if self._boundary:
             self.show_boundary()
