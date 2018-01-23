@@ -50,7 +50,7 @@ class Menubar(tkinter.Menu):
                              compound="left", underline=0)
         filemenu.add_separator()
         filemenu.add_command(label="Konec", image=main_window.icons.exit_icon,
-                             compound="left", underline=0,
+                             compound="left", underline=0, accelerator="Ctrl+Q",
                              command=parent.quit)
 
         edit = tkinter.Menu(self, tearoff=0)
@@ -121,6 +121,7 @@ class Menubar(tkinter.Menu):
         self.add_cascade(label="Zobrazit", menu=view, underline=0)
         self.add_cascade(label="Nástroje", menu=tools, underline=3)
         self.add_cascade(label="Nápověda", menu=helpmenu, underline=0)
+        self.parent.bind('<Control-q>', lambda event: parent.quit())
 
     def show_settings_dialog(self):
         SettingsDialog(self.parent)
