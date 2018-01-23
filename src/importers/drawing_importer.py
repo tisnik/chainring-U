@@ -12,6 +12,8 @@
 
 """Importer for drawings stored in a text file."""
 
+import sys
+
 from drawing import Drawing
 from entities.drawing_entity_type import *
 from entities.line import *
@@ -31,6 +33,9 @@ class DrawingImporter:
             "version:": DrawingImporter.process_version,
             "created:": DrawingImporter.process_created,
             "entities:": DrawingImporter.process_entities,
+            "rooms:": DrawingImporter.process_rooms,
+            "bounds:": DrawingImporter.process_bounds,
+            "scale:": DrawingImporter.process_scale,
             "L": DrawingImporter.process_line,
             "C": DrawingImporter.process_circle,
             "A": DrawingImporter.process_arc,
@@ -71,21 +76,37 @@ class DrawingImporter:
 
     def process_version(self, parts):
         """Process drawing version."""
-        version = parts[1]
+        version = parts[1].strip()
         print("Read attribute 'version': {v}".format(v=version))
         self.metadata["version"] = version
 
     def process_created(self, parts):
         """Process the date when drawing was created."""
-        created = parts[1]
+        created = " ".join(parts[1:]).strip()
         print("Read attribute 'created': {c}".format(c=created))
         self.metadata["created"] = created
 
     def process_entities(self, parts):
         """Process number of entities."""
-        entities = parts[1]
+        entities = parts[1].strip()
         print("Read attribute 'entities': {e}".format(e=entities))
         self.metadata["entities"] = entities
+
+    def process_rooms(self, parts):
+        """Process number of rooms."""
+        rooms = parts[1].strip()
+        print("Read attribute 'rooms': {r}".format(r=rooms))
+        self.metadata["rooms"] = rooms
+
+    def process_bounds(self, parts):
+        """Process the bounds line."""
+        # we don't need this attribute ATM
+        pass
+
+    def process_scale(self, parts):
+        """Process the scale line."""
+        # we don't need this attribute ATM
+        pass
 
     def process_line(self, parts):
         """Process line entity."""
