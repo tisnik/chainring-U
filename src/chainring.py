@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -30,16 +30,17 @@ window_width = config.getint('ui', 'window_width')
 window_height = config.getint('ui', 'window_height')
 mainWindow = MainWindow(window_width, window_height)
 
-importer = DrawingImporter("output.drw")
+importer = DrawingImporter("input.drw")
 drawing = importer.import_drawing()
 #importer = DxfImporter("test-data/Building_1np.dxf")
 #drawing = importer.import_dxf()
 
-exporter = DrawingExporter("output2.drw", drawing)
+exporter = DrawingExporter("output.drw", drawing)
 exporter.export()
 
 bounds = Bounds.computeBounds(drawing.entities)
-xoffset, yoffset, scale = Rescaler.computeScale(bounds, mainWindow.canvas)
+xoffset, yoffset, scale = Rescaler.computeScaleForCanvas(bounds, mainWindow.canvas)
+print(xoffset, yoffset, scale)
 
 #ex = BinaryExporter("output3.bin", entities)
 #ex.export_binary_drawing()
