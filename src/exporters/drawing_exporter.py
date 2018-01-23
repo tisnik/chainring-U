@@ -15,12 +15,21 @@
 from datetime import *
 
 from drawing import Drawing
+from geometry.bounds import Bounds
+from geometry.rescaler import Rescaler
 
 
 class DrawingExporter:
     """Drawing exporter to structured text format."""
 
     VERSION = 1
+    SCALES = [
+        [320, 240],
+        [400, 300],
+        [640, 480],
+        [800, 600],
+        [1024, 768]
+    ]
 
     def __init__(self, filename, drawing):
         """Initialize the exporter, set the filename to be created and a sequence of entities."""
@@ -58,6 +67,14 @@ class DrawingExporter:
         with open(self.filename, "w") as fout:
             DrawingExporter.output_version(fout)
             DrawingExporter.output_timestamp(fout)
+
+            bounds = Bounds.computeBounds(self.entities)
+            fout.write("bounds: {b}\n".format(b=bounds))
+
+            for scale in DrawingExporter.SCALES:
+                xoffset, yoffset, s = Rescaler.computeScale(bounds, scale[0], scale[1])
+                fout.write("scale: {w} {h} {s}\n".format(w=scale[0], h=scale[1], s=s))
+
             fout.write("entities: {e}\n".format(e=len(self.entities)))
             fout.write("rooms: {r}\n".format(r=len(self.rooms)))
             for entity in self.entities:
