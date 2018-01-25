@@ -23,27 +23,28 @@ class Toolbar(tkinter.LabelFrame):
         self.parent = parent
         self.main_window = main_window
 
-        button_open = tkinter.Button(
-            self, text="Otevřít",
+        button_drawing_load = tkinter.Button(
+            self, text="Otevřít výkres",
+            image=main_window.icons.drawing_load_icon,
+            command=main_window.open_drawing_command)
+
+        button_drawing_save = tkinter.Button(
+            self, text="Uložit výkres",
+            image=main_window.icons.drawing_save_icon,
+            command=main_window.save_drawing_command)
+
+        button_file_open = tkinter.Button(
+            self, text="Importovat nový výkres",
             image=main_window.icons.file_open_icon,
             command=main_window.open_drawing_command)
 
-        button_open = tkinter.Button(
-            self, text="Uložit",
-            image=main_window.icons.export_icon,
-            command=main_window.save_drawing_command)
-
-        button_import = tkinter.Button(
-            self, text="Import",
-            image=main_window.icons.file_import_icon)
-
-        button_save = tkinter.Button(
-            self, text="Uložit",
+        button_file_save = tkinter.Button(
+            self, text="Uložit pracovní výkres",
             image=main_window.icons.file_save_icon,
             command=main_window.save_drawing_command)
 
-        button_save_as = tkinter.Button(
-            self, text="Uložit výkres pod jiným jménem",
+        button_file_save_as = tkinter.Button(
+            self, text="Uložit pracovní výkres pod jiným jménem",
             image=main_window.icons.file_save_as_icon,
             command=main_window.save_drawing_as_command)
 
@@ -99,30 +100,35 @@ class Toolbar(tkinter.LabelFrame):
         spacer1 = tkinter.Label(self, text="   ")
         spacer2 = tkinter.Label(self, text="   ")
         spacer3 = tkinter.Label(self, text="   ")
+        spacer4 = tkinter.Label(self, text="   ")
 
-        button_import.grid(column=1, row=1)
-        button_open.grid(column=2, row=1)
-        button_save.grid(column=3, row=1)
-        button_save_as.grid(column=4, row=1)
-        button_quit.grid(column=5, row=1)
+        button_drawing_load.grid(column=1, row=1)
+        button_drawing_save.grid(column=2, row=1)
 
-        spacer1.grid(column=6, row=1)
+        spacer1.grid(column=3, row=1)
 
-        button_zoom_in.grid(column=7, row=1)
-        button_zoom_out.grid(column=8, row=1)
-        button_zoom_11.grid(column=9, row=1)
-        button_view_grid.grid(column=10, row=1)
-        button_view_boundary.grid(column=11, row=1)
+        button_file_open.grid(column=4, row=1)
+        button_file_save.grid(column=5, row=1)
+        button_file_save_as.grid(column=6, row=1)
+        button_quit.grid(column=7, row=1)
 
-        spacer2.grid(column=12, row=1)
+        spacer2.grid(column=8, row=1)
 
-        button_drawing_info.grid(column=13, row=1)
-        button_room_list.grid(column=14, row=1)
-        button_settings.grid(column=15, row=1)
+        button_zoom_in.grid(column=9, row=1)
+        button_zoom_out.grid(column=10, row=1)
+        button_zoom_11.grid(column=11, row=1)
+        button_view_grid.grid(column=12, row=1)
+        button_view_boundary.grid(column=13, row=1)
 
-        spacer3.grid(column=16, row=1)
+        spacer3.grid(column=14, row=1)
 
-        button_new_room.grid(column=17, row=1)
+        button_drawing_info.grid(column=15, row=1)
+        button_room_list.grid(column=16, row=1)
+        button_settings.grid(column=17, row=1)
+
+        spacer4.grid(column=18, row=1)
+
+        button_new_room.grid(column=19, row=1)
 
     def show_settings_dialog(self):
         SettingsDialog(self.parent)

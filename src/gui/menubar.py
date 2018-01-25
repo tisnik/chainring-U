@@ -30,24 +30,33 @@ class Menubar(tkinter.Menu):
 
         filemenu = tkinter.Menu(self, tearoff=0)
         filemenu.add_command(label="Otevřít výkres",
-                             image=main_window.icons.file_open_icon,
-                             compound="left", underline=0,
-                             command=main_window.open_drawing_command)
+                             image=main_window.icons.drawing_load_icon,
+                             compound="left", underline=0
+                             )
+                             #command=main_window.open_drawing_command)
 
         filemenu.add_command(label="Uložit výkres",
+                             image=main_window.icons.drawing_save_icon,
+                             compound="left", underline=0
+                             )
+                             #command=main_window.open_drawing_command)
+
+        filemenu.add_separator()
+
+        filemenu.add_command(label="Importovat nový výkres",
+                             image=main_window.icons.file_open_icon,
+                             compound="left", underline=0)
+
+        filemenu.add_command(label="Uložit pracovní výkres",
                              image=main_window.icons.file_save_icon,
                              compound="left", underline=0,
                              command=main_window.save_drawing_command)
 
-        filemenu.add_command(label="Uložit výkres pod jiným jménem",
+        filemenu.add_command(label="Uložit pracovní výkres pod jiným jménem",
                              image=main_window.icons.file_save_as_icon,
                              compound="left", underline=0,
                              command=main_window.save_drawing_as_command)
 
-        filemenu.add_separator()
-        filemenu.add_command(label="Importovat nový výkres",
-                             image=main_window.icons.file_import_icon,
-                             compound="left", underline=0)
         filemenu.add_separator()
         filemenu.add_command(label="Konec", image=main_window.icons.exit_icon,
                              compound="left", underline=0, accelerator="Ctrl+Q",

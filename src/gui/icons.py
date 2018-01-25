@@ -16,7 +16,9 @@ import icons.application_exit
 import icons.file_open
 import icons.file_save
 import icons.file_save_as
-import icons.file_import
+import icons.drawing_load
+import icons.drawing_save
+import icons.drawing_info
 import icons.zoom_in
 import icons.zoom_out
 import icons.zoom_original
@@ -32,25 +34,28 @@ import icons.edit
 import icons.edit_delete
 import icons.edit_delete_shred
 import icons.edit_redo
-import icons.drawing_info
 import icons.checkbox
 import icons.service
-import icons.export
 
 
 class Icons:
 
     def __init__(self):
         self.exit_icon = tkinter.PhotoImage(data=icons.application_exit.icon)
-        self.file_import_icon = tkinter.PhotoImage(data=icons.file_import.icon)
+
+        self.drawing_load_icon = tkinter.PhotoImage(data=icons.drawing_load.icon)
+        self.drawing_save_icon = tkinter.PhotoImage(data=icons.drawing_save.icon)
+
         self.file_open_icon = tkinter.PhotoImage(data=icons.file_open.icon)
         self.file_save_icon = tkinter.PhotoImage(data=icons.file_save.icon)
         self.file_save_as_icon = tkinter.PhotoImage(
             data=icons.file_save_as.icon)
+
         self.zoom_in_icon = tkinter.PhotoImage(data=icons.zoom_in.icon)
         self.zoom_out_icon = tkinter.PhotoImage(data=icons.zoom_out.icon)
         self.zoom_original_icon = tkinter.PhotoImage(
             data=icons.zoom_original.icon)
+
         self.help_about_icon = tkinter.PhotoImage(data=icons.help_about.icon)
         self.help_faq_icon = tkinter.PhotoImage(data=icons.help_faq.icon)
         self.room_list_icon = tkinter.PhotoImage(data=icons.room_list.icon)
@@ -69,4 +74,3 @@ class Icons:
             data=icons.drawing_info.icon)
         self.checkbox_icon = tkinter.PhotoImage(data=icons.checkbox.icon)
         self.service_icon = tkinter.PhotoImage(data=icons.service.icon)
-        self.export_icon = tkinter.PhotoImage(data=icons.export.icon)
