@@ -82,6 +82,13 @@ class Canvas(tkinter.Canvas):
         for entity in entities:
             entity.draw(self, xoffset, yoffset, scale)
 
+
+    def draw_rooms(self, rooms, xoffset, yoffset, scale):
+        for room in rooms:
+            print(room["room_id"])
+            room["canvas_id"] = self.draw_room(room)
+
+
     def draw_new_room_temporary_line(self, x1, y1, x2, y2):
         self.create_line(x1, y1, x2, y2,
                          fill='red', tags="new_room_temporary")
@@ -105,6 +112,15 @@ class Canvas(tkinter.Canvas):
 
     def delete_object_with_id(self, object_id):
         self.delete(object_id)
+
+    def draw_room(self, room):
+        print(room)
+        new_object = self.create_polygon(room["polygon"], width=2,
+                                         fill="", activefill="#ffff80",
+                                         outline="magenta", stipple="gray50")
+        self.tag_bind(new_object, "<ButtonPress-1>",
+                      lambda event, new_object=new_object: self.on_room_click(new_object))
+        return new_object
 
     def draw_new_room(self, room):
         print(room)
