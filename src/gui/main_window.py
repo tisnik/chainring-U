@@ -302,3 +302,4 @@ class MainWindow:
         self.canvas.draw_grid()
         self.canvas.draw_boundary()
         self.canvas.draw_entities(self.drawing.entities, 0, 0, 1)
+        self.canvas.draw_rooms(self.drawing.rooms, 0, 0, 1)
