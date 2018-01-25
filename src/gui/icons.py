@@ -35,6 +35,7 @@ import icons.edit_redo
 import icons.drawing_info
 import icons.checkbox
 import icons.service
+import icons.export
 
 
 class Icons:
@@ -68,3 +69,4 @@ class Icons:
             data=icons.drawing_info.icon)
         self.checkbox_icon = tkinter.PhotoImage(data=icons.checkbox.icon)
         self.service_icon = tkinter.PhotoImage(data=icons.service.icon)
+        self.export_icon = tkinter.PhotoImage(data=icons.export.icon)

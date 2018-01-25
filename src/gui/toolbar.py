@@ -23,14 +23,19 @@ class Toolbar(tkinter.LabelFrame):
         self.parent = parent
         self.main_window = main_window
 
-        button_import = tkinter.Button(
-            self, text="Import",
-            image=main_window.icons.file_import_icon)
-
         button_open = tkinter.Button(
             self, text="Otevřít",
             image=main_window.icons.file_open_icon,
             command=main_window.open_drawing_command)
+
+        button_open = tkinter.Button(
+            self, text="Uložit",
+            image=main_window.icons.export_icon,
+            command=main_window.save_drawing_command)
+
+        button_import = tkinter.Button(
+            self, text="Import",
+            image=main_window.icons.file_import_icon)
 
         button_save = tkinter.Button(
             self, text="Uložit",
