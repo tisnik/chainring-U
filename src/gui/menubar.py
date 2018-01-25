@@ -12,7 +12,7 @@
 
 import tkinter
 
-from gui.about_dialog import *
+from gui.dialogs.about_dialog import *
 from gui.help_dialog import *
 from gui.settings_dialog import SettingsDialog
 from gui.drawing_info_dialog import DrawingInfoDialog
