@@ -25,7 +25,7 @@ from gui.status_bar import *
 from gui.icons import *
 from gui.canvas_mode import CanvasMode
 from gui.room_error_dialog import *
-from gui.yes_no_dialogs import *
+from gui.dialogs.yes_no_dialogs import *
 from gui.save_dialogs import SaveDialogs
 from gui.floor_select_dialog import FloorSelectDialog
 from gui.room import Room
