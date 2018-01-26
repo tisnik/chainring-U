@@ -31,15 +31,13 @@ class Menubar(tkinter.Menu):
         filemenu = tkinter.Menu(self, tearoff=0)
         filemenu.add_command(label="Otevřít výkres",
                              image=main_window.icons.drawing_load_icon,
-                             compound="left", underline=0
-                             )
-                             #command=main_window.open_drawing_command)
+                             compound="left", underline=0, accelerator="Ctrl+O",
+                             command=main_window.open_drawing_command)
 
         filemenu.add_command(label="Uložit výkres",
                              image=main_window.icons.drawing_save_icon,
-                             compound="left", underline=0
-                             )
-                             #command=main_window.open_drawing_command)
+                             compound="left", underline=0, accelerator="Ctrl+S",
+                             command=main_window.save_drawing_command)
 
         filemenu.add_separator()
 
@@ -71,15 +69,15 @@ class Menubar(tkinter.Menu):
         view = tkinter.Menu(self, tearoff=0)
         view.add_command(label="Zvětšit",
                          image=main_window.icons.zoom_in_icon,
-                         compound="left", underline=1,
+                         compound="left", underline=1, accelerator="Ctrl++",
                          command=main_window.zoom_plus)
         view.add_command(label="Zmenšit",
                          image=main_window.icons.zoom_out_icon,
-                         compound="left", underline=1,
+                         compound="left", underline=1, accelerator="Ctrl+-",
                          command=main_window.zoom_minus)
         view.add_command(label="1:1",
                          image=main_window.icons.zoom_original_icon,
-                         compound="left", underline=0,
+                         compound="left", underline=0, accelerator="Ctrl+0",
                          command=main_window.redraw)
         view.add_separator()
         view.add_command(label="Mřížka",
@@ -131,6 +129,7 @@ class Menubar(tkinter.Menu):
         self.add_cascade(label="Nástroje", menu=tools, underline=3)
         self.add_cascade(label="Nápověda", menu=helpmenu, underline=0)
         self.parent.bind('<Control-q>', lambda event: parent.quit())
+        self.parent.bind('<Control-0>', lambda event: main_window.redraw())
 
     def show_settings_dialog(self):
         SettingsDialog(self.parent)
