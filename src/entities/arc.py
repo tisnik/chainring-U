@@ -39,6 +39,16 @@ class Arc(Entity):
             a1=self.angle1,
             a2=self.angle2)
 
+    def asDict(self):
+        return {
+            "T": "A",
+            "x": self.x,
+            "y": self.y,
+            "r": self.radius,
+            "a1": self.angle1,
+            "a2": self.angle2
+        }
+
     def draw(self, canvas, xoffset, yoffset, scale):
         """Draw the entity onto canvas."""
         extent = self.angle2 - self.angle1

@@ -33,6 +33,13 @@ class Polyline(Entity):
             x=self.x,
             y=self.y)
 
+    def asDict(self):
+        return {
+            "T": "P",
+            "x": self.x,
+            "y": self.y,
+        }
+
     def draw(self, canvas, xoffset, yoffset, scale):
         """Draw the entity onto canvas."""
         return (self.x, self.y, self.x, self.y)

@@ -35,6 +35,14 @@ class Text(Entity):
             y=self.y,
             t=self.text)
 
+    def asDict(self):
+        return {
+            "T": "T",
+            "x": self.x,
+            "y": self.y,
+            "text": self.text
+        }
+
     def draw(self, canvas, xoffset, yoffset, scale):
         """Draw the entity onto canvas."""
         return (self.x, self.y, self.x, self.y)

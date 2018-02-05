@@ -37,6 +37,15 @@ class Line(Entity):
             x2=self.x2,
             y2=self.y2)
 
+    def asDict(self):
+        return {
+            "T": "L",
+            "x1": self.x1,
+            "y1": self.y1,
+            "x2": self.x2,
+            "y2": self.y2,
+        }
+
     def draw(self, canvas, xoffset=0, yoffset=0, scale=1):
         """Draw the entity onto canvas."""
         x1 = self.x1 + xoffset

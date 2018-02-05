@@ -35,6 +35,14 @@ class Circle(Entity):
             y=self.y,
             r=self.radius)
 
+    def asDict(self):
+        return {
+            "T": "C",
+            "x": self.x,
+            "y": self.y,
+            "r": self.radius
+        }
+
     def draw(self, canvas, xoffset, yoffset, scale):
         """Draw the entity onto canvas."""
         self._id = canvas.create_oval(self.x-self.radius, self.y-self.radius,
