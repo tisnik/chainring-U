@@ -45,8 +45,8 @@ class Circle(Entity):
 
     def draw(self, canvas, xoffset, yoffset, scale):
         """Draw the entity onto canvas."""
-        self._id = canvas.create_oval(self.x-self.radius, self.y-self.radius,
-                                      self.x+self.radius, self.y+self.radius,
+        self._id = canvas.create_oval(self.x - self.radius, self.y - self.radius,
+                                      self.x + self.radius, self.y + self.radius,
                                       fill="red", tags="drawing")
 
     def transform(self, xoffset, yoffset, scale):
