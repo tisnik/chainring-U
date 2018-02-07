@@ -16,18 +16,18 @@ from importers.dxf_importer import *
 from importers.drawing_importer import *
 #from exporters.binary_exporter import *
 from exporters.drawing_exporter import *
+from exporters.json_exporter import *
 from geometry.bounds import Bounds
 from geometry.rescaler import Rescaler
+from configuration import *
 
 import sys
-import configparser
 
+configuration = Configuration()
+configuration.write()
 
-config = configparser.ConfigParser()
-config.read('config.ini')
-
-window_width = config.getint('ui', 'window_width')
-window_height = config.getint('ui', 'window_height')
+window_width = configuration.window_width
+window_height = configuration.window_height
 mainWindow = MainWindow(window_width, window_height)
 
 importer = DrawingImporter("input.drw")
@@ -37,6 +37,9 @@ drawing = importer.import_drawing()
 
 exporter = DrawingExporter("output.drw", drawing)
 exporter.export()
+
+json_exporter = JSONExporter("output.json", drawing)
+json_exporter.export()
 
 bounds = Bounds.computeBounds(drawing.entities)
 xoffset, yoffset, scale = Rescaler.computeScaleForCanvas(bounds, mainWindow.canvas)
