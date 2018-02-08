@@ -113,7 +113,7 @@ class Menubar(tkinter.Menu):
         tools.add_command(label="Verze rozhraní serveru",
                           image=main_window.icons.service_icon,
                           compound="left", underline=0,
-                          command=self.check_service_versions)
+                          command=self.check_service_version)
 
         helpmenu = tkinter.Menu(self, tearoff=0)
         helpmenu.add_command(label="Nápověda",
@@ -146,7 +146,7 @@ class Menubar(tkinter.Menu):
         else:
             messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
 
-    def check_service_versions(self):
+    def check_service_version(self):
         drawServiceInterface = DrawServiceInterface()
         status, version, message = drawServiceInterface.read_version()
         if status:
