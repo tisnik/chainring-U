@@ -142,9 +142,14 @@ class Menubar(tkinter.Menu):
         drawServiceInterface = DrawServiceInterface()
         status, message = drawServiceInterface.check_liveness()
         if status:
-            messagebox.showinfo("Ok", "Ok")
+            messagebox.showinfo("Připojení k serveru", "Připojení k serveru: Ok")
         else:
             messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
 
     def check_service_versions(self):
         drawServiceInterface = DrawServiceInterface()
+        status, version, message = drawServiceInterface.read_version()
+        if status:
+            messagebox.showinfo("Verze rozhraní", "Verze rozhraní: {v}".format(v=version))
+        else:
+            messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))

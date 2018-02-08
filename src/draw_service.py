@@ -12,6 +12,7 @@
 
 import requests
 
+
 class DrawServiceInterface:
     API_PREFIX = "api/v1"
 
@@ -29,7 +30,18 @@ class DrawServiceInterface:
             if code != 200:
                 return False, "Návratový kód {code}".format(code=code)
             if "status" in data and data["status"] == "ok":
-                return True, ""
+                return True, None
             return False, "Neplatná data vrácená serverem"
         except Exception as e:
             return False, repr(e)
+
+    def read_version(self):
+        try:
+            code, data = self.get("info")
+            if code != 200:
+                return False, "Návratový kód {code}".format(code=code)
+            if "service-version" in data:
+                return True, data["service-version"], None
+            return False, "Neplatná data vrácená serverem"
+        except Exception as e:
+            return False, None, repr(e)
