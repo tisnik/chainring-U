@@ -136,7 +136,7 @@ class Menubar(tkinter.Menu):
         SettingsDialog(self.parent)
 
     def show_drawing_info_dialog(self):
-        DrawingInfoDialog(self.parent, self.main_window.drawing.statistic)
+        DrawingInfoDialog(self.parent, self.main_window.drawing)
 
     def check_server_connectivity(self):
         drawServiceInterface = DrawServiceInterface()
