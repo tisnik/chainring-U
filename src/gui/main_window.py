@@ -36,12 +36,15 @@ class MainWindow:
     SCALE_UP_FACTOR = 1.1
     SCALE_DOWN_FACTOR = 0.9
 
-    def __init__(self, window_width, window_height):
+    def __init__(self, configuration):
         self._drawing = None
         self.root = tkinter.Tk()
 
         self.icons = Icons()
         self.canvas_mode = CanvasMode.VIEW
+
+        window_width = configuration.window_width
+        window_height = configuration.window_height
 
         self.canvas = Canvas(self.root, window_width, window_height, self)
         self.toolbar = Toolbar(self.root, self, self.canvas)
@@ -80,25 +83,31 @@ class MainWindow:
     def draw_new_room_command(self, event=None):
         self.canvas_mode = CanvasMode.DRAW_ROOM
 
-    def save_drawing(self, filename):
+    def import_drawing_command(self, filename):
+        pass
+
+    def export_drawing(self, filename):
         if filename:
             # set the new filename
             self.drawing.filename = filename
             exporter = DrawingExporter(filename, self.drawing)
             exporter.export()
 
-    def save_drawing_command(self, event=None):
+    def export_drawing_command(self, event=None):
         filename = self.drawing.filename
         if filename is None:
             filename = SaveDialogs.save_drawing(self.root)
-        self.save_drawing(filename)
+        self.export_drawing(filename)
 
-    def save_drawing_as_command(self, event=None):
+    def export_drawing_as_command(self, event=None):
         filename = SaveDialogs.save_drawing(self.root)
         self.save_drawing(filename)
 
     def open_drawing_command(self, event=None):
         FloorSelectDialog(self.root)
+
+    def save_drawing_command(self, event=None):
+        pass
 
     def delete_room_command(self, index, value):
         #print(index, value)

@@ -36,17 +36,17 @@ class Toolbar(tkinter.LabelFrame):
         button_file_open = tkinter.Button(
             self, text="Importovat nový výkres",
             image=main_window.icons.file_open_icon,
-            command=main_window.open_drawing_command)
+            command=main_window.import_drawing_command)
 
         button_file_save = tkinter.Button(
             self, text="Uložit pracovní výkres",
             image=main_window.icons.file_save_icon,
-            command=main_window.save_drawing_command)
+            command=main_window.export_drawing_command)
 
         button_file_save_as = tkinter.Button(
             self, text="Uložit pracovní výkres pod jiným jménem",
             image=main_window.icons.file_save_as_icon,
-            command=main_window.save_drawing_as_command)
+            command=main_window.export_drawing_as_command)
 
         button_quit = tkinter.Button(
             self, text="Ukončit",
