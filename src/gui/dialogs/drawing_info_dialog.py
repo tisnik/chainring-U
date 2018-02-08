@@ -18,6 +18,7 @@ from entities.drawing_entity_type import *
 class DrawingInfoDialog(tkinter.Toplevel):
     def __init__(self, parent, drawing):
         tkinter.Toplevel.__init__(self, parent)
+        self.title("Informace o výkresu")
 
         drawing_statistic = drawing.statistic
         rooms_count = len(drawing.rooms)
