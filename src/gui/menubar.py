@@ -65,7 +65,8 @@ class Menubar(tkinter.Menu):
         edit.add_command(label="Nakreslit místnost",
                          image=main_window.icons.edit_icon,
                          compound="left", underline=0,
-                         command=self.main_window.draw_new_room_command)
+                         command=self.main_window.draw_new_room_command,
+                         accelerator="Ctrl+N")
 
         view = tkinter.Menu(self, tearoff=0)
         view.add_command(label="Zvětšit",
@@ -95,11 +96,15 @@ class Menubar(tkinter.Menu):
         tools.add_command(label="Informace o výkresu",
                           image=main_window.icons.drawing_info_icon,
                           compound="left", underline=0,
-                          command=self.show_drawing_info_dialog)
+                          command=self.show_drawing_info_dialog,
+                          accelerator="Ctrl+I")
 
         tools.add_command(label="Seznam místností",
                           image=main_window.icons.room_list_icon,
-                          compound="left", underline=0)
+                          compound="left", underline=0,
+                          command=self.show_room_list_dialog,
+                          accelerator="Ctrl+M")
+
         tools.add_separator()
         tools.add_command(label="Nastavení",
                           image=main_window.icons.properties_icon,
@@ -129,7 +134,11 @@ class Menubar(tkinter.Menu):
         self.add_cascade(label="Zobrazit", menu=view, underline=0)
         self.add_cascade(label="Nástroje", menu=tools, underline=3)
         self.add_cascade(label="Nápověda", menu=helpmenu, underline=0)
+
         self.parent.bind('<Control-q>', lambda event: parent.quit())
+        self.parent.bind('<Control-n>', lambda event: main_window.draw_new_room_command())
+        self.parent.bind('<Control-i>', lambda event: self.show_drawing_info_dialog())
+        self.parent.bind('<Control-m>', lambda event: self.show_room_list_dialog())
         self.parent.bind('<Control-0>', lambda event: main_window.redraw())
 
     def show_settings_dialog(self):
@@ -137,6 +146,9 @@ class Menubar(tkinter.Menu):
 
     def show_drawing_info_dialog(self):
         DrawingInfoDialog(self.parent, self.main_window.drawing)
+
+    def show_room_list_dialog(self):
+        pass
 
     def check_server_connectivity(self):
         drawServiceInterface = DrawServiceInterface()
