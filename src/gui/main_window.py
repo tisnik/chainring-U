@@ -27,7 +27,7 @@ from gui.canvas_mode import CanvasMode
 from gui.room_error_dialog import *
 from gui.dialogs.yes_no_dialogs import *
 from gui.save_dialogs import SaveDialogs
-from gui.floor_select_dialog import FloorSelectDialog
+from gui.drawing_select_dialog import DrawingSelectDialog
 from gui.room import Room
 
 
@@ -104,7 +104,7 @@ class MainWindow:
         self.save_drawing(filename)
 
     def open_drawing_command(self, event=None):
-        FloorSelectDialog(self.root)
+        DrawingSelectDialog(self.root)
 
     def save_drawing_command(self, event=None):
         pass

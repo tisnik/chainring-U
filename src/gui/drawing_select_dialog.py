@@ -15,7 +15,7 @@ import tkinter
 
 from tkinter import ttk
 
-class FloorSelectDialog(tkinter.Toplevel):
+class DrawingSelectDialog(tkinter.Toplevel):
     def __init__(self, parent):
         tkinter.Toplevel.__init__(self, parent)
 
