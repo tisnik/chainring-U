@@ -13,9 +13,9 @@
 import tkinter
 
 from gui.dialogs.about_dialog import *
+from gui.dialogs.drawing_info_dialog import DrawingInfoDialog
 from gui.help_dialog import *
 from gui.settings_dialog import SettingsDialog
-from gui.drawing_info_dialog import DrawingInfoDialog
 
 from draw_service import DrawServiceInterface
 

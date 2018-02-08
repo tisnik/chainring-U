@@ -13,7 +13,7 @@
 import tkinter
 
 from gui.settings_dialog import SettingsDialog
-from gui.drawing_info_dialog import DrawingInfoDialog
+from gui.dialogs.drawing_info_dialog import DrawingInfoDialog
 
 
 class Toolbar(tkinter.LabelFrame):
