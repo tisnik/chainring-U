@@ -12,6 +12,7 @@
 
 import configparser
 
+
 class Configuration:
     CONFIG_FILE_NAME = 'config.ini'
 
@@ -27,6 +28,14 @@ class Configuration:
     @property
     def window_height(self):
         return self.config.getint('ui', 'window_height')
+
+    @property
+    def server_address(self):
+        return self.config.get('service', 'url')
+
+    @property
+    def server_port(self):
+        return self.config.getint('service', 'port')
 
     def write(self):
         with open('config2.ini', 'w') as fout:
