@@ -24,11 +24,9 @@ from configuration import *
 import sys
 
 configuration = Configuration()
-configuration.write()
+#configuration.write()
 
-window_width = configuration.window_width
-window_height = configuration.window_height
-mainWindow = MainWindow(window_width, window_height)
+mainWindow = MainWindow(configuration)
 
 importer = DrawingImporter("input.drw")
 drawing = importer.import_drawing()

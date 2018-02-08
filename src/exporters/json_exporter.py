@@ -79,6 +79,7 @@ class JSONExporter:
             "entities_count": len(self.entities),
             "rooms_count": len(self.rooms),
             "entities": entities_list,
+            "rooms": self.rooms,
         }
         with open(self.filename, "w") as fout:
             json.dump(obj, fout, indent="\t")
