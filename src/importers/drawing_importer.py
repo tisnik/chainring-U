@@ -39,7 +39,8 @@ class DrawingImporter:
             "L": DrawingImporter.process_line,
             "C": DrawingImporter.process_circle,
             "A": DrawingImporter.process_arc,
-            "T": DrawingImporter.process_text
+            "T": DrawingImporter.process_text,
+            "R": DrawingImporter.process_room,
         }
 
         self.statistic = {
@@ -50,6 +51,7 @@ class DrawingImporter:
         }
         self.metadata = {}
         self.entities = []
+        self.rooms = []
 
     def import_drawing(self):
         """Import the file and return structure containing all entities."""
@@ -59,11 +61,16 @@ class DrawingImporter:
                 self.parse_line(line)
                 lines += 1
         drawing = Drawing(self.entities, self.statistic, lines)
+        drawing.rooms = self.rooms
+        # TODO this needs to be improved for deleted rooms
+        drawing.room_counter = len(self.rooms) + 1
         return drawing
 
     def parse_line(self, line):
         """Parse one line in the input file."""
         parts = line.split(" ")
+        # remove end of lines
+        parts = [item.strip() for item in parts]
         command = parts[0]
         function = self.commands.get(command,
                                      DrawingImporter.process_unknown_command)
@@ -142,3 +149,12 @@ class DrawingImporter:
         text = " ".join(parts[3:]).strip()
         self.statistic[DrawingEntityType.TEXT] += 1
         self.entities.append(Text(x, y, text))
+
+    def process_room(self, parts):
+        """Process room polygon."""
+        room_id = parts[1]
+        vertexes = int(parts[2])
+        coordinates = parts[3:]
+        polygon = list((float(coordinates[i*2]), float(coordinates[i*2+1])) for i in range(vertexes))
+        self.rooms.append({"room_id": room_id,
+                           "polygon": polygon})
