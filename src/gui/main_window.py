@@ -43,6 +43,8 @@ class MainWindow:
         self.icons = Icons()
         self.canvas_mode = CanvasMode.VIEW
 
+        self.configuration = configuration
+
         window_width = configuration.window_width
         window_height = configuration.window_height
 
@@ -104,7 +106,7 @@ class MainWindow:
         self.save_drawing(filename)
 
     def open_drawing_command(self, event=None):
-        DrawingSelectDialog(self.root)
+        DrawingSelectDialog(self.root, self.configuration)
 
     def save_drawing_command(self, event=None):
         pass
@@ -312,3 +314,7 @@ class MainWindow:
         self.canvas.draw_boundary()
         self.canvas.draw_entities(self.drawing.entities, 0, 0, 1)
         self.canvas.draw_rooms(self.drawing.rooms, 0, 0, 1)
+
+    def add_all_rooms_from_drawing(self):
+        for room in self.drawing.rooms:
+            self.palette.add_new_room(room["room_id"])
