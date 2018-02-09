@@ -18,6 +18,7 @@ from tkinter import ttk
 class SettingsDialog(tkinter.Toplevel):
     def __init__(self, parent):
         tkinter.Toplevel.__init__(self, parent)
+        self.title("Nastavení")
 
         # don't display the dialog in list of opened windows
         self.transient(parent)

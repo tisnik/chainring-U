@@ -16,8 +16,9 @@ import tkinter
 from tkinter import ttk
 
 class DrawingSelectDialog(tkinter.Toplevel):
-    def __init__(self, parent):
+    def __init__(self, parent, configuration):
         tkinter.Toplevel.__init__(self, parent)
+        self.title("Otevřít výkres")
 
         # don't display the dialog in list of opened windows
         self.transient(parent)
