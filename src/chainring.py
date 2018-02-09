@@ -36,10 +36,11 @@ drawing = importer.import_drawing()
 exporter = DrawingExporter("output.drw", drawing)
 exporter.export()
 
-json_exporter = JSONExporter("output.json", drawing)
-json_exporter.export()
+#json_exporter = JSONExporter("output.json", drawing)
+#json_exporter.export()
 
 bounds = Bounds.computeBounds(drawing.entities)
+print(bounds)
 xoffset, yoffset, scale = Rescaler.computeScaleForCanvas(bounds, mainWindow.canvas)
 print(xoffset, yoffset, scale)
 
@@ -51,6 +52,10 @@ print(xoffset, yoffset, scale)
 
 drawing.rescale(xoffset, yoffset, scale)
 
+exporter = DrawingExporter("output2.drw", drawing)
+exporter.export()
+
 mainWindow.drawing = drawing
 mainWindow.redraw()
+mainWindow.add_all_rooms_from_drawing()
 mainWindow.show()
