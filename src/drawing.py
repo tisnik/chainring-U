@@ -31,6 +31,14 @@ class Drawing:
         self._entities = entities
 
     @property
+    def room_counter(self):
+        return self._room_counter
+
+    @entities.setter
+    def room_counter(self, new_value):
+        self._room_counter = new_value
+
+    @property
     def statistic(self):
         return self._statistic
 
@@ -89,7 +97,6 @@ class Drawing:
         return room_id
 
     def update_room_polygon(self, room_id, canvas_id, polygon):
-        print("HERE")
         room = self.find_room("room_id", room_id)
         print(room)
         if room is not None:
