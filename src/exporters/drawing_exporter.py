@@ -56,10 +56,15 @@ class DrawingExporter:
     def write_room(fout, room):
         """Write the room data into the generated file."""
         vertexes = room["polygon"]
-        fout.write("R {id} {vertex_count}".format(id=room["room_id"],
-                                                  vertex_count=len(vertexes)))
-        for vertex in vertexes:
-            fout.write(" {x} {y}".format(x=vertex[0], y=vertex[1]))
+        # export only room with polygon
+        if vertexes is not None:
+            fout.write("R {id} {vertex_count}".format(id=room["room_id"],
+                                                      vertex_count=len(vertexes)))
+            for vertex in vertexes:
+                fout.write(" {x} {y}".format(x=vertex[0], y=vertex[1]))
+        # room without polygon
+        else:
+            fout.write("R {id} 0".format(id=room["room_id"]))
         fout.write("\n")
 
     def export(self):
