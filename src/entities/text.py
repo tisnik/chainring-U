@@ -49,7 +49,10 @@ class Text(Entity):
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
-        pass
+        self.x = self.x + xoffset
+        self.y = self.y + yoffset
+        self.x *= scale
+        self.y *= scale
 
     def getBounds(self):
         """Compute bounds for given entity."""
