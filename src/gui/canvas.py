@@ -113,14 +113,19 @@ class Canvas(tkinter.Canvas):
     def delete_object_with_id(self, object_id):
         self.delete(object_id)
 
+    def proper_polygon_for_room(room):
+        return "polygon" in room and len(room["polygon"]) > 0
+
     def draw_room(self, room):
-        print(room)
-        new_object = self.create_polygon(room["polygon"], width=2,
-                                         fill="", activefill="#ffff80",
-                                         outline="magenta", stipple="gray50")
-        self.tag_bind(new_object, "<ButtonPress-1>",
-                      lambda event, new_object=new_object: self.on_room_click(new_object))
-        return new_object
+        if Canvas.proper_polygon_for_room(room):
+            new_object = self.create_polygon(room["polygon"], width=2,
+                                             fill="", activefill="#ffff80",
+                                             outline="magenta", stipple="gray50")
+            self.tag_bind(new_object, "<ButtonPress-1>",
+                          lambda event, new_object=new_object: self.on_room_click(new_object))
+            return new_object
+        else:
+            return None
 
     def draw_new_room(self, room):
         print(room)
