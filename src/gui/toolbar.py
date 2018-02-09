@@ -14,6 +14,7 @@ import tkinter
 
 from gui.settings_dialog import SettingsDialog
 from gui.dialogs.drawing_info_dialog import DrawingInfoDialog
+from gui.dialogs.room_list_dialog import RoomListDialog
 
 
 class Toolbar(tkinter.LabelFrame):
@@ -85,7 +86,8 @@ class Toolbar(tkinter.LabelFrame):
 
         button_room_list = tkinter.Button(
             self, text="Seznam místností",
-            image=main_window.icons.room_list_icon)
+            image=main_window.icons.room_list_icon,
+            command=self.show_room_list_dialog)
 
         button_new_room = tkinter.Button(
             self, text="Nakreslit místnost",
@@ -135,3 +137,6 @@ class Toolbar(tkinter.LabelFrame):
 
     def show_drawing_info_dialog(self):
         DrawingInfoDialog(self.parent, self.main_window.drawing)
+
+    def show_room_list_dialog(self):
+        RoomListDialog(self.parent, self.main_window.drawing)

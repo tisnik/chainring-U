@@ -16,6 +16,7 @@ from gui.dialogs.about_dialog import *
 from gui.dialogs.drawing_info_dialog import DrawingInfoDialog
 from gui.help_dialog import *
 from gui.settings_dialog import SettingsDialog
+from gui.dialogs.room_list_dialog import RoomListDialog
 
 from draw_service import DrawServiceInterface
 
@@ -148,7 +149,7 @@ class Menubar(tkinter.Menu):
         DrawingInfoDialog(self.parent, self.main_window.drawing)
 
     def show_room_list_dialog(self):
-        pass
+        RoomListDialog(self.parent, self.main_window.drawing)
 
     def check_server_connectivity(self):
         drawServiceInterface = DrawServiceInterface()
