@@ -14,6 +14,7 @@ import tkinter
 from tkinter import messagebox
 
 from exporters.drawing_exporter import *
+from exporters.json_exporter import *
 
 from geometry.utils import GeometryUtils
 from gui.canvas import *
@@ -94,6 +95,9 @@ class MainWindow:
             self.drawing.filename = filename
             exporter = DrawingExporter(filename, self.drawing)
             exporter.export()
+            filename2 = filename.replace(".drw", ".json")
+            json_exporter = JSONExporter(filename2, self.drawing)
+            json_exporter.export()
 
     def export_drawing_command(self, event=None):
         filename = self.drawing.filename
@@ -103,7 +107,7 @@ class MainWindow:
 
     def export_drawing_as_command(self, event=None):
         filename = SaveDialogs.save_drawing(self.root)
-        self.save_drawing(filename)
+        self.export_drawing(filename)
 
     def open_drawing_command(self, event=None):
         DrawingSelectDialog(self.root, self.configuration)
