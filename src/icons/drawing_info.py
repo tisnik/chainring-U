@@ -1,3 +1,5 @@
+"""Icon for the following action: display info about drawing"""
+
 # This icon was converted from the Oxygen Icon Theme
 # Please see copyright for further informations
 
