@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -100,27 +100,30 @@ class DxfImporter:
             raise Exception("unknown code {c} for state "
                             "BEGINNING".format(c=code))
 
+    def process_beginning_section_name_attribute(self, code, data):
+        if data == "HEADER":
+            self.state = DxfReaderState.SECTION_HEADER
+            print("    section header")
+        elif data == "TABLES":
+            self.state = DxfReaderState.SECTION_TABLES
+            print("    section tables")
+        elif data == "BLOCKS":
+            self.state = DxfReaderState.SECTION_BLOCKS
+            print("    section blocks")
+        elif data == "ENTITIES":
+            self.state = DxfReaderState.SECTION_ENTITIES
+            print("    section entities")
+        elif data == "OBJECTS":
+            self.state = DxfReaderState.SECTION_OBJECTS
+            print("    section tables")
+        else:
+            raise Exception("unknown data {d} for state "
+                            "BEGINNING_SECTION".format(d=data))
+
     def process_beginning_section(self, code, data):
         '''Part of the DXF import state machine.'''
         if code == 2:
-            if data == "HEADER":
-                self.state = DxfReaderState.SECTION_HEADER
-                print("    section header")
-            elif data == "TABLES":
-                self.state = DxfReaderState.SECTION_TABLES
-                print("    section tables")
-            elif data == "BLOCKS":
-                self.state = DxfReaderState.SECTION_BLOCKS
-                print("    section blocks")
-            elif data == "ENTITIES":
-                self.state = DxfReaderState.SECTION_ENTITIES
-                print("    section entities")
-            elif data == "OBJECTS":
-                self.state = DxfReaderState.SECTION_OBJECTS
-                print("    section tables")
-            else:
-                raise Exception("unknown data {d} for state "
-                                "BEGINNING_SECTION".format(d=data))
+            self.process_beginning_section_name_attribute(code, data)
         else:
             raise Exception("unknown code {c} for state "
                             "BEGINNING_SECTION".format(c=code))
@@ -160,27 +163,52 @@ class DxfImporter:
             self.blockName = data
             print("        begin block '{b}'".format(b=self.blockName))
 
+    def process_section_entities_entity_type(self, code, data):
+        if data == "LINE":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.LINE
+        elif data == "CIRCLE":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.CIRCLE
+        elif data == "ARC":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.ARC
+        elif data == "MTEXT" or data == "TEXT":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.TEXT
+
     def process_section_entities(self, code, data):
         '''Part of the DXF import state machine.'''
         if code == 0:
-            if data == "LINE":
-                self.state = DxfReaderState.ENTITY
-                self.entityType = DrawingEntityType.LINE
-            elif data == "CIRCLE":
-                self.state = DxfReaderState.ENTITY
-                self.entityType = DrawingEntityType.CIRCLE
-            elif data == "ARC":
-                self.state = DxfReaderState.ENTITY
-                self.entityType = DrawingEntityType.ARC
-            elif data == "MTEXT" or data == "TEXT":
-                self.state = DxfReaderState.ENTITY
-                self.entityType = DrawingEntityType.TEXT
+            self.process_section_entities_entity_type(code, data)
 
     def process_section_objects(self, code, data):
         '''Part of the DXF import state machine.'''
         if code == 0:
             if data == "ENDSEC":
                 print("    end section objects")
+
+    def process_entity_type_attribute(self, code, data):
+        self.statistic[self.entityType] += 1
+        self.store_entity()
+        self.state = DxfReaderState.SECTION_ENTITIES
+        self.entityType = DrawingEntityType.UNKNOWN
+        if data == "LINE":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.LINE
+        elif data == "CIRCLE":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.CIRCLE
+        elif data == "ARC":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.ARC
+        elif data == "MTEXT" or data == "TEXT":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.TEXT
+        elif data == "ENDSEC":
+            self.state = DxfReaderState.BEGINNING
+            self.entityType = DrawingEntityType.UNKNOWN
+            print("    end entities")
 
     def process_entity(self, code, data):
         '''Part of the DXF import state machine.'''
@@ -203,26 +231,7 @@ class DxfImporter:
         elif code == 1:
             self.text = data
         elif code == 0:
-            self.statistic[self.entityType] += 1
-            self.store_entity()
-            self.state = DxfReaderState.SECTION_ENTITIES
-            self.entityType = DrawingEntityType.UNKNOWN
-            if data == "LINE":
-                self.state = DxfReaderState.ENTITY
-                self.entityType = DrawingEntityType.LINE
-            elif data == "CIRCLE":
-                self.state = DxfReaderState.ENTITY
-                self.entityType = DrawingEntityType.CIRCLE
-            elif data == "ARC":
-                self.state = DxfReaderState.ENTITY
-                self.entityType = DrawingEntityType.ARC
-            elif data == "MTEXT" or data == "TEXT":
-                self.state = DxfReaderState.ENTITY
-                self.entityType = DrawingEntityType.TEXT
-            elif data == "ENDSEC":
-                self.state = DxfReaderState.BEGINNING
-                self.entityType = DrawingEntityType.UNKNOWN
-                print("    end entities")
+            self.process_entity_type_attribute(code, data)
 
     def store_entity(self):
         if self.entityType == DrawingEntityType.LINE:
