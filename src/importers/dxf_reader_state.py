@@ -27,6 +27,7 @@ class DxfReaderState(Enum):
     SECTION_BLOCK_ENTITY = 7,
     SECTION_ENTITIES = 8,
     SECTION_OBJECTS = 9,
-    ENTITY = 10,
-    LINE_IN_BLOCK = 11,
-    EOF = 12
+    SECTION_CLASSES = 10,
+    ENTITY = 11,
+    LINE_IN_BLOCK = 12,
+    EOF = 13

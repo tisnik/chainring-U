@@ -39,6 +39,8 @@ class DxfImporter:
                 DxfImporter.process_section_entities,
             DxfReaderState.SECTION_OBJECTS:
                 DxfImporter.process_section_objects,
+            DxfReaderState.SECTION_CLASSES:
+                DxfImporter.process_section_classes,
             DxfReaderState.SECTION_BLOCK:
                 DxfImporter.process_section_block,
             DxfReaderState.ENTITY:
@@ -115,7 +117,10 @@ class DxfImporter:
             print("    section entities")
         elif data == "OBJECTS":
             self.state = DxfReaderState.SECTION_OBJECTS
-            print("    section tables")
+            print("    section objects")
+        elif data == "CLASSES":
+            self.state = DxfReaderState.SECTION_CLASSES
+            print("    section classes")
         else:
             raise Exception("unknown data {d} for state "
                             "BEGINNING_SECTION".format(d=data))
@@ -187,6 +192,13 @@ class DxfImporter:
         if code == 0:
             if data == "ENDSEC":
                 print("    end section objects")
+
+    def process_section_classes(self, code, data):
+        '''Part of the DXF import state machine.'''
+        if code == 0:
+            if data == "ENDSEC":
+                print("    end section classes")
+                self.state = DxfReaderState.BEGINNING
 
     def process_entity_type_attribute(self, code, data):
         self.statistic[self.entityType] += 1
