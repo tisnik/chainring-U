@@ -45,7 +45,11 @@ class Text(Entity):
 
     def draw(self, canvas, xoffset, yoffset, scale):
         """Draw the entity onto canvas."""
-        return (self.x, self.y, self.x, self.y)
+        x = self.x + xoffset
+        y = self.y + yoffset
+        x *= scale
+        y *= scale
+        self._id = canvas.create_text(x, y, text=self.text, fill="red", tags="drawing")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
