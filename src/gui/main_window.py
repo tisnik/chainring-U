@@ -83,9 +83,11 @@ class MainWindow:
 
     def disable_ui_items_for_no_drawing_mode(self):
         self.toolbar.disable_ui_items_for_no_drawing_mode()
+        self.menubar.disable_ui_items_for_no_drawing_mode()
 
     def enable_ui_items_for_drawing_mode(self):
         self.toolbar.enable_ui_items_for_drawing_mode()
+        self.menubar.enable_ui_items_for_drawing_mode()
 
     def set_ui_items_for_actual_mode(self):
         if self.drawing is None:
