@@ -81,6 +81,18 @@ class MainWindow:
         self.room = Room()
         self.edited_room_id = None
 
+    def disable_ui_items_for_no_drawing_mode(self):
+        self.toolbar.disable_ui_items_for_no_drawing_mode()
+
+    def enable_ui_items_for_drawing_mode(self):
+        self.toolbar.enable_ui_items_for_drawing_mode()
+
+    def set_ui_items_for_actual_mode(self):
+        if self.drawing is None:
+            self.disable_ui_items_for_no_drawing_mode()
+        else:
+            self.enable_ui_items_for_drawing_mode()
+
     def configure_grid(self):
         tkinter.Grid.rowconfigure(self.root, 2, weight=1)
         tkinter.Grid.columnconfigure(self.root, 2, weight=1)
@@ -337,13 +349,20 @@ class MainWindow:
     def drawing(self, drawing):
         self._drawing = drawing
 
-    def redraw(self):
-        self.canvas.delete("all")
+    def redraw_drawing(self):
         self.canvas.draw_grid()
         self.canvas.draw_boundary()
         self.canvas.draw_entities(self.drawing.entities, 0, 0, 1)
         self.canvas.draw_rooms(self.drawing.rooms, 0, 0, 1)
 
+    def redraw(self):
+        self.canvas.delete("all")
+        if self.drawing is not None:
+            self.redraw_drawing()
+        else:
+            self.canvas.draw_empty_drawing_message()
+
     def add_all_rooms_from_drawing(self):
-        for room in self.drawing.rooms:
-            self.palette.add_new_room(room["room_id"])
+        if self.drawing is not None:
+            for room in self.drawing.rooms:
+                self.palette.add_new_room(room["room_id"])
