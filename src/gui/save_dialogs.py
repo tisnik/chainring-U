@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -20,5 +20,11 @@ class SaveDialogs:
     @staticmethod
     def save_drawing(root):
         filetypes = [('Výkresy', '*.drw')]
+        dialog = filedialog.SaveAs(root, filetypes=filetypes)
+        return dialog.show()
+
+    @staticmethod
+    def save_rooms(root):
+        filetypes = [('Místnosti', '*.rooms')]
         dialog = filedialog.SaveAs(root, filetypes=filetypes)
         return dialog.show()
