@@ -49,7 +49,7 @@ class Text(Entity):
         y = self.y + yoffset
         x *= scale
         y *= scale
-        self._id = canvas.create_text(x, y, text=self.text, fill="red", tags="drawing")
+        self._id = canvas.create_text(x, y, text=self.text, fill="blue", tags="drawing")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
