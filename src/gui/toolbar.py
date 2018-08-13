@@ -35,24 +35,24 @@ class Toolbar(tkinter.LabelFrame):
             command=main_window.save_drawing_command)
 
         button_file_open = tkinter.Button(
-            self, text="Importovat nový výkres",
+            self, text="Importovat místnosti",
             image=main_window.icons.file_open_icon,
-            command=main_window.import_drawing_command)
+            command=main_window.import_rooms_command)
 
         button_file_save = tkinter.Button(
-            self, text="Uložit pracovní výkres",
+            self, text="Uložit místnosti",
             image=main_window.icons.file_save_icon,
-            command=main_window.export_drawing_command)
+            command=main_window.export_rooms_command)
 
         button_file_save_as = tkinter.Button(
-            self, text="Uložit pracovní výkres pod jiným jménem",
+            self, text="Uložit místnosti pod jiným jménem",
             image=main_window.icons.file_save_as_icon,
-            command=main_window.export_drawing_as_command)
+            command=main_window.export_rooms_as_command)
 
-        button_quit = tkinter.Button(
-            self, text="Ukončit",
-            image=main_window.icons.exit_icon,
-            command=main_window.quit)
+        button_sap_import_rooms = tkinter.Button(
+            self, text="Seznam místností ze SAPu",
+            image=main_window.icons.rooms_from_sap,
+            command=main_window.quit)  # TODO
 
         button_zoom_in = tkinter.Button(
             self, text="Zvětšit",
@@ -99,10 +99,16 @@ class Toolbar(tkinter.LabelFrame):
             image=main_window.icons.properties_icon,
             command=self.show_settings_dialog)
 
+        button_quit = tkinter.Button(
+            self, text="Ukončit",
+            image=main_window.icons.exit_icon,
+            command=main_window.quit)
+
         spacer1 = tkinter.Label(self, text="   ")
         spacer2 = tkinter.Label(self, text="   ")
         spacer3 = tkinter.Label(self, text="   ")
         spacer4 = tkinter.Label(self, text="   ")
+        spacer5 = tkinter.Label(self, text="   ")
 
         button_drawing_load.grid(column=1, row=1)
         button_drawing_save.grid(column=2, row=1)
@@ -112,7 +118,7 @@ class Toolbar(tkinter.LabelFrame):
         button_file_open.grid(column=4, row=1)
         button_file_save.grid(column=5, row=1)
         button_file_save_as.grid(column=6, row=1)
-        button_quit.grid(column=7, row=1)
+        button_sap_import_rooms.grid(column=7, row=1)
 
         spacer2.grid(column=8, row=1)
 
@@ -131,6 +137,9 @@ class Toolbar(tkinter.LabelFrame):
         spacer4.grid(column=18, row=1)
 
         button_new_room.grid(column=19, row=1)
+
+        spacer5.grid(column=20, row=1)
+        button_quit.grid(column=21, row=1)
 
     def show_settings_dialog(self):
         SettingsDialog(self.parent)

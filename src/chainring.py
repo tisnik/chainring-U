@@ -31,13 +31,15 @@ mainWindow = MainWindow(configuration)
 importer = DrawingImporter("input.drw")
 drawing = importer.import_drawing()
 #importer = DxfImporter("test-data/Building_1np.dxf")
+#importer = DxfImporter("test2.dxf")
+#importer = DxfImporter("7701_cad.dxf")
 #drawing = importer.import_dxf()
 
 exporter = DrawingExporter("output.drw", drawing)
 exporter.export()
 
-#json_exporter = JSONExporter("output.json", drawing)
-#json_exporter.export()
+json_exporter = JSONExporter("output.json", drawing)
+json_exporter.export()
 
 bounds = Bounds.computeBounds(drawing.entities)
 print(bounds)

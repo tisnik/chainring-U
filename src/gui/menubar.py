@@ -42,22 +42,30 @@ class Menubar(tkinter.Menu):
 
         filemenu.add_separator()
 
-        filemenu.add_command(label="Importovat nový výkres",
+        filemenu.add_command(label="Importovat místnosti",
                              image=main_window.icons.file_open_icon,
                              compound="left", underline=0,
-                             command=main_window.import_drawing_command)
+                             command=main_window.import_rooms_command)
 
-        filemenu.add_command(label="Uložit pracovní výkres",
+        filemenu.add_command(label="Uložit místnosti",
                              image=main_window.icons.file_save_icon,
                              compound="left", underline=0,
-                             command=main_window.export_drawing_command)
+                             command=main_window.export_rooms_command)
 
-        filemenu.add_command(label="Uložit pracovní výkres pod jiným jménem",
+        filemenu.add_command(label="Uložit místnosti jiným jménem",
                              image=main_window.icons.file_save_as_icon,
                              compound="left", underline=0,
-                             command=main_window.export_drawing_as_command)
+                             command=main_window.export_rooms_as_command)
 
         filemenu.add_separator()
+
+        filemenu.add_command(label="Seznam místností ze SAPu",
+                             image=main_window.icons.rooms_from_sap,
+                             compound="left", underline=0,
+                             command=main_window.import_rooms_from_sap)
+
+        filemenu.add_separator()
+
         filemenu.add_command(label="Konec", image=main_window.icons.exit_icon,
                              compound="left", underline=0, accelerator="Ctrl+Q",
                              command=parent.quit)

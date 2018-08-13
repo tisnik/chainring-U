@@ -14,6 +14,7 @@ import tkinter
 from tkinter import messagebox
 
 from exporters.drawing_exporter import *
+from exporters.room_exporter import *
 from exporters.json_exporter import *
 
 from geometry.utils import GeometryUtils
@@ -45,6 +46,7 @@ class MainWindow:
         self.canvas_mode = CanvasMode.VIEW
 
         self.configuration = configuration
+        self.rooms_export_filename = None
 
         window_width = configuration.window_width
         window_height = configuration.window_height
@@ -86,8 +88,31 @@ class MainWindow:
     def draw_new_room_command(self, event=None):
         self.canvas_mode = CanvasMode.DRAW_ROOM
 
+    def import_rooms_from_sap(self, event=None):
+        pass
+
     def import_drawing_command(self, filename):
         pass
+
+    def import_rooms_command(self, event=None):
+        pass
+
+    def export_rooms_command(self, event=None):
+        filename = self.rooms_export_filename
+        if filename is None:
+            self.export_rooms_as_command(self)
+        else:
+            exporter = RoomExporter(filename, self.drawing)
+            exporter.export()
+
+    def export_rooms_as_command(self, event=None):
+        filename = SaveDialogs.save_rooms(self.root)
+        if filename == "":
+            filename = None
+        if filename is not None:
+            self.rooms_export_filename = filename
+            exporter = RoomExporter(filename, self.drawing)
+            exporter.export()
 
     def export_drawing(self, filename):
         if filename:
@@ -95,9 +120,9 @@ class MainWindow:
             self.drawing.filename = filename
             exporter = DrawingExporter(filename, self.drawing)
             exporter.export()
-            filename2 = filename.replace(".drw", ".json")
-            json_exporter = JSONExporter(filename2, self.drawing)
-            json_exporter.export()
+            # filename2 = filename.replace(".drw", ".json")
+            # json_exporter = JSONExporter(filename2, self.drawing)
+            # json_exporter.export()
 
     def export_drawing_command(self, event=None):
         filename = self.drawing.filename
