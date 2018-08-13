@@ -30,6 +30,12 @@ class Canvas(tkinter.Canvas):
         self.main_window = main_window
         self.selected_room_item = None
 
+    def draw_empty_drawing_message(self):
+        self.create_text(self.width / 2, self.height / 2,
+                         fill="darkred",
+                         font="Helvetice 20 bold",
+                         text="Žádný výkres nebyl načten")
+
     def draw_grid(self):
         for x in range(0, self.width, Canvas.GRID_SIZE):
             self.create_line(x, 0, x, self.height, dash=7, tags="grid")
