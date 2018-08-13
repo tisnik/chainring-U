@@ -20,6 +20,7 @@ from exporters.json_exporter import *
 from geometry.bounds import Bounds
 from geometry.rescaler import Rescaler
 from configuration import *
+from gui.dialogs.error_dialogs import *
 from gui.load_dialogs import LoadDialogs
 
 import sys
@@ -49,7 +50,8 @@ if drawing is None:
         print(drawing_file_name)
         importer = DrawingImporter(drawing_file_name)
         drawing = importer.import_drawing()
-    pass
+        if drawing is None:
+            error_dialog_drawing_load()
 
 if drawing is not None:
     bounds = Bounds.computeBounds(drawing.entities)

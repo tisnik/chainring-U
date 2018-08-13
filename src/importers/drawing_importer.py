@@ -55,16 +55,19 @@ class DrawingImporter:
 
     def import_drawing(self):
         """Import the file and return structure containing all entities."""
-        with open(self.filename) as fin:
-            lines = 0
-            for line in fin:
-                self.parse_line(line)
-                lines += 1
-        drawing = Drawing(self.entities, self.statistic, lines)
-        drawing.rooms = self.rooms
-        # TODO this needs to be improved for deleted rooms
-        drawing.room_counter = len(self.rooms) + 1
-        return drawing
+        try:
+            with open(self.filename) as fin:
+                lines = 0
+                for line in fin:
+                    self.parse_line(line)
+                    lines += 1
+            drawing = Drawing(self.entities, self.statistic, lines)
+            drawing.rooms = self.rooms
+            # TODO this needs to be improved for deleted rooms
+            drawing.room_counter = len(self.rooms) + 1
+            return drawing
+        except Exception as e:
+            return None
 
     def parse_line(self, line):
         """Parse one line in the input file."""
