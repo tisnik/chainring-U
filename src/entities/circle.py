@@ -47,7 +47,8 @@ class Circle(Entity):
         """Draw the entity onto canvas."""
         self._id = canvas.create_oval(self.x - self.radius, self.y - self.radius,
                                       self.x + self.radius, self.y + self.radius,
-                                      fill="red", tags="drawing")
+                                      tags="drawing")
+                                      #fill="red", tags="drawing")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
