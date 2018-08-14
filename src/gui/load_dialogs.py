@@ -19,7 +19,8 @@ class LoadDialogs:
 
     @staticmethod
     def load_drawing(root):
-        filetypes = [('Výkresy', '*.drw')]
+        filetypes = [('Výkresy', '*.drw'),
+                     ('Výkresy z CADu', '*.dxf')]
         dialog = filedialog.Open(root, filetypes=filetypes)
         return dialog.show()
 

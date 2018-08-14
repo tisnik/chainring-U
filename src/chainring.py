@@ -47,10 +47,16 @@ drawing = None
 if drawing is None:
     drawing_file_name = LoadDialogs.load_drawing(None)
     if drawing_file_name is not None and drawing_file_name != "" and drawing_file_name != ():
-        importer = DrawingImporter(drawing_file_name)
-        drawing = importer.import_drawing()
-        if drawing is None:
-            error_dialog_drawing_load()
+        if drawing_file_name.endswith(".drw"):
+            importer = DrawingImporter(drawing_file_name)
+            drawing = importer.import_drawing()
+            if drawing is None:
+                error_dialog_drawing_load()
+        else:
+            importer = DxfImporter(drawing_file_name)
+            drawing = importer.import_dxf()
+            if drawing is None:
+                error_dialog_drawing_load()
 
 if drawing is not None:
     bounds = Bounds.computeBounds(drawing.entities)
