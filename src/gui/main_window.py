@@ -13,6 +13,10 @@
 import tkinter
 from tkinter import messagebox
 
+from importers.drawing_importer import *
+from importers.room_importer import *
+from importers.sap_room_importer import *
+
 from exporters.drawing_exporter import *
 from exporters.room_exporter import *
 from exporters.json_exporter import *
@@ -31,6 +35,7 @@ from gui.dialogs.yes_no_dialogs import *
 from gui.save_dialogs import SaveDialogs
 from gui.drawing_select_dialog import DrawingSelectDialog
 from gui.room import Room
+from gui.load_dialogs import LoadDialogs
 
 
 class MainWindow:
@@ -41,6 +46,7 @@ class MainWindow:
     def __init__(self, configuration):
         self._drawing = None
         self.root = tkinter.Tk()
+        self.root.title("Integrace CAD výkresů do SAP, (c) eLevel system")
 
         self.icons = Icons()
         self.canvas_mode = CanvasMode.VIEW
@@ -103,13 +109,43 @@ class MainWindow:
         self.canvas_mode = CanvasMode.DRAW_ROOM
 
     def import_rooms_from_sap(self, event=None):
-        pass
+        if self.drawing.rooms is None or len(self.drawing.rooms) == 0 or dialog_load_rooms_from_sap():
+            room_file_name = LoadDialogs.load_rooms_from_sap(None)
+            if room_file_name is not None and room_file_name != "" and room_file_name != ():
+                # delete rooms from canvas
+                if self.drawing.rooms is not None:
+                    for room in self.drawing.rooms:
+                        if "canvas_id" in room:
+                            self.canvas.delete_object_with_id(room["canvas_id"])
+                self.drawing.rooms = None
+                self.drawing.room_counter = 0
+                self.palette.remove_all_rooms()
+                room_importer = SapRoomImporter(room_file_name)
+                self.drawing.rooms = room_importer.import_rooms()
+                self.drawing.room_counter = len(self.drawing.rooms) + 1
+                self.redraw()
+                self.add_all_rooms_from_drawing()
 
     def import_drawing_command(self, filename):
         pass
 
     def import_rooms_command(self, event=None):
-        pass
+        if self.drawing.rooms is None or len(self.drawing.rooms) == 0 or dialog_load_rooms():
+            room_file_name = LoadDialogs.load_rooms(None)
+            if room_file_name is not None and room_file_name != "" and room_file_name != ():
+                # delete rooms from canvas
+                if self.drawing.rooms is not None:
+                    for room in self.drawing.rooms:
+                        if "canvas_id" in room:
+                            self.canvas.delete_object_with_id(room["canvas_id"])
+                self.drawing.rooms = None
+                self.drawing.room_counter = 0
+                self.palette.remove_all_rooms()
+                room_importer = RoomImporter(room_file_name)
+                self.drawing.rooms = room_importer.import_rooms()
+                self.drawing.room_counter = len(self.drawing.rooms) + 1
+                self.redraw()
+                self.add_all_rooms_from_drawing()
 
     def export_rooms_command(self, event=None):
         filename = self.rooms_export_filename
@@ -149,7 +185,23 @@ class MainWindow:
         self.export_drawing(filename)
 
     def open_drawing_command(self, event=None):
-        DrawingSelectDialog(self.root, self.configuration)
+        if self.drawing is not None:
+            if not dialog_load_new_drawing():
+                return
+        drawing_file_name = LoadDialogs.load_drawing(None)
+        if drawing_file_name is not None and drawing_file_name != "" and drawing_file_name != ():
+            importer = DrawingImporter(drawing_file_name)
+            drawing = importer.import_drawing()
+            if drawing is None:
+                error_dialog_drawing_load()
+            else:
+                bounds = Bounds.computeBounds(drawing.entities)
+                xoffset, yoffset, scale = Rescaler.computeScaleForCanvas(bounds, self.canvas)
+                drawing.rescale(xoffset, yoffset, scale)
+                self.drawing = drawing
+                self.redraw()
+                self.add_all_rooms_from_drawing()
+                self.set_ui_items_for_actual_mode()
 
     def save_drawing_command(self, event=None):
         pass
@@ -191,6 +243,7 @@ class MainWindow:
 
     def finish_new_room(self):
         canvas_id = self.canvas.draw_new_room(self.room)
+        room_id = None
         if self.edited_room_id is None:
             room_id = self._drawing.add_new_room(canvas_id, self.room.polygon_world)
             self.palette.add_new_room(room_id)
@@ -199,6 +252,12 @@ class MainWindow:
             self._drawing.update_room_polygon(room_id, canvas_id, self.room.polygon_world)
         self.edited_room_id = None
         self.canvas.delete_temporary_entities()
+
+        # update left palette
+        r = {"room_id" : room_id,
+             "polygon": self.room.polygon_world}
+        self.palette.fill_in_room_info(r)
+
         # cleanup
         self.room.cleanup()
         self.canvas_mode = CanvasMode.VIEW
@@ -365,6 +424,7 @@ class MainWindow:
             self.canvas.draw_empty_drawing_message()
 
     def add_all_rooms_from_drawing(self):
+        self.palette.remove_all_rooms()
         if self.drawing is not None:
             for room in self.drawing.rooms:
                 self.palette.add_new_room(room["room_id"])

@@ -47,7 +47,6 @@ drawing = None
 if drawing is None:
     drawing_file_name = LoadDialogs.load_drawing(None)
     if drawing_file_name is not None and drawing_file_name != "" and drawing_file_name != ():
-        print(drawing_file_name)
         importer = DrawingImporter(drawing_file_name)
         drawing = importer.import_drawing()
         if drawing is None:
@@ -55,9 +54,9 @@ if drawing is None:
 
 if drawing is not None:
     bounds = Bounds.computeBounds(drawing.entities)
-    print(bounds)
+    # print(bounds)
     xoffset, yoffset, scale = Rescaler.computeScaleForCanvas(bounds, mainWindow.canvas)
-    print(xoffset, yoffset, scale)
+    # print(xoffset, yoffset, scale)
 
     #ex = BinaryExporter("output3.bin", entities)
     #ex.export_binary_drawing()
