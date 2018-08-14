@@ -21,7 +21,7 @@ from geometry.bounds import Bounds
 from geometry.rescaler import Rescaler
 from configuration import *
 from gui.dialogs.error_dialogs import *
-from gui.load_dialogs import LoadDialogs
+from gui.dialogs.load_dialogs import LoadDialogs
 
 import sys
 

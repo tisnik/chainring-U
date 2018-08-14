@@ -35,7 +35,7 @@ from gui.dialogs.yes_no_dialogs import *
 from gui.save_dialogs import SaveDialogs
 from gui.drawing_select_dialog import DrawingSelectDialog
 from gui.room import Room
-from gui.load_dialogs import LoadDialogs
+from gui.dialogs.load_dialogs import LoadDialogs
 
 
 class MainWindow:
