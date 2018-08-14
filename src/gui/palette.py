@@ -37,18 +37,20 @@ class Palette(tkinter.LabelFrame):
         self.label_contour = tkinter.Label(self.group, text="Obrys")
         self.label_contour.grid(column=1, row=4, sticky="W")
 
-        self.button1 = tkinter.Button(self.group, text="Smazat ze seznamu",
+        self.button1 = tkinter.Button(self.group, text="Smazat místnost ze seznamu",
                                       compound="left",
                                       command=self.delete_room_command,
                                       image=main_window.icons.edit_delete_shred_icon)
         self.button2 = tkinter.Button(self.group, text="Vymazat",
                                       compound="left",
                                       command=self.delete_room_polygon_command,
-                                      image=main_window.icons.edit_delete_icon)
+                                      image=main_window.icons.edit_delete_icon,
+                                      height=28)
         self.button3 = tkinter.Button(self.group, text="Překreslit",
                                       compound="left",
                                       command=self.redraw_room_polygon_command,
-                                      image=main_window.icons.edit_redo_icon)
+                                      image=main_window.icons.edit_redo_icon,
+                                      height=28)
         self.button1.grid(column=1, row=3, sticky="W", columnspan=2)
         self.button2.grid(column=1, row=5, sticky="W")
         self.button3.grid(column=2, row=5, sticky="W")
@@ -69,13 +71,23 @@ class Palette(tkinter.LabelFrame):
 
     def fill_in_room_info(self, room):
         self.label_id_value["text"] = room["room_id"]
-        if room["polygon"] is not None:
+        if room["polygon"] is not None and len(room["polygon"]) > 0:
             self.label_vertexes_value["text"] = len(room["polygon"])
+            self.button2.config(state='normal')
+            self.button3.config(text='Překreslit')
+            self.button3.config(image=self.main_window.icons.edit_redo_icon)
         else:
             self.label_vertexes_value["text"] = "nenakresleno!"
+            self.button2.config(state='disabled')
+            self.button3.config(text='Nakreslit')
+            self.button3.config(image=self.main_window.icons.edit_icon)
+
+    def remove_all_rooms(self):
+        self.listbox.delete(0, tkinter.END)
 
     def add_new_room(self, canvas_id):
         self.listbox.insert(tkinter.END, canvas_id)
+        self.button2.config(state='normal')
 
     def get_selected_room(self):
         selection = self.listbox.curselection()
