@@ -52,7 +52,7 @@ class Toolbar(tkinter.LabelFrame):
         self.button_sap_import_rooms = tkinter.Button(
             self, text="Seznam místností ze SAPu",
             image=main_window.icons.rooms_from_sap,
-            command=main_window.quit)  # TODO
+            command=main_window.import_rooms_from_sap)
 
         self.button_zoom_in = tkinter.Button(
             self, text="Zvětšit",

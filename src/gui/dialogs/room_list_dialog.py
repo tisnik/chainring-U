@@ -42,7 +42,7 @@ class RoomListDialog(tkinter.Toplevel):
             else:
                 self.txt.insert(tkinter.END, "x\t", "red")
 
-            if "canvas_id" in room:
+            if "canvas_id" in room and room["canvas_id"] is not None:
                 self.txt.insert(tkinter.END, str(room["canvas_id"]) + "\t")
             else:
                 self.txt.insert(tkinter.END, "x\t", "red")

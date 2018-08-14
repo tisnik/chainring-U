@@ -22,3 +22,15 @@ class LoadDialogs:
         filetypes = [('Výkresy', '*.drw')]
         dialog = filedialog.Open(root, filetypes=filetypes)
         return dialog.show()
+
+    @staticmethod
+    def load_rooms(root):
+        filetypes = [('Místnosti', '*.rooms')]
+        dialog = filedialog.Open(root, filetypes=filetypes)
+        return dialog.show()
+
+    @staticmethod
+    def load_rooms_from_sap(root):
+        filetypes = [('Místnosti ze SAP', '*.sap')]
+        dialog = filedialog.Open(root, filetypes=filetypes)
+        return dialog.show()

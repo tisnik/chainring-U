@@ -24,6 +24,20 @@ def dialog_delete_whole_room(sap_id):
     return messagebox.askyesno("Smazat místnost",
                                "Opravdu si přejete smazat celou místnost s označením " + sap_id + "?")
 
+
 def dialog_delete_room_polygon(sap_id):
     return messagebox.askyesno("Smazat obrys mísnosti",
                                "Opravdu si přejete smazat obrys místnosti s označením " + sap_id + "?")
+
+
+def dialog_load_new_drawing():
+    return messagebox.askyesno("Smazat stávající výkres",
+                               "Opravdu si přejete smazat stávající výkres a načíst výkres nový?")
+
+def dialog_load_rooms():
+    return messagebox.askyesno("Smazat stávající mísnosti",
+                               "Opravdu si přejete smazat stávající místnosti a načíst místnosti ze souboru?")
+
+def dialog_load_rooms_from_sap():
+    return messagebox.askyesno("Smazat stávající mísnosti",
+                               "Opravdu si přejete smazat stávající místnosti a načíst místnosti ze SAPu?")
