@@ -204,7 +204,7 @@ class MainWindow:
                 self.set_ui_items_for_actual_mode()
 
     def save_drawing_command(self, event=None):
-        pass
+        self.export_drawing_command()
 
     def delete_room_command(self, index, value):
         #print(index, value)
