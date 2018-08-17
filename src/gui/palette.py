@@ -113,9 +113,9 @@ class Palette(tkinter.LabelFrame):
                 self.listbox.selection_clear(0, tkinter.END)
                 self.listbox.selection_set(index)
         # activate(index)
-        #@delete(first, last=None
-        #get(first, last=None)
-        #size()
+        # @delete(first, last=None
+        # get(first, last=None)
+        # size()
 
     def on_room_click(self, event):
         index, value = self.get_selected_room()
@@ -140,4 +140,3 @@ class Palette(tkinter.LabelFrame):
     def delete_room_from_list(self, index):
         self.listbox.selection_clear(0, tkinter.END)
         self.listbox.delete(index)
-

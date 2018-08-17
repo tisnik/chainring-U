@@ -20,7 +20,9 @@ class DrawServiceInterface:
         self._service_url = service_url
 
     def get(self, endpoint):
-        url = "{url}/{api}/{endpoint}".format(url=self._service_url, api=DrawServiceInterface.API_PREFIX, endpoint=endpoint)
+        url = "{url}/{api}/{endpoint}".format(url=self._service_url,
+                                              api=DrawServiceInterface.API_PREFIX,
+                                              endpoint=endpoint)
         response = requests.get(url)
         return response.status_code, response.json()
 
@@ -46,14 +48,19 @@ class DrawServiceInterface:
         except Exception as e:
             return False, None, repr(e)
 
+    def check_input_data(self, data):
+        return "projects" in data and \
+               "buildings" in data and \
+               "floors" in data and \
+               "drawings" in data
+
     def read_all_drawings(self):
         try:
             code, data = self.get("all-drawings")
             if code != 200:
                 return False, "Návratový kód {code}".format(code=code)
-            if "projects" in data and "buildings" in data and "floors" in data and "drawings" in data:
+            if self.check_input_data(data):
                 return True, data, "Success"
             return False, None, "Neplatná data"
         except Exception as e:
             return False, None, repr(e)
-

@@ -119,9 +119,9 @@ class Drawing:
     def delete_room(self, room_id):
         room = self.find_room_by_room_id(room_id)
         if room is not None:
-            #print(self._rooms)
+            # print(self._rooms)
             self._rooms.remove(room)
-            #print(self._rooms)
+            # print(self._rooms)
 
     def delete_room_polygon(self, room_id):
         room = self.find_room_by_room_id(room_id)
