@@ -47,7 +47,7 @@ class RoomListDialog(tkinter.Toplevel):
             else:
                 self.txt.insert(tkinter.END, "x\t", "red")
 
-            if room["polygon"] is not None:
+            if room["polygon"] is not None and len(room["polygon"]) > 0:
                 self.txt.insert(tkinter.END, "ano\t", "green")
             else:
                 self.txt.insert(tkinter.END, "ne\t", "red")
