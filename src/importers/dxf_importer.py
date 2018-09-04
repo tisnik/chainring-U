@@ -11,6 +11,7 @@
 #
 
 from importers.dxf_reader_state import *
+from importers.dxf_codes import DxfCodes
 from drawing import Drawing
 from entities.drawing_entity_type import *
 from entities.line import *
@@ -89,14 +90,14 @@ class DxfImporter:
 
     def process_beginning(self, code, data):
         '''Part of the DXF import state machine.'''
-        if code == 0:
+        if code == DxfCodes.TEXT_STRING:
             if data == "SECTION":
                 self.state = DxfReaderState.BEGINNING_SECTION
                 print("section")
             elif data == "EOF":
                 self.state = DxfReaderState.EOF
                 print("eof")
-        elif code == 999:
+        elif code == DxfCodes.COMMENT:
             print(data)
         else:
             raise Exception("unknown code {c} for state "
@@ -127,7 +128,7 @@ class DxfImporter:
 
     def process_beginning_section(self, code, data):
         '''Part of the DXF import state machine.'''
-        if code == 2:
+        if code == DxfCodes.NAME:
             self.process_beginning_section_name_attribute(code, data)
         else:
             raise Exception("unknown code {c} for state "
@@ -135,21 +136,21 @@ class DxfImporter:
 
     def process_section_header(self, code, data):
         '''Part of the DXF import state machine.'''
-        if code == 0:
+        if code == DxfCodes.TEXT_STRING:
             if data == "ENDSEC":
                 self.state = DxfReaderState.BEGINNING
                 print("    end section header")
 
     def process_section_tables(self, code, data):
         '''Part of the DXF import state machine.'''
-        if code == 0:
+        if code == DxfCodes.TEXT_STRING:
             if data == "ENDSEC":
                 self.state = DxfReaderState.BEGINNING
                 print("    end section tables")
 
     def process_section_blocks(self, code, data):
         '''Part of the DXF import state machine.'''
-        if code == 0:
+        if code == DxfCodes.TEXT_STRING:
             if data == "BLOCK":
                 self.state = DxfReaderState.SECTION_BLOCK
                 print("    block")
@@ -159,11 +160,11 @@ class DxfImporter:
 
     def process_section_block(self, code, data):
         '''Part of the DXF import state machine.'''
-        if code == 0:
+        if code == DxfCodes.TEXT_STRING:
             if data == "ENDBLK":
                 print("        end block")
                 self.state = DxfReaderState.SECTION_BLOCKS
-        elif code == 2:
+        elif code == DxfCodes.NAME:
             self.state = DxfReaderState.SECTION_BLOCK
             self.blockName = data
             print("        begin block '{b}'".format(b=self.blockName))
@@ -184,18 +185,18 @@ class DxfImporter:
 
     def process_section_entities(self, code, data):
         '''Part of the DXF import state machine.'''
-        if code == 0:
+        if code == DxfCodes.TEXT_STRING:
             self.process_section_entities_entity_type(code, data)
 
     def process_section_objects(self, code, data):
         '''Part of the DXF import state machine.'''
-        if code == 0:
+        if code == DxfCodes.TEXT_STRING:
             if data == "ENDSEC":
                 print("    end section objects")
 
     def process_section_classes(self, code, data):
         '''Part of the DXF import state machine.'''
-        if code == 0:
+        if code == DxfCodes.TEXT_STRING:
             if data == "ENDSEC":
                 print("    end section classes")
                 self.state = DxfReaderState.BEGINNING
@@ -224,25 +225,25 @@ class DxfImporter:
 
     def process_entity(self, code, data):
         '''Part of the DXF import state machine.'''
-        if code == 8:
+        if code == DxfCodes.LAYER_NAME:
             self.layer = data
-        elif code == 10:
+        elif code == DxfCodes.X1:
             self.x1 = float(data)
-        elif code == 20:
+        elif code == DxfCodes.Y1:
             self.y1 = float(data)
-        elif code == 11:
+        elif code == DxfCodes.X2:
             self.x2 = float(data)
-        elif code == 21:
+        elif code == DxfCodes.Y2:
             self.y2 = float(data)
-        elif code == 40:
+        elif code == DxfCodes.RADIUS:
             self.radius = float(data)
-        elif code == 50:
+        elif code == DxfCodes.ANGLE1:
             self.angle1 = float(data)
-        elif code == 51:
+        elif code == DxfCodes.ANGLE2:
             self.angle2 = float(data)
-        elif code == 1:
+        elif code == DxfCodes.PRIMARY_TEXT:
             self.text = data
-        elif code == 0:
+        elif code == DxfCodes.TEXT_STRING:
             self.process_entity_type_attribute(code, data)
 
     def store_entity(self):
