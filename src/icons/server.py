@@ -1,0 +1,21 @@
+"""Icon for the following action: show service info"""
+
+# This icon was converted from the Oxygen Icon Theme
+# Please see copyright for further informations
+
+icon = """
+iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAQAAABuvaSwAAAAAXNSR0IArs4c6QAAAAlwSFlzAAAE
+wgAABMIBvM+QGAAAAAd0SU1FB9kDCAwwCdRxwksAAAACYktHRAD/h4/MvwAAAoZJREFUGBkFwU1v
+VGUYANDz3nvbmQ6CNFogINjS0mCAEIVoJO4ERVeGpTFhx9LEP+NvcAVRY2IkGqUEMBI1oI1YSqcN
+VEbKFKdl2vm49/GcBADI5XIZKqVSCQAJQO3c9KUL0yeHkyN7G+MRz5/1W8XyX79/fvnmoh4AdtS/
+/uzOvc1qGMOoIiIiIqKMYQxjs/r13hefqgE+np2/3Y6n0YnN6MZ29KIf/ejFdnRjIzqxHu347eYH
+0yS1H67PnA6FJAmhEkgySUJlIDc/9/7Z4uj4xKmuQAgAQCBJkmTijHpRH1lwEIFMkgBAqFSScN9I
+KlYH7TS0WwMAAEDo6prPB7KDVcsf+voGyGQymUwmk2GgtKGlHaLYaVc1n/1rzoemjCpkKmQYqDx1
+xYShV6sxxdKwlp30QGXBpP2+V9ol89yas1jwyItmzWfDqjjlaWykM06bd8uSP+2xW+4/K35Ex0U9
+azarQVVU1Xh/pdZy3XlH5I7Z0FY56W2VpOVLE0qH+mNl9ks1rJ3QFBaVDrhrUQhN19TVrFs1MKVV
+j1ScqG2Wz/IzXvfAbY/cN2Gv3JrHbqhs+MSmDf3BdlGs5i8Nl/Mn5pxzXDKjoy0z6w1hxIqv7Lft
+UFmMZs1ia/SYJpr69rtrESy7pi7X8Y+eaQ9rURSdbnOhPvumGU/c8NCSPV5QWLfmuqFtF2zbsny3
+7Of6a4u7z+8b+8lr3jHugJ06el4247AZyVUNy62rlzp/56K99OhqNTU6NZImTfrZuoZkXdMRuRW3
+ytVvrlx8fFuZQLKjcXTqo3ffe+v4Un0iHVZY8SD2dZfvfPvdvctb920JEoAk17Arb4zvq7+i6j1s
+Py67OraUAP8Dpeo+PSktWm8AAAAASUVORK5CYII=
+"""
