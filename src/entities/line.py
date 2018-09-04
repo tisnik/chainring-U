@@ -26,6 +26,8 @@ class Line(Entity):
         self.y1 = y1
         self.x2 = x2
         self.y2 = y2
+        self.color = None
+        self.layer = None
         # graphics entity ID on the canvas
         self._id = None
 

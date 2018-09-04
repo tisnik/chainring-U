@@ -25,6 +25,8 @@ class Circle(Entity):
         self.x = x
         self.y = y
         self.radius = radius
+        self.color = None
+        self.layer = None
         # graphics entity ID on the canvas
         self._id = None
 

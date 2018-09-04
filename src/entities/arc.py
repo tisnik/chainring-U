@@ -27,6 +27,8 @@ class Arc(Entity):
         self.radius = radius
         self.angle1 = angle1
         self.angle2 = angle2
+        self.color = None
+        self.layer = None
         # graphics entity ID on the canvas
         self._id = None
 

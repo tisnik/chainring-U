@@ -25,6 +25,8 @@ class Text(Entity):
         self.x = x
         self.y = y
         self.text = text
+        self.color = None
+        self.layer = None
         # graphics entity ID on the canvas
         self._id = None
 
