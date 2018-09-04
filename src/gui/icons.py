@@ -37,6 +37,7 @@ import icons.edit_redo
 import icons.checkbox
 import icons.service
 import icons.rooms_from_sap
+import icons.server
 
 
 class Icons:
@@ -76,3 +77,4 @@ class Icons:
         self.checkbox_icon = tkinter.PhotoImage(data=icons.checkbox.icon)
         self.service_icon = tkinter.PhotoImage(data=icons.service.icon)
         self.rooms_from_sap = tkinter.PhotoImage(data=icons.rooms_from_sap.icon)
+        self.server = tkinter.PhotoImage(data=icons.server.icon)

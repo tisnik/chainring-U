@@ -64,6 +64,11 @@ class Menubar(tkinter.Menu):
                                   compound="left", underline=0,
                                   command=main_window.import_rooms_from_sap)
 
+        self.filemenu.add_command(label="Export výkresu na server",
+                                  image=main_window.icons.server,
+                                  compound="left", underline=0,
+                                  command=main_window.import_rooms_from_sap)
+
         self.filemenu.add_separator()
 
         self.filemenu.add_command(label="Konec", image=main_window.icons.exit_icon,
@@ -181,6 +186,7 @@ class Menubar(tkinter.Menu):
         Menubar.disable_menu_item(self.filemenu, 4)
         Menubar.disable_menu_item(self.filemenu, 5)
         Menubar.disable_menu_item(self.filemenu, 7)
+        Menubar.disable_menu_item(self.filemenu, 8)
 
         Menubar.disable_menu_item(self.edit, 0)
 
@@ -196,6 +202,7 @@ class Menubar(tkinter.Menu):
         Menubar.enable_menu_item(self.filemenu, 4)
         Menubar.enable_menu_item(self.filemenu, 5)
         Menubar.enable_menu_item(self.filemenu, 7)
+        Menubar.enable_menu_item(self.filemenu, 8)
 
         Menubar.enable_menu_item(self.edit, 0)
 
