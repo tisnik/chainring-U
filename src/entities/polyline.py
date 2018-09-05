@@ -37,6 +37,7 @@ class Polyline(Entity):
             y=self.y)
 
     def asDict(self):
+        """Convert Polyline entity into proper dictionary."""
         return {
             "T": "P",
             "xpoints": self.points_x,

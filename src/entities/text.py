@@ -38,6 +38,7 @@ class Text(Entity):
             t=self.text)
 
     def asDict(self):
+        """Convert Text entity into proper dictionary."""
         return {
             "T": "T",
             "x": self.x,
