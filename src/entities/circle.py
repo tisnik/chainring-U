@@ -20,13 +20,13 @@ from geometry.bounds import Bounds
 class Circle(Entity):
     """Class that represents the circle."""
 
-    def __init__(self, x, y, radius):
+    def __init__(self, x, y, radius, color, layer):
         """Construct new circle from provided coordinates and radius."""
         self.x = x
         self.y = y
         self.radius = radius
-        self.color = None
-        self.layer = None
+        self.color = color
+        self.layer = layer
         # graphics entity ID on the canvas
         self._id = None
 

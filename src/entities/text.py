@@ -20,13 +20,13 @@ from geometry.bounds import Bounds
 class Text(Entity):
     """Class that represents the text entity."""
 
-    def __init__(self, x, y, text):
+    def __init__(self, x, y, text, color, layer):
         """Construct new text from provided coordinates and the string."""
         self.x = x
         self.y = y
         self.text = text
-        self.color = None
-        self.layer = None
+        self.color = color
+        self.layer = layer
         # graphics entity ID on the canvas
         self._id = None
 

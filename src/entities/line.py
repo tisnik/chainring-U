@@ -20,14 +20,14 @@ from geometry.bounds import Bounds
 class Line(Entity):
     """Class that represents the line."""
 
-    def __init__(self, x1, y1, x2, y2):
+    def __init__(self, x1, y1, x2, y2, color, layer):
         """Construct new line from provided coordinates."""
         self.x1 = x1
         self.y1 = y1
         self.x2 = x2
         self.y2 = y2
-        self.color = None
-        self.layer = None
+        self.color = color
+        self.layer = layer
         # graphics entity ID on the canvas
         self._id = None
 

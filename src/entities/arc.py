@@ -20,15 +20,15 @@ from geometry.bounds import Bounds
 class Arc(Entity):
     """Class that represents the arc."""
 
-    def __init__(self, x, y, radius, angle1, angle2):
+    def __init__(self, x, y, radius, angle1, angle2, color, layer):
         """Construct new arc from provided coordinates and angles."""
         self.x = x
         self.y = y
         self.radius = radius
         self.angle1 = angle1
         self.angle2 = angle2
-        self.color = None
-        self.layer = None
+        self.color = color
+        self.layer = layer
         # graphics entity ID on the canvas
         self._id = None
 
