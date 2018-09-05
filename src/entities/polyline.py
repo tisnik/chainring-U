@@ -12,6 +12,7 @@
 
 """Module with class that represents the polyline entity."""
 
+import sys
 
 from entities.entity import Entity
 from geometry.bounds import Bounds
@@ -20,12 +21,12 @@ from geometry.bounds import Bounds
 class Polyline(Entity):
     """Class that represents the polyline entity."""
 
-    def __init__(self, x, y):
+    def __init__(self, points_x, points_y, color, layer):
         """Construct new text from provided starting coordinates."""
-        self.x = x
-        self.y = y
-        self.color = None
-        self.layer = None
+        self.points_x = points_x
+        self.points_y = points_y
+        self.color = color
+        self.layer = layer
         # graphics entity ID on the canvas
         self._id = None
 
@@ -38,19 +39,50 @@ class Polyline(Entity):
     def asDict(self):
         return {
             "T": "P",
-            "x": self.x,
-            "y": self.y,
+            "xpoints": self.points_x,
+            "ypoints": self.points_y
         }
 
-    def draw(self, canvas, xoffset, yoffset, scale):
+    def draw(self, canvas, xoffset=0, yoffset=0, scale=1):
         """Draw the entity onto canvas."""
-        return (self.x, self.y, self.x, self.y)
+        points = []
+        for i in range(0, len(self.points_x)):
+            x = self.points_x[i] + xoffset
+            y = self.points_y[i] + yoffset
+            x *= scale
+            y *= scale
+            points.append(x)
+            points.append(y)
+        self._id = canvas.create_polygon(points, fill="", outline="green")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
-        pass
+        for i in range(0, len(self.points_x)):
+            self.points_x[i] = self.points_x[i] + xoffset
+            self.points_y[i] = self.points_y[i] + yoffset
+            self.points_x[i] *= scale
+            self.points_y[i] *= scale
 
     def getBounds(self):
         """Compute bounds for given entity."""
-        return Bounds(self.x, self.y,
-                      self.x, self.y)
+        xmin = sys.float_info.max
+        ymin = sys.float_info.max
+        xmax = -sys.float_info.max
+        ymax = -sys.float_info.max
+
+        for x in self.points_x:
+            if x < xmin:
+                xmin = x
+            if x > xmax:
+                xmax = x
+
+        for y in self.points_y:
+            if y < ymin:
+                ymin = y
+            if y > ymax:
+                ymax = y
+
+        print(xmin, ymin, xmax, ymax)
+
+        return Bounds(xmin, ymin,
+                      xmax, ymax)
