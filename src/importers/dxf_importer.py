@@ -15,6 +15,7 @@ from importers.dxf_codes import DxfCodes
 from drawing import Drawing
 from entities.drawing_entity_type import *
 from entities.line import *
+from entities.polyline import *
 from entities.circle import *
 from entities.arc import *
 from entities.text import *
@@ -65,10 +66,12 @@ class DxfImporter:
         self.entity_type = DrawingEntityType.UNKNOWN
         self.blockName = None
         self.statistic = {
+            DrawingEntityType.UNKNOWN: 0,
             DrawingEntityType.LINE: 0,
             DrawingEntityType.CIRCLE: 0,
             DrawingEntityType.ARC: 0,
             DrawingEntityType.TEXT: 0,
+            DrawingEntityType.POLYLINE: 0
         }
         self.entities = []
 
@@ -170,6 +173,8 @@ class DxfImporter:
             print("        begin block '{b}'".format(b=self.blockName))
 
     def process_section_entities_entity_type(self, code, data):
+        self.polyline_points_x = []
+        self.polyline_points_y = []
         if data == "LINE":
             self.state = DxfReaderState.ENTITY
             self.entityType = DrawingEntityType.LINE
@@ -179,6 +184,9 @@ class DxfImporter:
         elif data == "ARC":
             self.state = DxfReaderState.ENTITY
             self.entityType = DrawingEntityType.ARC
+        elif data == "LWPOLYLINE":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.POLYLINE
         elif data == "MTEXT" or data == "TEXT":
             self.state = DxfReaderState.ENTITY
             self.entityType = DrawingEntityType.TEXT
@@ -206,6 +214,10 @@ class DxfImporter:
         self.store_entity()
         self.state = DxfReaderState.SECTION_ENTITIES
         self.entityType = DrawingEntityType.UNKNOWN
+        self.layer = "0"
+        self.color = 0
+        self.polyline_points_x = []
+        self.polyline_points_y = []
         if data == "LINE":
             self.state = DxfReaderState.ENTITY
             self.entityType = DrawingEntityType.LINE
@@ -215,6 +227,9 @@ class DxfImporter:
         elif data == "ARC":
             self.state = DxfReaderState.ENTITY
             self.entityType = DrawingEntityType.ARC
+        elif data == "LWPOLYLINE":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.POLYLINE
         elif data == "MTEXT" or data == "TEXT":
             self.state = DxfReaderState.ENTITY
             self.entityType = DrawingEntityType.TEXT
@@ -229,8 +244,12 @@ class DxfImporter:
             self.layer = data
         elif code == DxfCodes.X1:
             self.x1 = float(data)
+            if self.entityType == DrawingEntityType.POLYLINE:
+                self.polyline_points_x.append(self.x1)
         elif code == DxfCodes.Y1:
             self.y1 = float(data)
+            if self.entityType == DrawingEntityType.POLYLINE:
+                self.polyline_points_y.append(self.y1)
         elif code == DxfCodes.X2:
             self.x2 = float(data)
         elif code == DxfCodes.Y2:
@@ -241,6 +260,8 @@ class DxfImporter:
             self.angle1 = float(data)
         elif code == DxfCodes.ANGLE2:
             self.angle2 = float(data)
+        elif code == DxfCodes.COLOR:
+            self.color = int(data)
         elif code == DxfCodes.PRIMARY_TEXT:
             self.text = data
         elif code == DxfCodes.TEXT_STRING:
@@ -253,23 +274,32 @@ class DxfImporter:
             self.store_circle()
         elif self.entityType == DrawingEntityType.ARC:
             self.store_arc()
+        elif self.entityType == DrawingEntityType.POLYLINE:
+            self.store_polyline()
         elif self.entityType == DrawingEntityType.TEXT:
             self.store_text()
         else:
             print("unknown entity?")
 
     def store_line(self):
-        self.entities.append(Line(self.x1, -self.y1, self.x2, -self.y2))
+        self.entities.append(Line(self.x1, -self.y1, self.x2, -self.y2, self.color, self.layer))
+
+    def store_polyline(self):
+        for i in range(0, len(self.polyline_points_y)):
+            self.polyline_points_y[i] = -self.polyline_points_y[i]
+        self.entities.append(Polyline(self.polyline_points_x, self.polyline_points_y, self.color, self.layer))
+        self.polyline_points_x = []
+        self.polyline_points_y = []
 
     def store_circle(self):
-        self.entities.append(Circle(self.x1, -self.y1, self.radius))
+        self.entities.append(Circle(self.x1, -self.y1, self.radius, self.color, self.layer))
 
     def store_arc(self):
         self.entities.append(Arc(self.x1, -self.y1,
-                                 self.radius, self.angle1, self.angle2))
+                                 self.radius, self.angle1, self.angle2, self.color, self.layer))
 
     def store_text(self):
-        self.entities.append(Text(self.x1, -self.y1, self.text))
+        self.entities.append(Text(self.x1, -self.y1, self.text, self.color, self.layer))
 
 
 if __name__ == "__main__":
