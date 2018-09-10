@@ -20,6 +20,7 @@ from entities.line import *
 from entities.circle import *
 from entities.arc import *
 from entities.text import *
+from entities.polyline import *
 
 
 class DrawingImporter:
@@ -41,6 +42,7 @@ class DrawingImporter:
             "A": DrawingImporter.process_arc,
             "T": DrawingImporter.process_text,
             "R": DrawingImporter.process_room,
+            "P": DrawingImporter.process_polyline
         }
 
         self.statistic = {
@@ -48,6 +50,7 @@ class DrawingImporter:
             DrawingEntityType.CIRCLE: 0,
             DrawingEntityType.ARC: 0,
             DrawingEntityType.TEXT: 0,
+            DrawingEntityType.POLYLINE: 0,
         }
         self.metadata = {}
         self.entities = []
@@ -67,6 +70,7 @@ class DrawingImporter:
             drawing.room_counter = len(self.rooms) + 1
             return drawing
         except Exception as e:
+            print(e)
             return None
 
     def parse_line(self, line):
@@ -120,38 +124,59 @@ class DrawingImporter:
 
     def process_line(self, parts):
         """Process line entity."""
-        x1 = float(parts[1])
-        y1 = float(parts[2])
-        x2 = float(parts[3])
-        y2 = float(parts[4])
+        color = int(parts[1])
+        layer = parts[2]
+        x1 = float(parts[3])
+        y1 = float(parts[4])
+        x2 = float(parts[5])
+        y2 = float(parts[6])
         self.statistic[DrawingEntityType.LINE] += 1
-        self.entities.append(Line(x1, y1, x2, y2))
+        self.entities.append(Line(x1, y1, x2, y2, color, layer))
 
     def process_circle(self, parts):
         """Process circle entity."""
-        x = float(parts[1])
-        y = float(parts[2])
-        radius = float(parts[3])
+        color = int(parts[1])
+        layer = parts[2]
+        x = float(parts[3])
+        y = float(parts[4])
+        radius = float(parts[5])
         self.statistic[DrawingEntityType.CIRCLE] += 1
-        self.entities.append(Circle(x, y, radius))
+        self.entities.append(Circle(x, y, radius, color, layer))
 
     def process_arc(self, parts):
         """Process arc entity."""
-        x = float(parts[1])
-        y = float(parts[2])
-        radius = float(parts[3])
-        angle1 = float(parts[4])
-        angle2 = float(parts[5])
+        color = int(parts[1])
+        layer = parts[2]
+        x = float(parts[3])
+        y = float(parts[4])
+        radius = float(parts[5])
+        angle1 = float(parts[6])
+        angle2 = float(parts[7])
         self.statistic[DrawingEntityType.ARC] += 1
-        self.entities.append(Arc(x, y, radius, angle1, angle2))
+        self.entities.append(Arc(x, y, radius, angle1, angle2, color, layer))
 
     def process_text(self, parts):
         """Process text entity."""
-        x = float(parts[1])
-        y = float(parts[2])
+        color = int(parts[1])
+        layer = parts[2]
+        x = float(parts[3])
+        y = float(parts[4])
         text = " ".join(parts[3:]).strip()
         self.statistic[DrawingEntityType.TEXT] += 1
-        self.entities.append(Text(x, y, text))
+        self.entities.append(Text(x, y, text, color, layer))
+
+    def process_polyline(self, parts):
+        """Process polyline entity."""
+        color = int(parts[1])
+        layer = parts[2]
+        vertexes = int(parts[3])
+        coordinates = parts[4:]
+        # first half of coordinates
+        xpoints = list(float(i) for i in coordinates[:vertexes])
+        # second half of coordinates
+        ypoints = list(float(i) for i in coordinates[vertexes:])
+        self.statistic[DrawingEntityType.POLYLINE] += 1
+        self.entities.append(Polyline(xpoints, ypoints, color, layer))
 
     def process_room(self, parts):
         """Process room polygon."""

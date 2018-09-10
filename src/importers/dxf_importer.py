@@ -214,8 +214,8 @@ class DxfImporter:
         self.store_entity()
         self.state = DxfReaderState.SECTION_ENTITIES
         self.entityType = DrawingEntityType.UNKNOWN
-        self.layer = "0"
-        self.color = 0
+        self.layer = None
+        self.color = None
         self.polyline_points_x = []
         self.polyline_points_y = []
         if data == "LINE":
