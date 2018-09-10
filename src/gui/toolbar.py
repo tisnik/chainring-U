@@ -94,6 +94,11 @@ class Toolbar(tkinter.LabelFrame):
             image=main_window.icons.edit_icon,
             command=self.main_window.draw_new_room_command)
 
+        self.button_new_room_polygon = tkinter.Button(
+            self, text="Vybrat polyčáru pro místnost",
+            image=main_window.icons.rectangle,
+            command=self.main_window.draw_new_room_command)
+
         self.button_settings = tkinter.Button(
             self, text="Nastavení",
             image=main_window.icons.properties_icon,
@@ -137,9 +142,10 @@ class Toolbar(tkinter.LabelFrame):
         spacer4.grid(column=18, row=1)
 
         self.button_new_room.grid(column=19, row=1)
+        self.button_new_room_polygon.grid(column=20, row=1)
 
-        spacer5.grid(column=20, row=1)
-        self.button_quit.grid(column=21, row=1)
+        spacer5.grid(column=21, row=1)
+        self.button_quit.grid(column=22, row=1)
 
     def show_settings_dialog(self):
         SettingsDialog(self.parent)
@@ -161,6 +167,7 @@ class Toolbar(tkinter.LabelFrame):
         Toolbar.disable_button(self.button_drawing_info)
         Toolbar.disable_button(self.button_room_list)
         Toolbar.disable_button(self.button_new_room)
+        Toolbar.disable_button(self.button_new_room_polygon)
 
     def enable_ui_items_for_drawing_mode(self):
         Toolbar.enable_button(self.button_drawing_save)
@@ -173,6 +180,7 @@ class Toolbar(tkinter.LabelFrame):
         Toolbar.enable_button(self.button_drawing_info)
         Toolbar.enable_button(self.button_room_list)
         Toolbar.enable_button(self.button_new_room)
+        Toolbar.enable_button(self.button_new_room_polygon)
 
     @staticmethod
     def disable_button(button):
