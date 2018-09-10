@@ -161,7 +161,7 @@ class DrawingImporter:
         layer = parts[2]
         x = float(parts[3])
         y = float(parts[4])
-        text = " ".join(parts[3:]).strip()
+        text = " ".join(parts[5:]).strip()
         self.statistic[DrawingEntityType.TEXT] += 1
         self.entities.append(Text(x, y, text, color, layer))
 
