@@ -64,7 +64,13 @@ class Polyline(Entity):
             y *= scale
             points.append(x)
             points.append(y)
-        self._id = canvas.create_polygon(points, fill="", outline="green")
+        if self.layer is not None and self.layer == "CKPOPISM_PLOCHA":
+            new_object = canvas.create_polygon(points, fill="", width=2, activeoutline="red", outline="green")
+            self._id = new_object
+            canvas.tag_bind(new_object, "<ButtonPress-1>",
+                            lambda event, new_object=new_object: canvas.on_polygon_for_room_click(new_object))
+        else:
+            self._id = canvas.create_polygon(points, fill="", outline="green")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
