@@ -1,0 +1,27 @@
+"""Icon for the following action: reload drawing"""
+
+# This icon was converted from the Oxygen Icon Theme
+# Please see copyright for further informations
+
+icon = """
+iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAADAFBMVEUAAAD/AAAA/wD//wAAAP//
+AP8A///////b29u2traSkpJtbW1JSUkkJCTbAAC2AACSAABtAABJAAAkAAAA2wAAtgAAkgAAbQAA
+SQAAJADb2wC2tgCSkgBtbQBJSQAkJAAAANsAALYAAJIAAG0AAEkAACTbANu2ALaSAJJtAG1JAEkk
+ACQA29sAtrYAkpIAbW0ASUkAJCT/29vbtra2kpKSbW1tSUlJJCT/trbbkpK2bW2SSUltJCT/kpLb
+bW22SUmSJCT/bW3bSUm2JCT/SUnbJCT/JCTb/9u227aStpJtkm1JbUkkSSS2/7aS25Jttm1Jkkkk
+bSSS/5Jt221JtkkkkiRt/21J20kktiRJ/0kk2yQk/yTb2/+2ttuSkrZtbZJJSW0kJEm2tv+Skttt
+bbZJSZIkJG2Skv9tbdtJSbYkJJJtbf9JSdskJLZJSf8kJNskJP///9vb27a2tpKSkm1tbUlJSST/
+/7bb25K2tm2SkkltbST//5Lb2222tkmSkiT//23b20m2tiT//0nb2yT//yT/2//bttu2kraSbZJt
+SW1JJEn/tv/bktu2bbaSSZJtJG3/kv/bbdu2SbaSJJL/bf/bSdu2JLb/Sf/bJNv/JP/b//+229uS
+trZtkpJJbW0kSUm2//+S29tttrZJkpIkbW2S//9t29tJtrYkkpJt//9J29sktrZJ//8k29sk////
+27bbtpK2km2SbUltSSRJJAD/tpLbkm22bUmSSSRtJAD/ttvbkra2bZKSSW1tJElJACT/krbbbZK2
+SW2SJEltACTbtv+2ktuSbbZtSZJJJG0kAEm2kv+SbdttSbZJJJIkAG222/+SttttkrZJbZIkSW0A
+JEmStv9tkttJbbYkSZIAJG22/9uS27ZttpJJkm0kbUkASSSS/7Zt25JJtm0kkkkAbSTb/7a225KS
+tm1tkklJbSQkSQC2/5KS221ttklJkiQkbQD/tgDbkgC2bQCSSQD/ALbbAJK2AG2SAEkAtv8AktsA
+bbYASZIAAAAAAADPKgIEAAAA+0lEQVQ4y9WVwQ6DMAxD7aj8Av//hdwRhewwpQohLZvEDuNCK1H7
+xYkKVRW/eAQ/eootSD6Crqo8CQPAsiwQEagqLCJb+z0ATNMEkiAJAFjXFfM851GUUoy+HYh7kk3U
+UWLbtjwKABB5+xzHcTloexE5mQC4iF6IjaxHa6J+klQVtdbTmS6xUUfa+FbVS3W3xEaXHTJiktj3
+Pf1uSGxlx2hiVZl5yYi9QTTxRh8Lx6nwJr0ss6pS4h5tNg2xkUPhu0i8gDcbEkfqXiRfE4+aGCPx
+grfNi43MiH0kI/EyvKw7xNmkDKOotbYbLhMfTYpl3+J0TXj0ouff/fNeMqS8rACwatEAAAAASUVO
+RK5CYII=
+"""
