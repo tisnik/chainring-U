@@ -82,6 +82,12 @@ class Menubar(tkinter.Menu):
                               command=self.main_window.draw_new_room_command,
                               accelerator="Ctrl+N")
 
+        self.edit.add_command(label="Vybrat polygon pro místnost",
+                              image=main_window.icons.rectangle,
+                              compound="left", underline=0,
+                              command=self.main_window.draw_new_room_command,
+                              accelerator="Ctrl+P")
+
         self.view = tkinter.Menu(self, tearoff=0)
         self.view.add_command(label="Zvětšit",
                               image=main_window.icons.zoom_in_icon,
