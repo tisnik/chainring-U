@@ -40,7 +40,8 @@ class Palette(tkinter.LabelFrame):
         self.button1 = tkinter.Button(self.group, text="Smazat místnost ze seznamu",
                                       compound="left",
                                       command=self.delete_room_command,
-                                      image=main_window.icons.edit_delete_shred_icon)
+                                      image=main_window.icons.edit_delete_shred_icon,
+                                      width=200)
         self.button2 = tkinter.Button(self.group, text="Vymazat",
                                       compound="left",
                                       command=self.delete_room_polygon_command,
@@ -51,9 +52,15 @@ class Palette(tkinter.LabelFrame):
                                       command=self.redraw_room_polygon_command,
                                       image=main_window.icons.edit_redo_icon,
                                       height=28)
-        self.button1.grid(column=1, row=3, sticky="W", columnspan=2)
-        self.button2.grid(column=1, row=5, sticky="W")
-        self.button3.grid(column=2, row=5, sticky="W")
+        self.button4 = tkinter.Button(self.group, text="Vybrat polyčáru",
+                                      compound="left",
+                                      command=self.select_polygon_for_room,
+                                      image=main_window.icons.rectangle,
+                                      width=200, height=28)
+        self.button1.grid(column=1, row=3, sticky="WE", columnspan=2)
+        self.button2.grid(column=1, row=5, sticky="WE")
+        self.button3.grid(column=2, row=5, sticky="WE")
+        self.button4.grid(column=1, row=6, sticky="WE", columnspan=2)
 
         self.group.pack(fill=tkinter.X, expand=False)
         self.listbox.bind("<<ListboxSelect>>", self.on_room_click)
@@ -63,11 +70,13 @@ class Palette(tkinter.LabelFrame):
         self.button1.config(state='normal')
         self.button2.config(state='normal')
         self.button3.config(state='normal')
+        self.button4.config(state='normal')
 
     def disable_all(self):
         self.button1.config(state='disabled')
         self.button2.config(state='disabled')
         self.button3.config(state='disabled')
+        self.button4.config(state='disabled')
 
     def fill_in_room_info(self, room):
         self.label_id_value["text"] = room["room_id"]
@@ -136,6 +145,11 @@ class Palette(tkinter.LabelFrame):
         index, value = self.get_selected_room()
         if value:
             self.main_window.redraw_room_polygon_command(index, value)
+
+    def select_polygon_for_room(self):
+        index, value = self.get_selected_room()
+        if value:
+            self.main_window.select_polygon_for_room(index, value)
 
     def delete_room_from_list(self, index):
         self.listbox.selection_clear(0, tkinter.END)

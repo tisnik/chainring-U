@@ -15,4 +15,5 @@ from enum import Enum
 
 class CanvasMode(Enum):
     VIEW = 1,
-    DRAW_ROOM = 2
+    DRAW_ROOM = 2,
+    SELECT_POLYGON_FOR_ROOM = 3

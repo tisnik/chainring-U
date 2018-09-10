@@ -91,7 +91,7 @@ class Canvas(tkinter.Canvas):
 
     def draw_rooms(self, rooms, xoffset, yoffset, scale):
         for room in rooms:
-            print(room["room_id"])
+            # print(room["room_id"])
             room["canvas_id"] = self.draw_room(room)
 
 
@@ -144,6 +144,9 @@ class Canvas(tkinter.Canvas):
 
     def on_room_click(self, canvas_object_id):
         self.main_window.on_room_click_canvas(canvas_object_id)
+
+    def on_polygon_for_room_click(self, canvas_object_id):
+        self.main_window.on_polygon_for_room_click_canvas(canvas_object_id)
 
     def highlight_room(self, room):
         """Highlight the given room and remove highlight for previously selected one."""
