@@ -236,6 +236,13 @@ class MainWindow:
         self.canvas_mode = CanvasMode.DRAW_ROOM
         self.edited_room_id = value
 
+    def select_polygon_for_room(self, index, value):
+        room = self.drawing.find_room_by_room_id(value)
+        if room is not None:
+            self.canvas.delete_object_with_id(room["canvas_id"])
+        self.canvas_mode = CanvasMode.SELECT_POLYGON_FOR_ROOM
+        self.edited_room_id = value
+
     def scroll_start(self, event):
         self.canvas.scan_mark(event.x, event.y)
 
@@ -323,6 +330,36 @@ class MainWindow:
             self.palette.select_room_in_list(room)
             self.canvas.highlight_room(room)
 
+    def on_polygon_for_room_click_canvas(self, canvas_object_id):
+        if self.canvas_mode == CanvasMode.SELECT_POLYGON_FOR_ROOM:
+            entity = self.drawing.find_entity_by_id(canvas_object_id)
+            if entity is not None:
+                room_id = self.edited_room_id
+
+                self.room.polygon_canvas = self.canvas.coords(canvas_object_id)
+
+                xpoints = entity.points_x
+                ypoints = entity.points_y
+                self.room.polygon_world = []
+                for i in range(0, len(xpoints)):
+                    self.room.polygon_world.append((xpoints[i], ypoints[i]))
+                canvas_id = self.canvas.draw_new_room(self.room)
+
+                self._drawing.update_room_polygon(room_id, canvas_id, self.room.polygon_world)
+                print(entity)
+                print(canvas_object_id)
+                print(canvas_id)
+                print(xpoints)
+                print(ypoints)
+                r = {"room_id" : room_id,
+                     "polygon": self.room.polygon_world}
+                self.palette.fill_in_room_info(r)
+
+            self.edited_room_id = None
+            # update left palette
+
+        self.canvas_mode = CanvasMode.VIEW
+
     def draw_new_room_line(self, canvas_x, canvas_y):
         if self.room.last_point_exist():
             self.canvas.draw_new_room_temporary_line(self.room.last_x,
@@ -357,11 +394,15 @@ class MainWindow:
     def on_left_button_pressed(self, event):
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
             self.add_vertex_to_room(event)
+        elif self.canvas_mode == CanvasMode.SELECT_POLYGON_FOR_ROOM:
+            pass
         else:
             self.scroll_start(event)
 
     def on_left_button_drag(self, event):
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
+            pass
+        elif self.canvas_mode == CanvasMode.SELECT_POLYGON_FOR_ROOM:
             pass
         else:
             self.scroll_move(event)
