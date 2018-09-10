@@ -32,7 +32,9 @@ class Circle(Entity):
 
     def str(self):
         """Return textual representation of circle."""
-        return "C {x} {y} {r}".format(
+        return "C {c} {l} {x} {y} {r}".format(
+            c=self.color,
+            l=self.layer,
             x=self.x,
             y=self.y,
             r=self.radius)
@@ -43,7 +45,9 @@ class Circle(Entity):
             "T": "C",
             "x": self.x,
             "y": self.y,
-            "r": self.radius
+            "r": self.radius,
+            "color": self.color,
+            "layer": self.layer
         }
 
     def draw(self, canvas, xoffset, yoffset, scale):

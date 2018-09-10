@@ -30,18 +30,28 @@ class Polyline(Entity):
         # graphics entity ID on the canvas
         self._id = None
 
+    @staticmethod
+    def point_list_to_str(point_list):
+        """Converts list of coordinates into string, space is used as a separator."""
+        return " ".join([str(i) for i in point_list])
+
     def str(self):
-        """Return textual representation of text entity."""
-        return "T {x} {y} {t}".format(
-            x=self.x,
-            y=self.y)
+        """Return textual representation of polyline entity."""
+        return "P {c} {l} {points} {xpoints} {ypoints}".format(
+            c=self.color,
+            l=self.layer,
+            points=len(self.points_x),
+            xpoints=Polyline.point_list_to_str(self.points_x),
+            ypoints=Polyline.point_list_to_str(self.points_y))
 
     def asDict(self):
         """Convert Polyline entity into proper dictionary."""
         return {
             "T": "P",
             "xpoints": self.points_x,
-            "ypoints": self.points_y
+            "ypoints": self.points_y,
+            "color": self.color,
+            "layer": self.layer
         }
 
     def draw(self, canvas, xoffset=0, yoffset=0, scale=1):
@@ -82,8 +92,6 @@ class Polyline(Entity):
                 ymin = y
             if y > ymax:
                 ymax = y
-
-        print(xmin, ymin, xmax, ymax)
 
         return Bounds(xmin, ymin,
                       xmax, ymax)

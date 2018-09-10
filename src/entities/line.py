@@ -33,7 +33,9 @@ class Line(Entity):
 
     def str(self):
         """Return textual representation of line."""
-        return "L {x1} {y1} {x2} {y2}".format(
+        return "L {c} {l} {x1} {y1} {x2} {y2}".format(
+            c=self.color,
+            l=self.layer,
             x1=self.x1,
             y1=self.y1,
             x2=self.x2,
@@ -47,6 +49,8 @@ class Line(Entity):
             "y1": self.y1,
             "x2": self.x2,
             "y2": self.y2,
+            "color": self.color,
+            "layer": self.layer
         }
 
     def draw(self, canvas, xoffset=0, yoffset=0, scale=1):

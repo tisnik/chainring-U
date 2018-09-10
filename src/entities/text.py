@@ -32,7 +32,9 @@ class Text(Entity):
 
     def str(self):
         """Return textual representation of text entity."""
-        return "T {x} {y} {t}".format(
+        return "T {c} {l} {x} {y} {t}".format(
+            c=self.color,
+            l=self.layer,
             x=self.x,
             y=self.y,
             t=self.text)
@@ -43,7 +45,9 @@ class Text(Entity):
             "T": "T",
             "x": self.x,
             "y": self.y,
-            "text": self.text
+            "text": self.text,
+            "color": self.color,
+            "layer": self.layer
         }
 
     def draw(self, canvas, xoffset, yoffset, scale):
