@@ -22,7 +22,11 @@ from geometry.rescaler import Rescaler
 class DrawingExporter:
     """Drawing exporter to structured text format."""
 
-    VERSION = 1
+    # supported versions:
+    # 1 - supports line, circle, arc, text, w/o color, w/o layer
+    # 2 - supports v1 + polyline + color + layer
+
+    VERSION = 2
     SCALES = [
         [320, 240],
         [400, 300],
