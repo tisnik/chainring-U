@@ -34,7 +34,8 @@ class DrawingInfoDialog(tkinter.Toplevel):
         DrawingInfoDialog.add_label(group1, 2, 1, "Kružnic")
         DrawingInfoDialog.add_label(group1, 3, 1, "Oblouků")
         DrawingInfoDialog.add_label(group1, 4, 1, "Textů")
-        DrawingInfoDialog.add_label(group1, 5, 1, "Celkem")
+        DrawingInfoDialog.add_label(group1, 5, 1, "Polyčar")
+        DrawingInfoDialog.add_label(group1, 7, 1, "Celkem")
 
         DrawingInfoDialog.add_value_widget(
             group1, 1, 2, drawing_statistic[DrawingEntityType.LINE])
@@ -49,7 +50,13 @@ class DrawingInfoDialog(tkinter.Toplevel):
             group1, 4, 2, drawing_statistic[DrawingEntityType.TEXT])
 
         DrawingInfoDialog.add_value_widget(
-            group1, 5, 2, DrawingInfoDialog.compute_sum(drawing_statistic))
+            group1, 5, 2, drawing_statistic[DrawingEntityType.POLYLINE])
+
+        lbl = tkinter.Label(group1, text="")
+        lbl.grid(row=6, column=1, columnspan=2, sticky="WE")
+
+        DrawingInfoDialog.add_value_widget(
+            group1, 7, 2, DrawingInfoDialog.compute_sum(drawing_statistic))
 
         group2 = tkinter.LabelFrame(self, text="Místnosti",
                                     padx=5, pady=5)
