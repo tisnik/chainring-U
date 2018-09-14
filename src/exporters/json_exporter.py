@@ -55,7 +55,6 @@ class JSONExporter:
 
     def export(self):
         """Export the whole drawing into the JSON file."""
-
         bounds = Bounds.computeBounds(self.entities)
         scales = []
 
