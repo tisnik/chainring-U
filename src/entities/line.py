@@ -33,9 +33,9 @@ class Line(Entity):
 
     def str(self):
         """Return textual representation of line."""
-        return "L {c} {l} {x1} {y1} {x2} {y2}".format(
-            c=self.color,
-            l=self.layer,
+        return "L {color} {layer} {x1} {y1} {x2} {y2}".format(
+            color=self.color,
+            layer=self.layer,
             x1=self.x1,
             y1=self.y1,
             x2=self.x2,

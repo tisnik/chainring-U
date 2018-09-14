@@ -34,9 +34,9 @@ class Arc(Entity):
 
     def str(self):
         """Return textual representation of arc."""
-        return "A {c} {l} {x} {y} {r} {a1} {a2}".format(
-            c=self.color,
-            l=self.layer,
+        return "A {color} {layer} {x} {y} {r} {a1} {a2}".format(
+            color=self.color,
+            layer=self.layer,
             x=self.x,
             y=self.y,
             r=self.radius,

@@ -32,9 +32,9 @@ class Text(Entity):
 
     def str(self):
         """Return textual representation of text entity."""
-        return "T {c} {l} {x} {y} {t}".format(
-            c=self.color,
-            l=self.layer,
+        return "T {color} {layer} {x} {y} {t}".format(
+            color=self.color,
+            layer=self.layer,
             x=self.x,
             y=self.y,
             t=self.text)

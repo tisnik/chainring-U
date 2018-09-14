@@ -32,9 +32,9 @@ class Circle(Entity):
 
     def str(self):
         """Return textual representation of circle."""
-        return "C {c} {l} {x} {y} {r}".format(
-            c=self.color,
-            l=self.layer,
+        return "C {color} {layer} {x} {y} {r}".format(
+            color=self.color,
+            layer=self.layer,
             x=self.x,
             y=self.y,
             r=self.radius)
