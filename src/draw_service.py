@@ -16,6 +16,10 @@ import requests
 class DrawServiceInterface:
     API_PREFIX = "api/v1"
 
+    @staticmethod
+    def get_url(address, port):
+        return "http://{address}:{port}".format(address=address, port=port)
+
     def __init__(self, service_url="http://localhost:3000"):
         self._service_url = service_url
 
@@ -47,6 +51,36 @@ class DrawServiceInterface:
             return False, None, "Neplatná data vrácená serverem"
         except Exception as e:
             return False, None, repr(e)
+
+    def read_areals(self, valid_from):
+        try:
+            code, data = self.get("areals?valid-from=" + valid_from)
+            if code != 200:
+                return None, "Návratový kód {code}".format(code=code)
+            print(data)
+            if "status" in data and data["status"] == "ok":
+                if "areals" in data:
+                    return data["areals"], "Ok"
+                else:
+                    return None, "Seznam areálů je prázdný"
+            return None, "Neplatná data vrácená serverem"
+        except Exception as e:
+            return None, repr(e)
+
+    def read_buildings(self, valid_from, aoid):
+        try:
+            code, data = self.get("buildings?valid-from=" + valid_from + "&areal-id=" + aoid)
+            if code != 200:
+                return None, "Návratový kód {code}".format(code=code)
+            print(data)
+            if "status" in data and data["status"] == "ok":
+                if "buildings" in data:
+                    return data["buildings"], "Ok"
+                else:
+                    return None, "Seznam budov je prázdný"
+            return None, "Neplatná data vrácená serverem"
+        except Exception as e:
+            return None, repr(e)
 
     def check_input_data(self, data):
         return "projects" in data and \
