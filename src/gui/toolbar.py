@@ -99,10 +99,10 @@ class Toolbar(tkinter.LabelFrame):
             image=main_window.icons.rectangle,
             command=self.main_window.draw_new_room_command)
 
-        self.button_settings = tkinter.Button(
-            self, text="Nastavení",
-            image=main_window.icons.properties_icon,
-            command=self.show_settings_dialog)
+        #self.button_settings = tkinter.Button(
+        #    self, text="Nastavení",
+        #    image=main_window.icons.properties_icon,
+        #    command=self.show_settings_dialog)
 
         self.button_quit = tkinter.Button(
             self, text="Ukončit",
@@ -137,7 +137,7 @@ class Toolbar(tkinter.LabelFrame):
 
         self.button_drawing_info.grid(column=15, row=1)
         self.button_room_list.grid(column=16, row=1)
-        self.button_settings.grid(column=17, row=1)
+        # self.button_settings.grid(column=17, row=1)
 
         spacer4.grid(column=18, row=1)
 

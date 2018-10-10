@@ -126,11 +126,11 @@ class Menubar(tkinter.Menu):
                                accelerator="Ctrl+M")
 
         self.tools.add_separator()
-        self.tools.add_command(label="Nastavení",
-                               image=main_window.icons.properties_icon,
-                               compound="left", underline=0,
-                               command=self.show_settings_dialog)
-        self.tools.add_separator()
+        #self.tools.add_command(label="Nastavení",
+        #                       image=main_window.icons.properties_icon,
+        #                       compound="left", underline=0,
+        #                       command=self.show_settings_dialog)
+        #self.tools.add_separator()
         self.tools.add_command(label="Zkontrolovat připojení k serveru",
                                image=main_window.icons.checkbox_icon,
                                compound="left", underline=0,
@@ -171,7 +171,16 @@ class Menubar(tkinter.Menu):
         RoomListDialog(self.parent, self.main_window.drawing)
 
     def check_server_connectivity(self):
-        drawServiceInterface = DrawServiceInterface()
+        address = self.main_window.configuration.server_address
+        port = self.main_window.configuration.server_port
+        if not address:
+            messagebox.showerror("Nastala chyba", "Není nastavená adresa serveru")
+            return
+        if not port:
+            messagebox.showerror("Nastala chyba", "Není nastaven port serveru")
+            return
+        url = DrawServiceInterface.get_url(address, port)
+        drawServiceInterface = DrawServiceInterface(service_url=url)
         status, message = drawServiceInterface.check_liveness()
         if status:
             messagebox.showinfo("Připojení k serveru", "Připojení k serveru: Ok")
@@ -179,7 +188,16 @@ class Menubar(tkinter.Menu):
             messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
 
     def check_service_version(self):
-        drawServiceInterface = DrawServiceInterface()
+        address = self.main_window.configuration.server_address
+        port = self.main_window.configuration.server_port
+        if not address:
+            messagebox.showerror("Nastala chyba", "Není nastavená adresa serveru")
+            return
+        if not port:
+            messagebox.showerror("Nastala chyba", "Není nastaven port serveru")
+            return
+        url = DrawServiceInterface.get_url(address, port)
+        drawServiceInterface = DrawServiceInterface(service_url=url)
         status, version, message = drawServiceInterface.read_version()
         if status:
             messagebox.showinfo("Verze rozhraní", "Verze rozhraní: {v}".format(v=version))

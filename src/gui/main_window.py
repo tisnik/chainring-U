@@ -32,6 +32,7 @@ from gui.status_bar import *
 from gui.icons import *
 from gui.canvas_mode import CanvasMode
 from gui.dialogs.room_error_dialog import *
+from gui.dialogs.error_dialogs import *
 from gui.dialogs.yes_no_dialogs import *
 from gui.dialogs.save_dialogs import SaveDialogs
 from gui.drawing_select_dialog import DrawingSelectDialog
@@ -111,8 +112,8 @@ class MainWindow:
 
     def import_rooms_from_sap(self, event=None):
         if self.drawing.rooms is None or len(self.drawing.rooms) == 0 or dialog_load_rooms_from_sap():
-            room_file_name = LoadDialogs.load_rooms_from_sap(None)
-            if room_file_name is not None and room_file_name != "" and room_file_name != ():
+            rooms_from_sap = LoadDialogs.load_rooms_from_sap(self.root, self.configuration)
+            if rooms_from_sap is not None:
                 # delete rooms from canvas
                 if self.drawing.rooms is not None:
                     for room in self.drawing.rooms:
@@ -121,11 +122,12 @@ class MainWindow:
                 self.drawing.rooms = None
                 self.drawing.room_counter = 0
                 self.palette.remove_all_rooms()
-                room_importer = SapRoomImporter(room_file_name)
-                self.drawing.rooms = room_importer.import_rooms()
-                self.drawing.room_counter = len(self.drawing.rooms) + 1
-                self.redraw()
-                self.add_all_rooms_from_drawing()
+                #
+                #room_importer = SapRoomImporter(room_file_name)
+                #self.drawing.rooms = room_importer.import_rooms()
+                #self.drawing.room_counter = len(self.drawing.rooms) + 1
+                #self.redraw()
+                #self.add_all_rooms_from_drawing()
 
     def import_drawing_command(self, filename):
         pass
