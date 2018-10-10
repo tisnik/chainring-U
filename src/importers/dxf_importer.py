@@ -51,9 +51,18 @@ class DxfImporter:
 
     def dxf_entry(self, fin):
         '''Generate pair dxf_code + dxf_data for each iteration.'''
+        linenumber = 0
         while True:
+            line1 = None
+            line2 = None
+            linenumber += 1
             line1 = fin.readline()
-            line2 = fin.readline()
+            try:
+                linenumber += 1
+                line2 = fin.readline()
+            except Exception as e:
+                print("Error on line: {line}".format(line=linenumber))
+                line2 = ""
             if not line1 or not line2:
                 break
             code = int(line1.strip())
@@ -241,7 +250,7 @@ class DxfImporter:
     def process_entity(self, code, data):
         '''Part of the DXF import state machine.'''
         if code == DxfCodes.LAYER_NAME:
-            self.layer = data
+            self.layer = data.replace(" ", "_")
         elif code == DxfCodes.X1:
             self.x1 = float(data)
             if self.entityType == DrawingEntityType.POLYLINE:
