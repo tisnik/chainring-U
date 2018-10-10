@@ -84,19 +84,35 @@ class DxfImporter:
         }
         self.entities = []
 
+    def detect_encoding(self):
+        encodings = ['utf-8', 'windows-1250', 'windows-1252']
+        for e in encodings:
+            try:
+                with open(self.filename, 'r', encoding=e) as fin:
+                    fin.readlines()
+                    fin.seek(0)
+            except UnicodeDecodeError as e:
+                # ok, we expect some errors ;)
+                pass
+            else:
+                print("Encoding: {e}".format(e=e))
+                return e
+
     def import_dxf(self):
         '''Import the DXF file and return structure containing all entities.'''
         self.init_import()
 
-        with open(self.filename) as fin:
+        encoding = self.detect_encoding()
+
+        with open(self.filename, encoding=encoding) as fin:
             lines = 0
             for code, data in self.dxf_entry(fin):
                 function = self.state_switcher.get(self.state, lambda self,
                                                    code, data: "nothing")
                 function(self, code, data)
                 lines += 1
-        print(lines)
-        print(self.statistic)
+        # print(lines)
+        # print(self.statistic)
         drawing = Drawing(self.entities, self.statistic, lines)
         return drawing
 
@@ -165,7 +181,7 @@ class DxfImporter:
         if code == DxfCodes.TEXT_STRING:
             if data == "BLOCK":
                 self.state = DxfReaderState.SECTION_BLOCK
-                print("    block")
+                # print("    block")
             elif data == "ENDSEC":
                 self.state = DxfReaderState.BEGINNING
                 print("    end section blocks")
@@ -174,12 +190,12 @@ class DxfImporter:
         '''Part of the DXF import state machine.'''
         if code == DxfCodes.TEXT_STRING:
             if data == "ENDBLK":
-                print("        end block")
+                # print("        end block")
                 self.state = DxfReaderState.SECTION_BLOCKS
         elif code == DxfCodes.NAME:
             self.state = DxfReaderState.SECTION_BLOCK
             self.blockName = data
-            print("        begin block '{b}'".format(b=self.blockName))
+            # print("        begin block '{b}'".format(b=self.blockName))
 
     def process_section_entities_entity_type(self, code, data):
         self.polyline_points_x = []
