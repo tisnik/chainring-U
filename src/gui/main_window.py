@@ -60,8 +60,8 @@ class MainWindow:
         window_height = configuration.window_height
 
         self.canvas = Canvas(self.root, window_width, window_height, self)
-        self.toolbar = Toolbar(self.root, self, self.canvas)
         self.palette = Palette(self.root, self)
+        self.toolbar = Toolbar(self.root, self, self.canvas)
         self.statusbar = StatusBar(self.root)
 
         self.menubar = Menubar(self.root, self, self.canvas)

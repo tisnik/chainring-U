@@ -31,6 +31,7 @@ import icons.properties
 import icons.view_grid
 import icons.view_boundary
 import icons.edit
+import icons.reload
 import icons.edit_delete
 import icons.edit_delete_shred
 import icons.edit_redo
@@ -68,6 +69,7 @@ class Icons:
         self.view_boundary_icon = tkinter.PhotoImage(
             data=icons.view_boundary.icon)
         self.edit_icon = tkinter.PhotoImage(data=icons.edit.icon)
+        self.reload_icon = tkinter.PhotoImage(data=icons.reload.icon)
         self.edit_delete_icon = tkinter.PhotoImage(data=icons.edit_delete.icon)
         self.edit_delete_shred_icon = tkinter.PhotoImage(
             data=icons.edit_delete_shred.icon)
