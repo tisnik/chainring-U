@@ -42,28 +42,6 @@ class Menubar(tkinter.Menu):
 
         self.filemenu.add_separator()
 
-        self.filemenu.add_command(label="Importovat místnosti",
-                                  image=main_window.icons.file_open_icon,
-                                  compound="left", underline=0,
-                                  command=main_window.import_rooms_command)
-
-        self.filemenu.add_command(label="Uložit místnosti",
-                                  image=main_window.icons.file_save_icon,
-                                  compound="left", underline=0,
-                                  command=main_window.export_rooms_command)
-
-        self.filemenu.add_command(label="Uložit místnosti jiným jménem",
-                                  image=main_window.icons.file_save_as_icon,
-                                  compound="left", underline=0,
-                                  command=main_window.export_rooms_as_command)
-
-        self.filemenu.add_separator()
-
-        self.filemenu.add_command(label="Seznam místností ze SAPu",
-                                  image=main_window.icons.rooms_from_sap,
-                                  compound="left", underline=0,
-                                  command=main_window.import_rooms_from_sap)
-
         self.filemenu.add_command(label="Export výkresu na server",
                                   image=main_window.icons.server,
                                   compound="left", underline=0,
@@ -75,18 +53,55 @@ class Menubar(tkinter.Menu):
                                   compound="left", underline=0, accelerator="Ctrl+Q",
                                   command=parent.quit)
 
+        self.rooms = tkinter.Menu(self, tearoff=0)
+
+        self.rooms.add_command(label="Seznam místností",
+                               image=main_window.icons.room_list_icon,
+                               compound="left", underline=0,
+                               command=self.show_room_list_dialog,
+                               accelerator="Ctrl+M")
+
+        self.rooms.add_separator()
+
+        self.rooms.add_command(label="Importovat místnosti",
+                               image=main_window.icons.file_open_icon,
+                               compound="left", underline=0,
+                               command=main_window.import_rooms_command)
+
+        self.rooms.add_command(label="Uložit místnosti",
+                               image=main_window.icons.file_save_icon,
+                               compound="left", underline=0,
+                               command=main_window.export_rooms_command)
+
+        self.rooms.add_command(label="Uložit místnosti jiným jménem",
+                               image=main_window.icons.file_save_as_icon,
+                               compound="left", underline=1,
+                               command=main_window.export_rooms_as_command)
+
+        self.rooms.add_separator()
+
+        self.rooms.add_command(label="Seznam místností ze SAPu",
+                                  image=main_window.icons.rooms_from_sap,
+                                  compound="left", underline=1,
+                                  command=main_window.import_rooms_from_sap)
+
+        self.rooms.add_command(label="Synchronizace místností ze SAPem",
+                                  image=main_window.icons.reload_icon,
+                                  compound="left", underline=1,
+                                  command=main_window.import_rooms_from_sap)
+
         self.edit = tkinter.Menu(self, tearoff=0)
         self.edit.add_command(label="Nakreslit místnost",
                               image=main_window.icons.edit_icon,
                               compound="left", underline=0,
-                              command=self.main_window.draw_new_room_command,
-                              accelerator="Ctrl+N")
+                              command=self.main_window.draw_new_room_command)
+                              #accelerator="Ctrl+N")
 
         self.edit.add_command(label="Vybrat polygon pro místnost",
                               image=main_window.icons.rectangle,
                               compound="left", underline=0,
-                              command=self.main_window.draw_new_room_command,
-                              accelerator="Ctrl+P")
+                              command=self.main_window.draw_new_room_command)
+                              #accelerator="Ctrl+P")
 
         self.view = tkinter.Menu(self, tearoff=0)
         self.view.add_command(label="Zvětšit",
@@ -119,12 +134,6 @@ class Menubar(tkinter.Menu):
                                command=self.show_drawing_info_dialog,
                                accelerator="Ctrl+I")
 
-        self.tools.add_command(label="Seznam místností",
-                               image=main_window.icons.room_list_icon,
-                               compound="left", underline=0,
-                               command=self.show_room_list_dialog,
-                               accelerator="Ctrl+M")
-
         self.tools.add_separator()
         #self.tools.add_command(label="Nastavení",
         #                       image=main_window.icons.properties_icon,
@@ -151,6 +160,7 @@ class Menubar(tkinter.Menu):
 
         self.add_cascade(label="Soubor", menu=self.filemenu, underline=0)
         self.add_cascade(label="Upravit", menu=self.edit, underline=0)
+        self.add_cascade(label="Místnosti", menu=self.rooms, underline=0)
         self.add_cascade(label="Zobrazit", menu=self.view, underline=0)
         self.add_cascade(label="Nástroje", menu=self.tools, underline=3)
         self.add_cascade(label="Nápověda", menu=self.helpmenu, underline=0)
@@ -207,34 +217,48 @@ class Menubar(tkinter.Menu):
     def disable_ui_items_for_no_drawing_mode(self):
         Menubar.disable_menu_item(self.filemenu, 1)
         Menubar.disable_menu_item(self.filemenu, 3)
-        Menubar.disable_menu_item(self.filemenu, 4)
-        Menubar.disable_menu_item(self.filemenu, 5)
-        Menubar.disable_menu_item(self.filemenu, 7)
-        Menubar.disable_menu_item(self.filemenu, 8)
+
+        Menubar.disable_menu_item(self.rooms, 0)
+        Menubar.disable_menu_item(self.rooms, 2)
+        Menubar.disable_menu_item(self.rooms, 3)
+        Menubar.disable_menu_item(self.rooms, 4)
+        Menubar.disable_menu_item(self.rooms, 6)
+        Menubar.disable_menu_item(self.rooms, 7)
 
         Menubar.disable_menu_item(self.edit, 0)
+        Menubar.disable_menu_item(self.edit, 1)
 
+        Menubar.disable_menu_item(self.view, 0)
+        Menubar.disable_menu_item(self.view, 1)
+        Menubar.disable_menu_item(self.view, 2)
         Menubar.disable_menu_item(self.view, 4)
         Menubar.disable_menu_item(self.view, 5)
 
         Menubar.disable_menu_item(self.tools, 0)
-        Menubar.disable_menu_item(self.tools, 1)
+        #Menubar.disable_menu_item(self.tools, 1)
 
     def enable_ui_items_for_drawing_mode(self):
         Menubar.enable_menu_item(self.filemenu, 1)
         Menubar.enable_menu_item(self.filemenu, 3)
-        Menubar.enable_menu_item(self.filemenu, 4)
-        Menubar.enable_menu_item(self.filemenu, 5)
-        Menubar.enable_menu_item(self.filemenu, 7)
-        Menubar.enable_menu_item(self.filemenu, 8)
+
+        Menubar.enable_menu_item(self.rooms, 0)
+        Menubar.enable_menu_item(self.rooms, 2)
+        Menubar.enable_menu_item(self.rooms, 3)
+        Menubar.enable_menu_item(self.rooms, 4)
+        Menubar.enable_menu_item(self.rooms, 6)
+        Menubar.enable_menu_item(self.rooms, 7)
 
         Menubar.enable_menu_item(self.edit, 0)
+        Menubar.enable_menu_item(self.edit, 1)
 
+        Menubar.enable_menu_item(self.view, 0)
+        Menubar.enable_menu_item(self.view, 1)
+        Menubar.enable_menu_item(self.view, 2)
         Menubar.enable_menu_item(self.view, 4)
         Menubar.enable_menu_item(self.view, 5)
 
         Menubar.enable_menu_item(self.tools, 0)
-        Menubar.enable_menu_item(self.tools, 1)
+        #Menubar.enable_menu_item(self.tools, 1)
 
     @staticmethod
     def disable_menu_item(menu, index):
