@@ -12,8 +12,6 @@
 
 import tkinter
 
-from tkinter import ttk
-
 
 class SettingsDialog(tkinter.Toplevel):
     def __init__(self, parent):
