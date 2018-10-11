@@ -152,10 +152,10 @@ class Menubar(tkinter.Menu):
         self.helpmenu = tkinter.Menu(self, tearoff=0)
         self.helpmenu.add_command(label="Nápověda",
                                   image=main_window.icons.help_faq_icon,
-                                  compound="left", underline=0,
+                                  compound="left", underline=0, accelerator="F1",
                                   command=help)
         self.helpmenu.add_command(label="O programu",
-                                  image=main_window.icons.help_about_icon,
+                                  image=main_window.icons.help_about_icon, accelerator="F11",
                                   compound="left", underline=0, command=about)
 
         self.add_cascade(label="Soubor", menu=self.filemenu, underline=0)
@@ -165,6 +165,8 @@ class Menubar(tkinter.Menu):
         self.add_cascade(label="Nástroje", menu=self.tools, underline=3)
         self.add_cascade(label="Nápověda", menu=self.helpmenu, underline=0)
 
+        self.parent.bind('<F1>', lambda event: help())
+        self.parent.bind('<F11>', lambda event: about())
         self.parent.bind('<Control-q>', lambda event: parent.quit())
         self.parent.bind('<Control-n>', lambda event: main_window.draw_new_room_command())
         self.parent.bind('<Control-i>', lambda event: self.show_drawing_info_dialog())
