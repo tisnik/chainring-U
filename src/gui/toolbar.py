@@ -54,6 +54,11 @@ class Toolbar(tkinter.LabelFrame):
             image=main_window.icons.rooms_from_sap,
             command=main_window.import_rooms_from_sap)
 
+        self.button_sap_sync_rooms = tkinter.Button(
+            self, text="Synchronizace místností ze SAPem",
+            image=main_window.icons.reload_icon,
+            command=main_window.import_rooms_from_sap)
+
         self.button_zoom_in = tkinter.Button(
             self, text="Zvětšit",
             image=main_window.icons.zoom_in_icon,
@@ -92,12 +97,12 @@ class Toolbar(tkinter.LabelFrame):
         self.button_new_room = tkinter.Button(
             self, text="Nakreslit místnost",
             image=main_window.icons.edit_icon,
-            command=self.main_window.draw_new_room_command)
+            command=self.main_window.palette.redraw_room_polygon_command)
 
         self.button_new_room_polygon = tkinter.Button(
             self, text="Vybrat polyčáru pro místnost",
             image=main_window.icons.rectangle,
-            command=self.main_window.draw_new_room_command)
+            command=self.main_window.palette.select_polygon_for_room)
 
         #self.button_settings = tkinter.Button(
         #    self, text="Nastavení",
@@ -114,6 +119,7 @@ class Toolbar(tkinter.LabelFrame):
         spacer3 = tkinter.Label(self, text="   ")
         spacer4 = tkinter.Label(self, text="   ")
         spacer5 = tkinter.Label(self, text="   ")
+        spacer6 = tkinter.Label(self, text="   ")
 
         self.button_drawing_load.grid(column=1, row=1)
         self.button_drawing_save.grid(column=2, row=1)
@@ -123,29 +129,33 @@ class Toolbar(tkinter.LabelFrame):
         self.button_file_open.grid(column=4, row=1)
         self.button_file_save.grid(column=5, row=1)
         self.button_file_save_as.grid(column=6, row=1)
-        self.button_sap_import_rooms.grid(column=7, row=1)
 
-        spacer2.grid(column=8, row=1)
+        spacer2.grid(column=7, row=1)
 
-        self.button_zoom_in.grid(column=9, row=1)
-        self.button_zoom_out.grid(column=10, row=1)
-        self.button_zoom_11.grid(column=11, row=1)
-        self.button_view_grid.grid(column=12, row=1)
-        self.button_view_boundary.grid(column=13, row=1)
+        self.button_sap_import_rooms.grid(column=8, row=1)
+        self.button_sap_sync_rooms.grid(column=9, row=1)
 
-        spacer3.grid(column=14, row=1)
+        spacer3.grid(column=10, row=1)
 
-        self.button_drawing_info.grid(column=15, row=1)
-        self.button_room_list.grid(column=16, row=1)
-        # self.button_settings.grid(column=17, row=1)
+        self.button_zoom_in.grid(column=11, row=1)
+        self.button_zoom_out.grid(column=12, row=1)
+        self.button_zoom_11.grid(column=13, row=1)
+        self.button_view_grid.grid(column=14, row=1)
+        self.button_view_boundary.grid(column=15, row=1)
 
-        spacer4.grid(column=18, row=1)
+        spacer4.grid(column=16, row=1)
 
-        self.button_new_room.grid(column=19, row=1)
-        self.button_new_room_polygon.grid(column=20, row=1)
+        self.button_drawing_info.grid(column=17, row=1)
+        self.button_room_list.grid(column=18, row=1)
+        # self.button_settings.grid(column=19, row=1)
 
-        spacer5.grid(column=21, row=1)
-        self.button_quit.grid(column=22, row=1)
+        spacer5.grid(column=20, row=1)
+
+        self.button_new_room.grid(column=21, row=1)
+        self.button_new_room_polygon.grid(column=22, row=1)
+
+        spacer6.grid(column=23, row=1)
+        self.button_quit.grid(column=24, row=1)
 
     def show_settings_dialog(self):
         SettingsDialog(self.parent)
@@ -162,6 +172,10 @@ class Toolbar(tkinter.LabelFrame):
         Toolbar.disable_button(self.button_file_save)
         Toolbar.disable_button(self.button_file_save_as)
         Toolbar.disable_button(self.button_sap_import_rooms)
+        Toolbar.disable_button(self.button_sap_sync_rooms)
+        Toolbar.disable_button(self.button_zoom_11)
+        Toolbar.disable_button(self.button_zoom_in)
+        Toolbar.disable_button(self.button_zoom_out)
         Toolbar.disable_button(self.button_view_grid)
         Toolbar.disable_button(self.button_view_boundary)
         Toolbar.disable_button(self.button_drawing_info)
@@ -175,6 +189,10 @@ class Toolbar(tkinter.LabelFrame):
         Toolbar.enable_button(self.button_file_save)
         Toolbar.enable_button(self.button_file_save_as)
         Toolbar.enable_button(self.button_sap_import_rooms)
+        Toolbar.enable_button(self.button_sap_sync_rooms)
+        Toolbar.enable_button(self.button_zoom_11)
+        Toolbar.enable_button(self.button_zoom_in)
+        Toolbar.enable_button(self.button_zoom_out)
         Toolbar.enable_button(self.button_view_grid)
         Toolbar.enable_button(self.button_view_boundary)
         Toolbar.enable_button(self.button_drawing_info)
