@@ -57,6 +57,11 @@ class DrawingExporter:
         fout.write("version: {v}\n".format(v=DrawingExporter.VERSION))
 
     @staticmethod
+    def output_drawing_id(fout, drawing):
+        """Write the ID into the generated file."""
+        fout.write("id: {id}\n".format(id=drawing.drawing_id))
+
+    @staticmethod
     def write_room(fout, room):
         """Write the room data into the generated file."""
         vertexes = room["polygon"]
@@ -75,6 +80,7 @@ class DrawingExporter:
         """Export the whole drawing into the text file."""
         with open(self.filename, "w") as fout:
             DrawingExporter.output_version(fout)
+            DrawingExporter.output_drawing_id(fout, self.drawing)
             DrawingExporter.output_timestamp(fout)
 
             bounds = Bounds.computeBounds(self.entities)
