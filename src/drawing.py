@@ -15,6 +15,7 @@ class Drawing:
 
     def __init__(self, entities, statistic, lines=0, metadata=None):
         self._entities = entities
+        self._drawing_id = None
         self._statistic = statistic
         self._lines = lines
         self._rooms = []
@@ -77,6 +78,14 @@ class Drawing:
     @filename.setter
     def filename(self, filename):
         self._filename = filename
+
+    @property
+    def drawing_id(self):
+        return self._drawing_id
+
+    @drawing_id.setter
+    def drawing_id(self, drawing_id):
+        self._drawing_id = drawing_id
 
     def rescale(self, xoffset, yoffset, scale):
         for entity in self._entities:
