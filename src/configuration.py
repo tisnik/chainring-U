@@ -16,9 +16,9 @@ import configparser
 class Configuration:
     CONFIG_FILE_NAME = 'config.ini'
 
-    def __init__(self):
+    def __init__(self, path="."):
         self.config = configparser.ConfigParser()
-        self.config.read(Configuration.CONFIG_FILE_NAME)
+        self.config.read(path + "/" + Configuration.CONFIG_FILE_NAME)
 
     @property
     def window_width(self):
