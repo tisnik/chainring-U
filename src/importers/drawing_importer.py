@@ -32,6 +32,7 @@ class DrawingImporter:
 
         self.commands = {
             "version:": DrawingImporter.process_version,
+            "id:": DrawingImporter.process_id,
             "created:": DrawingImporter.process_created,
             "entities:": DrawingImporter.process_entities,
             "rooms:": DrawingImporter.process_rooms,
@@ -55,6 +56,7 @@ class DrawingImporter:
         self.metadata = {}
         self.entities = []
         self.rooms = []
+        self.drawing_id = None
 
     def import_drawing(self):
         """Import the file and return structure containing all entities."""
@@ -66,6 +68,7 @@ class DrawingImporter:
                     lines += 1
             drawing = Drawing(self.entities, self.statistic, lines)
             drawing.rooms = self.rooms
+            drawing.drawing_id = self.drawing_id
             # TODO this needs to be improved for deleted rooms
             drawing.room_counter = len(self.rooms) + 1
             return drawing
@@ -87,6 +90,12 @@ class DrawingImporter:
         """Pprocess unknown command(s)."""
         print("Unknown command: '{c}'".format(c=parts[0]))
         sys.exit(0)
+
+    def process_id(self, parts):
+        """Process drawing ID."""
+        drawing_id = parts[1].strip()
+        print("Read attribute 'id': {id}".format(id=drawing_id))
+        self.drawing_id = drawing_id
 
     def process_version(self, parts):
         """Process drawing version."""
@@ -183,6 +192,6 @@ class DrawingImporter:
         room_id = parts[1]
         vertexes = int(parts[2])
         coordinates = parts[3:]
-        polygon = list((float(coordinates[i*2]), float(coordinates[i*2+1])) for i in range(vertexes))
+        polygon = list((float(coordinates[i * 2]), float(coordinates[i * 2 + 1])) for i in range(vertexes))
         self.rooms.append({"room_id": room_id,
                            "polygon": polygon})
