@@ -20,6 +20,89 @@ from draw_service import DrawServiceInterface
 
 class RoomsFromSapDialog(tkinter.Toplevel):
 
+    def calendar_part(self):
+        top_part = tkinter.LabelFrame(self, text="Datum platnosti", padx=5, pady=5)
+        top_part.grid(row=1, column=1, sticky="NWSE")
+
+        label = tkinter.Label(top_part, text="Platnost od")
+        label.grid(row=1, column=1, sticky="W", padx=5, pady=5)
+
+        self.calendar = tkinter.Entry(top_part, width=12)
+        today = time.strftime("%Y-%m-%d")
+        self.calendar.insert(tkinter.END, today)
+        self.calendar.grid(row=1, column=2, sticky="W", padx=5, pady=5)
+
+        label = tkinter.Label(top_part, text="(rok-měsíc-den)")
+        label.grid(row=2, column=2, sticky="W", padx=5, pady=5)
+
+        label = tkinter.Label(top_part, text="ID výkresu")
+        label.grid(row=1, column=4, sticky="W", padx=5, pady=5)
+
+        self.id = tkinter.StringVar()
+        self.id_entry = tkinter.Entry(top_part, width=20, state="readonly", textvariable = self.id)
+        self.id_entry.grid(row=1, column=5, sticky="W", padx=5, pady=5)
+
+        listArealsButton = tkinter.Button(top_part, text="Načíst seznam areálů", command=self.read_areals)
+        listArealsButton.grid(row=1, column=3, sticky="WE")
+
+    def command_part(self):
+        bottom_part = tkinter.LabelFrame(self, text="Operace", padx=5, pady=5)
+        bottom_part.grid(row=3, column=1, sticky="NWSE")
+
+        self.okButton = tkinter.Button(bottom_part, text="OK", width=10, command=self.ok)
+        self.okButton.grid(row=5, column=1, sticky="WE")
+
+        self.cancelButton = tkinter.Button(bottom_part, text="Storno", width=10, command=self.cancel)
+        self.cancelButton.grid(row=5, column=2, sticky="WE")
+
+    def aoid_part(self):
+        middle_part = tkinter.LabelFrame(self, text="Výběr podlaží", padx=5, pady=5)
+        middle_part.grid(row=2, column=1, sticky="NWSE")
+
+        label = tkinter.Label(middle_part, text="Areály")
+        label.grid(row=1, column=1, sticky="W", padx=5, pady=5)
+        label = tkinter.Label(middle_part, text="Budovy")
+        label.grid(row=1, column=2, sticky="W", padx=5, pady=5)
+        label = tkinter.Label(middle_part, text="Podlaží")
+        label.grid(row=1, column=3, sticky="W", padx=5, pady=5)
+        label = tkinter.Label(middle_part, text="Místnosti")
+        label.grid(row=1, column=4, sticky="W", padx=5, pady=5)
+
+        frame1 = tkinter.Frame(middle_part)
+        scrollbar1 = tkinter.Scrollbar(frame1, orient=tkinter.VERTICAL)
+        self.arealList = tkinter.Listbox(frame1, height=20, width=30, yscrollcommand=scrollbar1.set)
+        self.arealList.bind('<<ListboxSelect>>', lambda event: self.on_areal_select(event))
+        scrollbar1.config(command=self.arealList.yview)
+        scrollbar1.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+        self.arealList.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
+        frame1.grid(row=2, column=1, sticky="NWSE")
+
+        frame2 = tkinter.Frame(middle_part)
+        scrollbar2 = tkinter.Scrollbar(frame2, orient=tkinter.VERTICAL)
+        self.buildingList = tkinter.Listbox(frame2, height=20, width=30, yscrollcommand=scrollbar2.set)
+        self.buildingList.bind('<<ListboxSelect>>', lambda event: self.on_building_select(event))
+        scrollbar2.config(command=self.buildingList.yview)
+        scrollbar2.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+        self.buildingList.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
+        frame2.grid(row=2, column=2, sticky="NWSE")
+
+        frame3 = tkinter.Frame(middle_part)
+        scrollbar3 = tkinter.Scrollbar(frame3, orient=tkinter.VERTICAL)
+        self.floorList = tkinter.Listbox(frame3, height=20, width=30, yscrollcommand=scrollbar3.set)
+        self.floorList.bind('<<ListboxSelect>>', lambda event: self.on_floor_select(event))
+        scrollbar3.config(command=self.floorList.yview)
+        scrollbar3.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+        self.floorList.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
+        frame3.grid(row=2, column=3, sticky="NWSE")
+
+        frame4 = tkinter.Frame(middle_part)
+        scrollbar4 = tkinter.Scrollbar(frame4, orient=tkinter.VERTICAL)
+        self.roomList = tkinter.Listbox(frame4, height=20, width=30, yscrollcommand=scrollbar4.set)
+        scrollbar4.config(command=self.floorList.yview)
+        scrollbar4.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+        self.roomList.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
+        frame4.grid(row=2, column=4, sticky="NWSE")
+
     def __init__(self, parent, configuration):
         tkinter.Toplevel.__init__(self, parent)
 
@@ -28,6 +111,11 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         self.address = self.configuration.server_address
         self.port = self.configuration.server_port
 
+        self.areals = None
+        self.buildings = None
+        self.floors = None
+        self.rooms = None
+
         if self.address and self.port:
             self.url = DrawServiceInterface.get_url(self.address, self.port)
 
@@ -35,30 +123,9 @@ class RoomsFromSapDialog(tkinter.Toplevel):
 
         self.title("Import místností ze SAPu")
 
-        self.add_label(0, 0, "Platnost od")
-        self.add_label(1, 0, "(rok-mesic-den)")
-        today = time.strftime("%Y-%m-%d")
-        self.calendar = self.add_value_widget(0, 1, today)
-
-        self.listArealsButton = tkinter.Button(self, text="Načíst seznam areálů", command=self.read_areals)
-        self.listArealsButton.grid(row=2, column=1, sticky="WE")
-
-        self.add_label(3, 1, "Areály")
-        self.add_label(3, 2, "Budovy")
-        self.add_label(3, 3, "Podlaží")
-
-        self.arealList = tkinter.Listbox(self, height=10, width=30)
-        self.arealList.grid(row=4, column=1, sticky="WE")
-        self.arealList.bind('<<ListboxSelect>>', lambda event:self.on_areal_select(event))
-
-        self.buildingList = tkinter.Listbox(self, height=10, width=30)
-        self.buildingList.grid(row=4, column=2, sticky="WE")
-
-        self.floorList = tkinter.Listbox(self, height=10, width=30)
-        self.floorList.grid(row=4, column=3, sticky="WE")
-
-        self.okButton = tkinter.Button(self, text="OK", command=self.ok)
-        self.okButton.grid(row=5, column=1, sticky="WE")
+        self.calendar_part()
+        self.aoid_part()
+        self.command_part()
 
         # close the dialog on 'x' click
         self.protocol("WM_DELETE_WINDOW", self.destroy)
@@ -70,62 +137,111 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         self.bind("<Return>", lambda event: self.ok())
         self.bind("<Escape>", lambda event: self.destroy())
 
-    def on_areal_select(self, event):
+    def show(self):
+        self.wm_deiconify()
+        self.wait_window()
+        return self.rooms, self.id.get()
+
+    def list_box_index(self, event):
         widget = event.widget
         selection = widget.curselection()
         if selection:
-            index = int(selection[0])
-            value = widget.get(index)
+            return int(selection[0])
+        return None
+
+    def on_areal_select(self, event):
+        index = self.list_box_index(event)
+        if index is not None:
             areal = self.areals[index]
-            aoid = areal["AOID"]
-            self.read_buildings(aoid)
+            if areal and "AOID" in areal:
+                aoid = areal["AOID"]
+                self.read_buildings(aoid)
+
+    def on_building_select(self, event):
+        index = self.list_box_index(event)
+        if index is not None:
+            building = self.buildings[index]
+            if building and "AOID" in building:
+                aoid = building["AOID"]
+                self.read_floors(aoid)
+
+    def on_floor_select(self, event):
+        index = self.list_box_index(event)
+        if index is not None:
+            floor = self.floors[index]
+            if floor and "AOID" in floor:
+                aoid = floor["AOID"]
+                self.read_rooms(aoid)
+                full_id = aoid.replace(".", "_").replace("/", "_")
+                valid_from = self.calendar.get().replace("_", "").replace("-", "")
+                self.id.set("{d}_{v}".format(d=full_id, v=valid_from))
+
+    def fill_in_listbox(self, listbox, data):
+        listbox.delete(0, tkinter.END)
+        for item in data:
+            val = "{name} ({aoid})".format(name=item["Label"], aoid=item["AOID"])
+            listbox.insert(tkinter.END, val)
+
+    def error_server_address(self):
+        messagebox.showerror("Nastala chyba", "Není nastavená adresa serveru")
+
+    def error_server_call(self, message):
+        messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
 
     def read_areals(self):
         valid_from = self.calendar.get()
         if not self.url:
-            messagebox.showerror("Nastala chyba", "Není nastavená adresa serveru")
+            self.error_server_address()
             return
         data, message = self.drawServiceInterface.read_areals(valid_from)
         if data:
             self.areals = data
-            self.arealList.delete(0, tkinter.END)
-            for areal in data:
-                val = "{name} ({aoid})".format(name=areal["Label"], aoid=areal["AOID"])
-                self.arealList.insert(tkinter.END,  val)
+            self.fill_in_listbox(self.arealList, data)
         else:
-            messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
+            self.error_server_call(message)
 
     def read_buildings(self, aoid):
         valid_from = self.calendar.get()
         if not self.url:
-            messagebox.showerror("Nastala chyba", "Není nastavená adresa serveru")
+            self.error_server_address()
             return
         data, message = self.drawServiceInterface.read_buildings(valid_from, aoid)
         if data:
             self.buildings = data
-            self.buildingList.delete(0, tkinter.END)
-            for building in data:
-                val = "{name} ({aoid})".format(name=building["Label"], aoid=building["AOID"])
-                self.buildingList.insert(tkinter.END, val)
+            self.fill_in_listbox(self.buildingList, data)
         else:
-            messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
+            self.error_server_call(message)
+
+    def read_floors(self, aoid):
+        valid_from = self.calendar.get()
+        if not self.url:
+            self.error_server_address()
+            return
+        data, message = self.drawServiceInterface.read_floors(valid_from, aoid)
+        if data:
+            self.floors = data
+            self.fill_in_listbox(self.floorList, data)
+        else:
+            self.error_server_call(message)
+
+    def read_rooms(self, aoid):
+        valid_from = self.calendar.get()
+        if not self.url:
+            self.error_server_address()
+            return
+        data, message = self.drawServiceInterface.read_rooms(valid_from, aoid)
+        if data:
+            self.rooms = data
+            self.fill_in_listbox(self.roomList, data)
+        else:
+            self.error_server_call(message)
 
     def ok(self):
         self.destroy()
 
-    def add_value_widget(self, row, column, value):
-        widget = self.value_widget(value)
-        widget.grid(row=row, column=column, sticky="W", padx=5, pady=5)
-        return widget
-
-    def value_widget(self, value):
-        widget = tkinter.Entry(self, width=12)
-        widget.insert(tkinter.END, value)
-        return widget
-
-    def add_label(self, row, column, text):
-        label = tkinter.Label(self, text=text)
-        label.grid(row=row, column=column, sticky="W", padx=5, pady=5)
+    def cancel(self):
+        self.rooms = None
+        self.destroy()
 
 
 class LoadDialogs:
@@ -145,5 +261,5 @@ class LoadDialogs:
 
     @staticmethod
     def load_rooms_from_sap(root, configuration):
-        d = RoomsFromSapDialog(root, configuration)
-        return None
+        d = RoomsFromSapDialog(root, configuration).show()
+        return d
