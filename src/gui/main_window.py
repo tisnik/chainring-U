@@ -21,6 +21,7 @@ from importers.sap_room_importer import *
 from exporters.drawing_exporter import *
 from exporters.room_exporter import *
 from exporters.json_exporter import *
+from draw_service import *
 
 from geometry.utils import GeometryUtils
 from gui.canvas import *
@@ -89,6 +90,23 @@ class MainWindow:
         self.room = Room()
         self.edited_room_id = None
 
+    def send_drawing_to_server(self):
+        address = self.configuration.server_address
+        port = self.configuration.server_port
+        if not address:
+            messagebox.showerror("Nastala chyba", "Není nastavená adresa serveru")
+            return
+        if not port:
+            messagebox.showerror("Nastala chyba", "Není nastaven port serveru")
+            return
+        url = DrawServiceInterface.get_url(address, port)
+        drawServiceInterface = DrawServiceInterface(service_url=url)
+        status, message = drawServiceInterface.send_drawing(self.drawing)
+        if status:
+            messagebox.showinfo("Výsledek operace", message)
+        else:
+            messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
+
     def disable_ui_items_for_no_drawing_mode(self):
         self.toolbar.disable_ui_items_for_no_drawing_mode()
         self.menubar.disable_ui_items_for_no_drawing_mode()
@@ -110,11 +128,21 @@ class MainWindow:
     def draw_new_room_command(self, event=None):
         self.canvas_mode = CanvasMode.DRAW_ROOM
 
+    def get_rooms_from_sap(self, rooms_from_sap):
+        rooms = []
+        for r in rooms_from_sap:
+            polygon = []
+            rooms.append({"room_id": r["AOID"],
+                          "polygon": polygon})
+        return rooms
+
     def import_rooms_from_sap(self, event=None):
         if self.drawing.rooms is None or len(self.drawing.rooms) == 0 or dialog_load_rooms_from_sap():
-            rooms_from_sap = LoadDialogs.load_rooms_from_sap(self.root, self.configuration)
+            rooms_from_sap, drawing_id = LoadDialogs.load_rooms_from_sap(self.root, self.configuration)
             if rooms_from_sap is not None:
                 # delete rooms from canvas
+                if drawing_id is not None:
+                    self.drawing.drawing_id = drawing_id
                 if self.drawing.rooms is not None:
                     for room in self.drawing.rooms:
                         if "canvas_id" in room:
@@ -122,12 +150,55 @@ class MainWindow:
                 self.drawing.rooms = None
                 self.drawing.room_counter = 0
                 self.palette.remove_all_rooms()
-                #
-                #room_importer = SapRoomImporter(room_file_name)
-                #self.drawing.rooms = room_importer.import_rooms()
-                #self.drawing.room_counter = len(self.drawing.rooms) + 1
-                #self.redraw()
-                #self.add_all_rooms_from_drawing()
+                self.drawing.rooms = self.get_rooms_from_sap(rooms_from_sap)
+                self.drawing.room_counter = len(self.drawing.rooms) + 1
+                self.redraw()
+                self.add_all_rooms_from_drawing()
+
+    def synchronize_rooms_with_sap(self, event=None):
+        if self.drawing.rooms is None or len(self.drawing.rooms) == 0 or dialog_synchronize_rooms_with_sap():
+            rooms_from_sap, drawing_id = LoadDialogs.load_rooms_from_sap(self.root, self.configuration)
+            if rooms_from_sap is not None:
+                deleted = 0
+                inserted = 0
+                self.drawing.drawing_id = drawing_id
+                if self.drawing.rooms is not None:
+                    # if some room is missing in SAP, remove it from drawing as well
+                    for room in list(self.drawing.rooms):
+                        room_id = room["room_id"]
+                        found = False
+                        for q in rooms_from_sap:
+                            if q["AOID"] == room_id:
+                                found = True
+                                break
+                        if not found:
+                            print("Deleting " + room_id)
+                            deleted += 1
+                            if "canvas_id" in room:
+                                self.canvas.delete_object_with_id(room["canvas_id"])
+                            self.drawing.rooms.remove(room)
+                    # now check for new rooms added into SAP
+                    for q in rooms_from_sap:
+                        sap_id = q["AOID"]
+                        found = False
+                        for room in list(self.drawing.rooms):
+                            if room["room_id"] == sap_id:
+                                found = True
+                                break
+                        if not found:
+                            print("Adding " + sap_id)
+                            inserted += 1
+                            self.drawing.rooms.append({"room_id": sap_id,
+                                                       "polygon": []})
+
+                self.palette.remove_all_rooms()
+                self.drawing.room_counter = len(self.drawing.rooms) + 1
+                self.redraw()
+                self.add_all_rooms_from_drawing()
+                message = ("Přidaných místností: {i}\n" +
+                           "Vymazaných místností: {d}").format(i=inserted, d=deleted)
+                messagebox.showinfo("Výsledek synchronizace", message)
+
 
     def import_drawing_command(self, filename):
         pass
