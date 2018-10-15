@@ -45,7 +45,7 @@ class Menubar(tkinter.Menu):
         self.filemenu.add_command(label="Export výkresu na server",
                                   image=main_window.icons.server,
                                   compound="left", underline=0,
-                                  command=main_window.import_rooms_from_sap)
+                                  command=main_window.send_drawing_to_server)
 
         self.filemenu.add_separator()
 
@@ -88,7 +88,7 @@ class Menubar(tkinter.Menu):
         self.rooms.add_command(label="Synchronizace místností ze SAPem",
                                   image=main_window.icons.reload_icon,
                                   compound="left", underline=1,
-                                  command=main_window.import_rooms_from_sap)
+                                  command=main_window.synchronize_rooms_with_sap)
 
         self.edit = tkinter.Menu(self, tearoff=0)
         self.edit.add_command(label="Nakreslit místnost",
