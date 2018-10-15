@@ -40,6 +40,7 @@ class DrawingExporter:
         self.filename = filename
         self.entities = drawing.entities
         self.rooms = drawing.rooms
+        self.drawing_id = drawing.drawing_id
 
     @staticmethod
     def get_timestamp():
@@ -57,9 +58,9 @@ class DrawingExporter:
         fout.write("version: {v}\n".format(v=DrawingExporter.VERSION))
 
     @staticmethod
-    def output_drawing_id(fout, drawing):
+    def output_drawing_id(fout, drawing_id):
         """Write the ID into the generated file."""
-        fout.write("id: {id}\n".format(id=drawing.drawing_id))
+        fout.write("id: {id}\n".format(id=drawing_id))
 
     @staticmethod
     def write_room(fout, room):
@@ -80,7 +81,8 @@ class DrawingExporter:
         """Export the whole drawing into the text file."""
         with open(self.filename, "w") as fout:
             DrawingExporter.output_version(fout)
-            DrawingExporter.output_drawing_id(fout, self.drawing)
+            if self.drawing_id is not None:
+                DrawingExporter.output_drawing_id(fout, self.drawing_id)
             DrawingExporter.output_timestamp(fout)
 
             bounds = Bounds.computeBounds(self.entities)
