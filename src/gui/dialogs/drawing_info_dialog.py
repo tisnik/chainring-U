@@ -16,6 +16,7 @@ from entities.drawing_entity_type import *
 
 
 class DrawingInfoDialog(tkinter.Toplevel):
+
     def __init__(self, parent, drawing):
         tkinter.Toplevel.__init__(self, parent)
         self.title("Informace o výkresu")
@@ -25,6 +26,13 @@ class DrawingInfoDialog(tkinter.Toplevel):
 
         # don't display the dialog in list of opened windows
         self.transient(parent)
+
+        group0 = tkinter.LabelFrame(self, text="ID výkresu",
+                                    padx=5, pady=5)
+        group0.grid(row=0, column=1, padx=5, pady=5, sticky="WE")
+
+        # display drawing ID
+        DrawingInfoDialog.add_value_widget(group0, 1, 1, drawing.drawing_id or "Nezadáno!")
 
         group1 = tkinter.LabelFrame(self, text="Grafické entity",
                                     padx=5, pady=5)
