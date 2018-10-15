@@ -41,3 +41,7 @@ def dialog_load_rooms():
 def dialog_load_rooms_from_sap():
     return messagebox.askyesno("Smazat stávající mísnosti",
                                "Opravdu si přejete smazat stávající místnosti a načíst místnosti ze SAPu?")
+
+def dialog_synchronize_rooms_with_sap():
+    return messagebox.askyesno("Synchronizace se SAPem",
+                               "Opravdu si přejete synchronizovat stávající místnosti ze SAPem?")
