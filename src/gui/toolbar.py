@@ -57,7 +57,7 @@ class Toolbar(tkinter.LabelFrame):
         self.button_sap_sync_rooms = tkinter.Button(
             self, text="Synchronizace místností ze SAPem",
             image=main_window.icons.reload_icon,
-            command=main_window.import_rooms_from_sap)
+            command=main_window.synchronize_rooms_with_sap)
 
         self.button_zoom_in = tkinter.Button(
             self, text="Zvětšit",
