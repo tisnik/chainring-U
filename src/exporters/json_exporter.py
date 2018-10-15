@@ -53,8 +53,7 @@ class JSONExporter:
             fout.write(" {x} {y}".format(x=vertex[0], y=vertex[1]))
         fout.write("\n")
 
-    def export(self):
-        """Export the whole drawing into the JSON file."""
+    def to_json(self):
         bounds = Bounds.computeBounds(self.entities)
         scales = []
 
@@ -80,6 +79,15 @@ class JSONExporter:
             "entities": entities_list,
             "rooms": self.rooms,
         }
+        return obj
+
+    def as_string(self):
+        obj = self.to_json()
+        return json.dumps(obj, indent="\t")
+
+    def export(self):
+        """Export the whole drawing into the JSON file."""
+        obj = self.to_json()
         with open(self.filename, "w") as fout:
             json.dump(obj, fout, indent="\t")
 
