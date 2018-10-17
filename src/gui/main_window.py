@@ -346,6 +346,8 @@ class MainWindow:
         # cleanup
         self.room.cleanup()
         self.canvas_mode = CanvasMode.VIEW
+        self.room.polygon_world = []
+        self.room.polygon_canvas = []
 
     def on_right_button_pressed(self, event):
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
@@ -427,11 +429,13 @@ class MainWindow:
                 r = {"room_id" : room_id,
                      "polygon": self.room.polygon_world}
                 self.palette.fill_in_room_info(r)
+                self.room.polygon_world = []
+                self.room.polygon_canvas = []
 
             self.edited_room_id = None
             # update left palette
 
-        self.canvas_mode = CanvasMode.VIEW
+            self.canvas_mode = CanvasMode.VIEW
 
     def draw_new_room_line(self, canvas_x, canvas_y):
         if self.room.last_point_exist():
