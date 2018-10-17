@@ -40,6 +40,7 @@ import icons.service
 import icons.rooms_from_sap
 import icons.server
 import icons.rectangle
+import icons.configure
 
 
 class Icons:
@@ -82,3 +83,4 @@ class Icons:
         self.rooms_from_sap = tkinter.PhotoImage(data=icons.rooms_from_sap.icon)
         self.server = tkinter.PhotoImage(data=icons.server.icon)
         self.rectangle = tkinter.PhotoImage(data=icons.rectangle.icon)
+        self.configure = tkinter.PhotoImage(data=icons.configure.icon)
