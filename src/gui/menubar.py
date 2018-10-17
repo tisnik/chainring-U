@@ -13,6 +13,7 @@
 import tkinter
 
 from gui.dialogs.about_dialog import *
+from gui.dialogs.configure import *
 from gui.dialogs.drawing_info_dialog import DrawingInfoDialog
 from gui.dialogs.help_dialog import *
 from gui.dialogs.settings_dialog import SettingsDialog
@@ -154,9 +155,14 @@ class Menubar(tkinter.Menu):
                                   image=main_window.icons.help_faq_icon,
                                   compound="left", underline=0, accelerator="F1",
                                   command=help)
+        self.helpmenu.add_separator()
         self.helpmenu.add_command(label="O programu",
                                   image=main_window.icons.help_about_icon, accelerator="F11",
                                   compound="left", underline=0, command=about)
+        self.helpmenu.add_command(label="Aktuální konfigurace",
+                                  image=main_window.icons.configure, accelerator="F12",
+                                  compound="left", underline=0,
+                                  command=lambda: configure(self.main_window.configuration))
 
         self.add_cascade(label="Soubor", menu=self.filemenu, underline=0)
         self.add_cascade(label="Upravit", menu=self.edit, underline=0)
@@ -167,6 +173,7 @@ class Menubar(tkinter.Menu):
 
         self.parent.bind('<F1>', lambda event: help())
         self.parent.bind('<F11>', lambda event: about())
+        self.parent.bind('<F12>', lambda event: configure(self.main_window.configuration))
         self.parent.bind('<Control-q>', lambda event: parent.quit())
         self.parent.bind('<Control-n>', lambda event: main_window.draw_new_room_command())
         self.parent.bind('<Control-i>', lambda event: self.show_drawing_info_dialog())
