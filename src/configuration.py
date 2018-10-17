@@ -26,6 +26,10 @@ class Configuration:
         return v
 
     @property
+    def app_type(self):
+        return self.config.get('ui', 'app_type')
+
+    @property
     def window_height(self):
         return self.config.getint('ui', 'window_height')
 
