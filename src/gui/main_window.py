@@ -306,6 +306,7 @@ class MainWindow:
         room = self.drawing.find_room_by_room_id(value)
         if room is not None:
             self.canvas.delete_object_with_id(room["canvas_id"])
+            self.drawing.delete_room_polygon(value)
         self.canvas_mode = CanvasMode.DRAW_ROOM
         self.edited_room_id = value
 
@@ -313,6 +314,7 @@ class MainWindow:
         room = self.drawing.find_room_by_room_id(value)
         if room is not None:
             self.canvas.delete_object_with_id(room["canvas_id"])
+            self.drawing.delete_room_polygon(value)
         self.canvas_mode = CanvasMode.SELECT_POLYGON_FOR_ROOM
         self.edited_room_id = value
 
@@ -486,6 +488,8 @@ class MainWindow:
 
     # zoom on Windows
     def zoom(self, event):
+        if self.canvas_mode == CanvasMode.DRAW_ROOM:
+            return
         if event.delta > 0:
             self.canvas.scale("all", event.x, event.y, 1.1, 1.1)
         elif event.delta < 0:
@@ -494,6 +498,8 @@ class MainWindow:
 
     # zoom on Linux
     def zoom_plus(self, event=None):
+        if self.canvas_mode == CanvasMode.DRAW_ROOM:
+            return
         if event:
             self.canvas.scale("all", event.x, event.y,
                               MainWindow.SCALE_UP_FACTOR,
@@ -506,6 +512,8 @@ class MainWindow:
 
     # zoom on Linux
     def zoom_minus(self, event=None):
+        if self.canvas_mode == CanvasMode.DRAW_ROOM:
+            return
         if event:
             self.canvas.scale("all", event.x, event.y,
                               MainWindow.SCALE_DOWN_FACTOR,
