@@ -324,6 +324,8 @@ class DxfImporter:
                                  self.radius, self.angle1, self.angle2, self.color, self.layer))
 
     def store_text(self):
+        if self.text:
+            self.text = self.text.replace("\\U+00B2", u"\u00B2")
         self.entities.append(Text(self.x1, -self.y1, self.text, self.color, self.layer))
 
 
