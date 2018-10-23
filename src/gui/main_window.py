@@ -234,6 +234,9 @@ class MainWindow:
         if filename == "":
             filename = None
         if filename is not None:
+            if not filename.endswith(".rooms"):
+                filename += ".rooms";
+
             self.rooms_export_filename = filename
             exporter = RoomExporter(filename, self.drawing)
             exporter.export()
@@ -252,6 +255,9 @@ class MainWindow:
         filename = self.drawing.filename
         if filename is None:
             filename = SaveDialogs.save_drawing(self.root)
+            if not filename.endswith(".drw"):
+                filename += ".drw";
+
         self.export_drawing(filename)
 
     def export_drawing_as_command(self, event=None):
@@ -336,7 +342,7 @@ class MainWindow:
             self.palette.add_new_room(room_id)
         else:
             room_id = self.edited_room_id
-            self._drawing.update_room_polygon(room_id, canvas_id, self.room.polygon_world)
+            self._drawing.update_room_polygon(room_id, canvas_id, self.room.polygon_world, "L")
         self.edited_room_id = None
         self.canvas.delete_temporary_entities()
 
@@ -422,7 +428,7 @@ class MainWindow:
                     self.room.polygon_world.append((xpoints[i], ypoints[i]))
                 canvas_id = self.canvas.draw_new_room(self.room)
 
-                self._drawing.update_room_polygon(room_id, canvas_id, self.room.polygon_world)
+                self._drawing.update_room_polygon(room_id, canvas_id, self.room.polygon_world, "P")
                 print(entity)
                 print(canvas_object_id)
                 print(canvas_id)
