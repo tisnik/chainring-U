@@ -53,7 +53,10 @@ class RoomListDialog(tkinter.Toplevel):
                 self.txt.insert(tkinter.END, "ne\t", "red")
 
             if room["polygon"] is not None:
-                self.txt.insert(tkinter.END, str(len(room["polygon"])) + "\n")
+                typ = "?"
+                if "type" in room:
+                    typ = room["type"]
+                self.txt.insert(tkinter.END, str(len(room["polygon"])) + " (" + typ + ")\n")
             else:
                 self.txt.insert(tkinter.END, "?\n")
 
