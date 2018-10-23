@@ -75,6 +75,10 @@ class DrawingExporter:
         # room without polygon
         else:
             fout.write("R {id} 0".format(id=room["room_id"]))
+
+        if "type" in room:
+            fout.write(" {t}".format(t=room["type"]))
+
         fout.write("\n")
 
     def export(self):
@@ -94,8 +98,10 @@ class DrawingExporter:
 
             fout.write("entities: {e}\n".format(e=len(self.entities)))
             fout.write("rooms: {r}\n".format(r=len(self.rooms)))
+
             for entity in self.entities:
                 fout.write(entity.str())
                 fout.write("\n")
+
             for room in self.rooms:
                 DrawingExporter.write_room(fout, room)
