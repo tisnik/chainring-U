@@ -55,6 +55,10 @@ class RoomExporter:
         # room without polygon
         else:
             fout.write("R {id} 0".format(id=room["room_id"]))
+
+        if "type" in room:
+            fout.write(" {t}".format(t=room["type"]))
+
         fout.write("\n")
 
     def export(self):

@@ -83,5 +83,11 @@ class RoomImporter:
         vertexes = int(parts[2])
         coordinates = parts[3:]
         polygon = list((float(coordinates[i*2]), float(coordinates[i*2+1])) for i in range(vertexes))
+        last_part = parts[-1]
+        if last_part == "P" or last_part == "L":
+            typ = last_part
+        else:
+            typ = "?"
         self.rooms.append({"room_id": room_id,
-                           "polygon": polygon})
+                           "polygon": polygon,
+                           "type": typ})
