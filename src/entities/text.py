@@ -37,7 +37,7 @@ class Text(Entity):
             layer=self.layer,
             x=self.x,
             y=self.y,
-            t=self.text)
+            t=self.text.replace(u"\u00B2", "^2^"))
 
     def asDict(self):
         """Convert Text entity into proper dictionary."""

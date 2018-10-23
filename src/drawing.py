@@ -105,7 +105,7 @@ class Drawing:
         self._room_counter += 1
         return room_id
 
-    def update_room_polygon(self, room_id, canvas_id, polygon):
+    def update_room_polygon(self, room_id, canvas_id, polygon, typ="?"):
         room = self.find_room("room_id", room_id)
         if room is not None:
             print("updating")
@@ -113,6 +113,7 @@ class Drawing:
             print(polygon)
             room["canvas_id"] = canvas_id
             room["polygon"] = polygon
+            room["type"] = typ
 
     def find_room(self, selector, value):
         for room in self._rooms:
