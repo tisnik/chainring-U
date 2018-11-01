@@ -11,3 +11,17 @@
 #
 
 """Drawing exporter to CVS."""
+
+
+class CSVExporter:
+    """Drawing exporter to CVS."""
+
+    def __init__(self, filename, entities):
+        """Initialize the exporter, set the filename to be created and a sequence of entities."""
+        self.filename = filename
+        self.entities = entities
+
+    def export(self):
+        """Perform the export."""
+        # TODO: implement this feature
+        pass
