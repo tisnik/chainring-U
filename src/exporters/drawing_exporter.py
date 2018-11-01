@@ -81,17 +81,23 @@ class DrawingExporter:
 
         fout.write("\n")
 
+    # TODO: refactor this function
     def export(self):
         """Export the whole drawing into the text file."""
         with open(self.filename, "w") as fout:
             DrawingExporter.output_version(fout)
+
+            # write drawing ID, but only when the ID is known/specified
             if self.drawing_id is not None:
                 DrawingExporter.output_drawing_id(fout, self.drawing_id)
+
             DrawingExporter.output_timestamp(fout)
 
+            # compute drawing bounds and write them into the file
             bounds = Bounds.computeBounds(self.entities)
             fout.write("bounds: {b}\n".format(b=bounds))
 
+            # compute drawing scales and write them into the file
             for scale in DrawingExporter.SCALES:
                 xoffset, yoffset, s = Rescaler.computeScale(bounds, scale[0], scale[1])
                 fout.write("scale: {w} {h} {s}\n".format(w=scale[0], h=scale[1], s=s))
@@ -99,9 +105,11 @@ class DrawingExporter:
             fout.write("entities: {e}\n".format(e=len(self.entities)))
             fout.write("rooms: {r}\n".format(r=len(self.rooms)))
 
+            # write all entities
             for entity in self.entities:
                 fout.write(entity.str())
                 fout.write("\n")
 
+            # write all rooms
             for room in self.rooms:
                 DrawingExporter.write_room(fout, room)
