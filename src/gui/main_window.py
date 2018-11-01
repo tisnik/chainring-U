@@ -91,6 +91,12 @@ class MainWindow:
         self.edited_room_id = None
 
     def send_drawing_to_server(self):
+        if self.drawing is None:
+            messagebox.showerror("Nastala chyba", "Výkres není aktivní")
+            return
+        if self.drawing.drawing_id is None:
+            messagebox.showerror("Nastala chyba", "Výkres nemá přiřazen jednoznačný identifikátor (ID)")
+            return
         address = self.configuration.server_address
         port = self.configuration.server_port
         if not address:
