@@ -146,9 +146,12 @@ class MainWindow:
         if self.drawing.rooms is None or len(self.drawing.rooms) == 0 or dialog_load_rooms_from_sap():
             rooms_from_sap, drawing_id = LoadDialogs.load_rooms_from_sap(self.root, self.configuration)
             if rooms_from_sap is not None:
-                # delete rooms from canvas
+                # process drawing_id
                 if drawing_id is not None:
                     self.drawing.drawing_id = drawing_id
+                else:
+                    messagebox.showerror("Nastala chyba", "Nelze zjistit jednoznačný identifikátor výkresu")
+                # delete rooms from canvas
                 if self.drawing.rooms is not None:
                     for room in self.drawing.rooms:
                         if "canvas_id" in room:
@@ -167,7 +170,11 @@ class MainWindow:
             if rooms_from_sap is not None:
                 deleted = 0
                 inserted = 0
-                self.drawing.drawing_id = drawing_id
+                # process drawing_id
+                if drawing_id is not None:
+                    self.drawing.drawing_id = drawing_id
+                else:
+                    messagebox.showerror("Nastala chyba", "Nelze zjistit jednoznačný identifikátor výkresu")
                 if self.drawing.rooms is not None:
                     # if some room is missing in SAP, remove it from drawing as well
                     for room in list(self.drawing.rooms):
