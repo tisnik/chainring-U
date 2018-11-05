@@ -510,7 +510,8 @@ class MainWindow:
     def on_left_button_pressed(self, event):
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
             # shift key
-            if event.state == 1:
+            shift = (event.state & 0x1) != 0
+            if shift:
                 self.add_current_vertex_to_room(event)
             else:
                 self.add_vertex_to_room(event)
