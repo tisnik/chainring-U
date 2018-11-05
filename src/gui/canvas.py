@@ -46,6 +46,9 @@ class Canvas(tkinter.Canvas):
         else:
             self.hide_grid()
 
+    def draw_scale_line(self):
+        self.create_line(0, 0, self.width, 0, tags="scale", fill="white", width=0)
+
     def draw_boundary(self):
         self.create_line(2, 2,
                          self.width, 2,
