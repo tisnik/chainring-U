@@ -474,6 +474,13 @@ class MainWindow:
         else:
             return x2, y2, entity.x2, entity.y2
 
+    def add_vertex(self, canvas_x, canvas_y, world_x, world_y):
+        self.canvas.draw_cross(canvas_x, canvas_y)
+        self.draw_new_room_line(canvas_x, canvas_y)
+        self.room.polygon_canvas.append((canvas_x, canvas_y))
+        self.room.polygon_world.append((world_x, world_y))
+        # self.canvas.itemconfig(item, fill='cyan')
+
     def add_vertex_to_room(self, event):
         # get the coordinates before canvas scroll
         x = self.canvas.canvasx(event.x)
@@ -483,11 +490,7 @@ class MainWindow:
         entity = self.entity_with_endpoints(item)
         if entity is not None:
             canvas_x, canvas_y, world_x, world_y = self.nearest_endpoint(x, y, item, entity)
-            self.canvas.draw_cross(canvas_x, canvas_y)
-            self.draw_new_room_line(canvas_x, canvas_y)
-            self.room.polygon_canvas.append((canvas_x, canvas_y))
-            self.room.polygon_world.append((world_x, world_y))
-            # self.canvas.itemconfig(item, fill='cyan')
+            self.add_vertex(canvas_x, canvas_y, world_x, world_y)
 
     def on_left_button_pressed(self, event):
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
@@ -563,6 +566,7 @@ class MainWindow:
     def redraw_drawing(self):
         self.canvas.draw_grid()
         self.canvas.draw_boundary()
+        self.canvas.draw_scale_line()
         self.canvas.draw_entities(self.drawing.entities, 0, 0, 1)
         self.canvas.draw_rooms(self.drawing.rooms, 0, 0, 1)
 
