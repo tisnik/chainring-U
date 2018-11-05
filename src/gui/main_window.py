@@ -492,9 +492,28 @@ class MainWindow:
             canvas_x, canvas_y, world_x, world_y = self.nearest_endpoint(x, y, item, entity)
             self.add_vertex(canvas_x, canvas_y, world_x, world_y)
 
+    def get_scale(self):
+        scale_line = self.canvas.find_withtag("scale")[0]
+        x1, y1, x2, y2 = self.canvas.coords(scale_line)
+        len1 = self.canvas.width
+        len2 = x2 - x1
+        return 1.0 * len2 / len1, x1, y1
+
+    def add_current_vertex_to_room(self, event):
+        canvas_x = self.canvas.canvasx(event.x)
+        canvas_y = self.canvas.canvasy(event.y)
+        current_scale, xd, yd = self.get_scale()
+        world_x = (canvas_x - xd) / current_scale
+        world_y = (canvas_y - yd) / current_scale
+        self.add_vertex(canvas_x, canvas_y, world_x, world_y)
+
     def on_left_button_pressed(self, event):
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
-            self.add_vertex_to_room(event)
+            # shift key
+            if event.state == 1:
+                self.add_current_vertex_to_room(event)
+            else:
+                self.add_vertex_to_room(event)
         elif self.canvas_mode == CanvasMode.SELECT_POLYGON_FOR_ROOM:
             pass
         else:
