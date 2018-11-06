@@ -11,3 +11,9 @@
 #
 
 """Room exporter to CSV."""
+
+
+class RoomCSVExporter:
+    """Room exporter to CVS."""
+    # TODO: implementation
+    pass
