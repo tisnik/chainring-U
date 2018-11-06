@@ -20,6 +20,7 @@ from drawing import Drawing
 class RoomExporter:
     """Room exporter to structured text format."""
 
+    # currently supported version
     VERSION = 1
 
     def __init__(self, filename, drawing):
@@ -52,7 +53,7 @@ class RoomExporter:
                                                       vertex_count=len(vertexes)))
             for vertex in vertexes:
                 fout.write(" {x} {y}".format(x=vertex[0], y=vertex[1]))
-        # room without polygon
+        # room without polygon needs to have zero vertexes specified
         else:
             fout.write("R {id} 0".format(id=room["room_id"]))
 
@@ -68,5 +69,6 @@ class RoomExporter:
             RoomExporter.output_timestamp(fout)
 
             fout.write("rooms: {r}\n".format(r=len(self.rooms)))
+            # export all rooms
             for room in self.rooms:
                 RoomExporter.write_room(fout, room)
