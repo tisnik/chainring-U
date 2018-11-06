@@ -26,7 +26,10 @@ class DrawingExporter:
     # 1 - supports line, circle, arc, text, w/o color, w/o layer
     # 2 - supports v1 + polyline + color + layer
 
+    # the default version
     VERSION = 2
+
+    # supported scales to be used in drawing files
     SCALES = [
         [320, 240],
         [400, 300],
@@ -72,10 +75,11 @@ class DrawingExporter:
                                                       vertex_count=len(vertexes)))
             for vertex in vertexes:
                 fout.write(" {x} {y}".format(x=vertex[0], y=vertex[1]))
-        # room without polygon
+        # room without polygon need to have zero vertexes
         else:
             fout.write("R {id} 0".format(id=room["room_id"]))
 
+        # the room type field is optional
         if "type" in room:
             fout.write(" {t}".format(t=room["type"]))
 
