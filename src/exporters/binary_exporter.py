@@ -26,4 +26,6 @@ class BinaryExporter:
     def export_binary_drawing(self):
         """Export (serialize) the drawing into a binary file."""
         with open(self.filename, "wb") as fout:
+            # at this moment we use simple approach:
+            # dump() function from pickle module
             pickle.dump(self.entities, fout)
