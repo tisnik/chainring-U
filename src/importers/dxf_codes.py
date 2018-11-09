@@ -45,3 +45,4 @@ class DxfCodes:
     VISIBILITY = 60
     COLOR = 62
     COMMENT = 999
+    MIRROR = 230

@@ -243,6 +243,7 @@ class DxfImporter:
         self.color = None
         self.polyline_points_x = []
         self.polyline_points_y = []
+        self.mirror = 1
         if data == "LINE":
             self.state = DxfReaderState.ENTITY
             self.entityType = DrawingEntityType.LINE
@@ -289,6 +290,8 @@ class DxfImporter:
             self.color = int(data)
         elif code == DxfCodes.PRIMARY_TEXT:
             self.text = data
+        elif code == DxfCodes.MIRROR:
+            self.mirror = int(float(data))
         elif code == DxfCodes.TEXT_STRING:
             self.process_entity_type_attribute(code, data)
 
@@ -317,6 +320,9 @@ class DxfImporter:
         self.polyline_points_y = []
 
     def store_circle(self):
+        if self.mirror == -1:
+            print("MIRROR")
+            self.x1 = -self.x1
         self.entities.append(Circle(self.x1, -self.y1, self.radius, self.color, self.layer))
 
     def store_arc(self):
