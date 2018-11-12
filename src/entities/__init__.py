@@ -10,7 +10,6 @@
 #      Pavel Tisnovsky
 #
 
-"""Graphics entities used in drawing."""
+"""Graphics entities imported from DXF format and used in drawing."""
 
-# TODO: polylines
 # TODO: text entity to work properly
