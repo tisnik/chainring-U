@@ -1,5 +1,5 @@
 #
-#  (C) Copyright 2017  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -10,13 +10,13 @@
 #      Pavel Tisnovsky
 #
 
-"""Module with class that represents bounds of one entity or entity group."""
+"""Module with class that represents bounds of one entity or a larger entity group."""
 
 import sys
 
 
 class Bounds:
-    """Class representing bounds of given entity or group of entitites."""
+    """Class representing bounds of given entity or a larger group of entitites."""
 
     def __init__(self,
                  xmin=sys.float_info.max, ymin=sys.float_info.max,
