@@ -10,11 +10,11 @@
 #      Pavel Tisnovsky
 #
 
-"""Module with abstract class that represents any entity."""
+"""Module with abstract class that represents any two dimensional entity."""
 
 
 class Entity:
-    """Abstract class that represents any entity."""
+    """Abstract class that represents any two dimensional entity."""
 
     def draw(self, canvas, xoffset, yoffset, scale):
         """Draw the entity onto canvas."""
