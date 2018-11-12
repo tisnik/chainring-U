@@ -10,7 +10,7 @@
 #      Pavel Tisnovsky
 #
 
-"""Module with class that represents the text entity."""
+"""Module with class that represents the two dimensional text entity."""
 
 
 from entities.entity import Entity
@@ -18,10 +18,10 @@ from geometry.bounds import Bounds
 
 
 class Text(Entity):
-    """Class that represents the text entity."""
+    """Class that represents the two dimensional text entity."""
 
     def __init__(self, x, y, text, color, layer):
-        """Construct new text from provided coordinates and the string."""
+        """Construct new text from provided coordinates, the string, color code, and layer name."""
         self.x = x
         self.y = y
         self.text = text
@@ -52,16 +52,20 @@ class Text(Entity):
 
     def draw(self, canvas, xoffset, yoffset, scale):
         """Draw the entity onto canvas."""
+        # step 1: translate
         x = self.x + xoffset
         y = self.y + yoffset
+        # step 2: scale
         x *= scale
         y *= scale
         self._id = canvas.create_text(x, y, text=self.text, fill="blue", tags="drawing")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
+        # step 1: translate
         self.x = self.x + xoffset
         self.y = self.y + yoffset
+        # step 2: scale
         self.x *= scale
         self.y *= scale
 
