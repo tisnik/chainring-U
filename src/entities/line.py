@@ -10,7 +10,7 @@
 #      Pavel Tisnovsky
 #
 
-"""Module with class that represents the line."""
+"""Module with class that represents the two dimensional line entity."""
 
 
 from entities.entity import Entity
@@ -18,10 +18,10 @@ from geometry.bounds import Bounds
 
 
 class Line(Entity):
-    """Class that represents the line."""
+    """Class that represents the two dimensional line entity."""
 
     def __init__(self, x1, y1, x2, y2, color, layer):
-        """Construct new line from provided coordinates."""
+        """Construct new line from provided coordinates, color code, and layer name."""
         self.x1 = x1
         self.y1 = y1
         self.x2 = x2
@@ -55,10 +55,12 @@ class Line(Entity):
 
     def draw(self, canvas, xoffset=0, yoffset=0, scale=1):
         """Draw the entity onto canvas."""
+        # step 1: translate
         x1 = self.x1 + xoffset
         y1 = self.y1 + yoffset
         x2 = self.x2 + xoffset
         y2 = self.y2 + yoffset
+        # step 2: scale
         x1 *= scale
         y1 *= scale
         x2 *= scale
