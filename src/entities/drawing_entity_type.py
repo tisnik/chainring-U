@@ -10,14 +10,14 @@
 #      Pavel Tisnovsky
 #
 
-"""All entity types that can be used in drawings."""
+"""Enumeration with all entity types that can be used in drawings."""
 
 
 from enum import Enum
 
 
 class DrawingEntityType(Enum):
-    """All entity types that can be used in drawings."""
+    """Enumeration with all entity types that can be used in drawings."""
 
     UNKNOWN = 1,
     LINE = 2,
