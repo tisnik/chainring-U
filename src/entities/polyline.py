@@ -10,7 +10,7 @@
 #      Pavel Tisnovsky
 #
 
-"""Module with class that represents the polyline entity."""
+"""Module with class that represents the two dimensional polyline entity."""
 
 import sys
 
@@ -19,10 +19,10 @@ from geometry.bounds import Bounds
 
 
 class Polyline(Entity):
-    """Class that represents the polyline entity."""
+    """Class that represents the two dimensional polyline entity."""
 
     def __init__(self, points_x, points_y, color, layer):
-        """Construct new text from provided starting coordinates."""
+        """Construct new text from provided starting coordinates, color code, and layer name."""
         self.points_x = points_x
         self.points_y = points_y
         self.color = color
@@ -64,19 +64,23 @@ class Polyline(Entity):
             y *= scale
             points.append(x)
             points.append(y)
+        # special polyline used for selecting room
         if self.layer is not None and self.layer == "CKPOPISM_PLOCHA":
             new_object = canvas.create_polygon(points, fill="", width=2, activeoutline="red", outline="green")
             self._id = new_object
             canvas.tag_bind(new_object, "<ButtonPress-1>",
                             lambda event, new_object=new_object: canvas.on_polygon_for_room_click(new_object))
+        # just a regular polyline
         else:
             self._id = canvas.create_polygon(points, fill="", outline="green")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
         for i in range(0, len(self.points_x)):
+            # step 1: translate
             self.points_x[i] = self.points_x[i] + xoffset
             self.points_y[i] = self.points_y[i] + yoffset
+            # step 2: scale
             self.points_x[i] *= scale
             self.points_y[i] *= scale
 
@@ -87,12 +91,14 @@ class Polyline(Entity):
         xmax = -sys.float_info.max
         ymax = -sys.float_info.max
 
+        # x bounds for all vertexes
         for x in self.points_x:
             if x < xmin:
                 xmin = x
             if x > xmax:
                 xmax = x
 
+        # y bounds for all vertexes
         for y in self.points_y:
             if y < ymin:
                 ymin = y
