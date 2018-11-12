@@ -10,7 +10,7 @@
 #      Pavel Tisnovsky
 #
 
-"""Module with class that represents the circle."""
+"""Module with class that represents the two dimensional circle entity."""
 
 
 from entities.entity import Entity
@@ -18,10 +18,10 @@ from geometry.bounds import Bounds
 
 
 class Circle(Entity):
-    """Class that represents the circle."""
+    """Class that represents the two dimensional circle entity."""
 
     def __init__(self, x, y, radius, color, layer):
-        """Construct new circle from provided coordinates and radius."""
+        """Construct new circle from provided coordinates, radius, color code, and layer name."""
         self.x = x
         self.y = y
         self.radius = radius
@@ -52,14 +52,17 @@ class Circle(Entity):
 
     def draw(self, canvas, xoffset, yoffset, scale):
         """Draw the entity onto canvas."""
+        # draw the circle, remember the canvas ID of the new graphics entity
         self._id = canvas.create_oval(self.x - self.radius, self.y - self.radius,
                                       self.x + self.radius, self.y + self.radius,
                                       tags="drawing")   # fill="red", tags="drawing")
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
+        # step 1: translate
         self.x = self.x + xoffset
         self.y = self.y + yoffset
+        # step 2: scale
         self.x *= scale
         self.y *= scale
         self.radius *= scale
