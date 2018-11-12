@@ -10,7 +10,9 @@
 #      Pavel Tisnovsky
 #
 
+
 """Class to recompute scale from canvas size and computed bounds."""
+
 
 class Rescaler:
     """Class to recompute scale from canvas size and computed bounds."""
