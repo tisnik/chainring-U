@@ -10,14 +10,14 @@
 #      Pavel Tisnovsky
 #
 
-"""All layers that must be distinguished."""
+"""All layers that must be distinguished by the application."""
 
 
 from enum import Enum
 
 
 class Layers(Enum):
-    """All layers that must be distinguished."""
+    """All layers that must be distinguished by the application."""
 
     DEFAULT = 1,
     DIMENSION = 2,
