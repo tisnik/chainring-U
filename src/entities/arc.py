@@ -10,7 +10,7 @@
 #      Pavel Tisnovsky
 #
 
-"""Module with class that represents the arc."""
+"""Module with class that represents the two dimensional arc entity."""
 
 
 from entities.entity import Entity
@@ -18,10 +18,10 @@ from geometry.bounds import Bounds
 
 
 class Arc(Entity):
-    """Class that represents the arc."""
+    """Class that represents the two dimensional arc entity."""
 
     def __init__(self, x, y, radius, angle1, angle2, color, layer):
-        """Construct new arc from provided coordinates and angles."""
+        """Construct new arc from provided coordinates, angles, color code, and layer name."""
         self.x = x
         self.y = y
         self.radius = radius
@@ -57,13 +57,14 @@ class Arc(Entity):
         }
 
     def draw(self, canvas, xoffset, yoffset, scale):
-        """Draw the entity onto canvas."""
+        """Draw the two dimensional arc entity onto canvas."""
         extent = self.angle2 - self.angle1
 
         # don't use negative angle, not well supported in Tkinter
         if extent < 0:
             extent += 360
 
+        # draw the arc, remember the canvas ID of the new graphics entity
         self._id = canvas.create_arc(self.x - self.radius, self.y - self.radius,
                                      self.x + self.radius, self.y + self.radius,
                                      start=self.angle1, extent=extent,
@@ -72,8 +73,10 @@ class Arc(Entity):
 
     def transform(self, xoffset, yoffset, scale):
         """Perform the transformation of the entity into paper space."""
+        # step 1: translate
         self.x = self.x + xoffset
         self.y = self.y + yoffset
+        # step 2: scale
         self.x *= scale
         self.y *= scale
         self.radius *= scale
