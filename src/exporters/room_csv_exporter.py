@@ -10,10 +10,10 @@
 #      Pavel Tisnovsky
 #
 
-"""Room exporter to CSV."""
+"""Room exporter (serializer) to CSV."""
 
 
 class RoomCSVExporter:
-    """Room exporter to CVS."""
+    """Room exporter (serializer) to CVS."""
     # TODO: implementation
     pass
