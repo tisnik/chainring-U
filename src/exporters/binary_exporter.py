@@ -10,13 +10,13 @@
 #      Pavel Tisnovsky
 #
 
-"""Module to export drawing into a binary file."""
+"""Module to export (serialize) whole drawing into a binary file."""
 
 import pickle
 
 
 class BinaryExporter:
-    """Class to export drawing into a binary file."""
+    """Class to export (serialize) whole drawing into a binary file."""
 
     def __init__(self, filename, entities):
         """Initialize the exporter."""
