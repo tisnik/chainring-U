@@ -10,7 +10,7 @@
 #      Pavel Tisnovsky
 #
 
-"""Importer for drawings stored in a text file."""
+"""Importer (deserializer) for drawings stored in structured text file."""
 
 import sys
 
@@ -24,7 +24,7 @@ from entities.polyline import *
 
 
 class DrawingImporter:
-    """Importer for drawings stored in a text file."""
+    """Importer (deserializer) for drawings stored in structured text file."""
 
     def __init__(self, filename):
         """Initialize the object, set the filename to be read, and setup callback functions."""
@@ -61,6 +61,7 @@ class DrawingImporter:
     def import_drawing(self):
         """Import the file and return structure containing all entities."""
         try:
+            # read and parse all lines
             with open(self.filename) as fin:
                 lines = 0
                 for line in fin:
@@ -81,6 +82,7 @@ class DrawingImporter:
         parts = line.split(" ")
         # remove end of lines
         parts = [item.strip() for item in parts]
+        # first string or word is a command
         command = parts[0]
         function = self.commands.get(command,
                                      DrawingImporter.process_unknown_command)
@@ -92,47 +94,47 @@ class DrawingImporter:
         sys.exit(0)
 
     def process_id(self, parts):
-        """Process drawing ID."""
+        """Process command with drawing ID."""
         drawing_id = parts[1].strip()
         print("Read attribute 'id': {id}".format(id=drawing_id))
         self.drawing_id = drawing_id
 
     def process_version(self, parts):
-        """Process drawing version."""
+        """Process command with drawing version."""
         version = parts[1].strip()
         print("Read attribute 'version': {v}".format(v=version))
         self.metadata["version"] = version
 
     def process_created(self, parts):
-        """Process the date when drawing was created."""
+        """Process command with the date when drawing was created."""
         created = " ".join(parts[1:]).strip()
         print("Read attribute 'created': {c}".format(c=created))
         self.metadata["created"] = created
 
     def process_entities(self, parts):
-        """Process number of entities."""
+        """Process command with number of entities."""
         entities = parts[1].strip()
         print("Read attribute 'entities': {e}".format(e=entities))
         self.metadata["entities"] = entities
 
     def process_rooms(self, parts):
-        """Process number of rooms."""
+        """Process command with number of rooms."""
         rooms = parts[1].strip()
         print("Read attribute 'rooms': {r}".format(r=rooms))
         self.metadata["rooms"] = rooms
 
     def process_bounds(self, parts):
-        """Process the bounds line."""
+        """Process command with the bounds line."""
         # we don't need this attribute ATM
         pass
 
     def process_scale(self, parts):
-        """Process the scale line."""
+        """Process command with the scale line."""
         # we don't need this attribute ATM
         pass
 
     def process_line(self, parts):
-        """Process line entity."""
+        """Process command with line entity."""
         color = int(parts[1])
         layer = parts[2]
         x1 = float(parts[3])
@@ -143,7 +145,7 @@ class DrawingImporter:
         self.entities.append(Line(x1, y1, x2, y2, color, layer))
 
     def process_circle(self, parts):
-        """Process circle entity."""
+        """Process command with circle entity."""
         color = int(parts[1])
         layer = parts[2]
         x = float(parts[3])
@@ -153,7 +155,7 @@ class DrawingImporter:
         self.entities.append(Circle(x, y, radius, color, layer))
 
     def process_arc(self, parts):
-        """Process arc entity."""
+        """Process command with arc entity."""
         color = int(parts[1])
         layer = parts[2]
         x = float(parts[3])
@@ -165,7 +167,7 @@ class DrawingImporter:
         self.entities.append(Arc(x, y, radius, angle1, angle2, color, layer))
 
     def process_text(self, parts):
-        """Process text entity."""
+        """Process command with text entity."""
         color = int(parts[1])
         layer = parts[2]
         x = float(parts[3])
@@ -176,7 +178,7 @@ class DrawingImporter:
         self.entities.append(Text(x, y, text, color, layer))
 
     def process_polyline(self, parts):
-        """Process polyline entity."""
+        """Process command with polyline entity."""
         color = int(parts[1])
         layer = parts[2]
         vertexes = int(parts[3])
@@ -189,12 +191,13 @@ class DrawingImporter:
         self.entities.append(Polyline(xpoints, ypoints, color, layer))
 
     def process_room(self, parts):
-        """Process room polygon."""
+        """Process command with room polygon."""
         room_id = parts[1]
         vertexes = int(parts[2])
         coordinates = parts[3:]
         polygon = list((float(coordinates[i * 2]), float(coordinates[i * 2 + 1])) for i in range(vertexes))
         last_part = parts[-1]
+        # type: drawn from polygon or from series of line vertexes
         if last_part == "P" or last_part == "L":
             typ = last_part
         else:
