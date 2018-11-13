@@ -10,7 +10,7 @@
 #      Pavel Tisnovsky
 #
 
-"""Room exporter to structured text format."""
+"""Rooms exporter (serializer) to structured text format."""
 
 from datetime import *
 
@@ -18,7 +18,7 @@ from drawing import Drawing
 
 
 class RoomExporter:
-    """Room exporter to structured text format."""
+    """Rooms exporter (serializer) to structured text format."""
 
     # currently supported version
     VERSION = 1
@@ -63,11 +63,13 @@ class RoomExporter:
         fout.write("\n")
 
     def export(self):
-        """Export room list into the text file."""
+        """Export (serialize) room list into the text file."""
         with open(self.filename, "w") as fout:
+            # metadata
             RoomExporter.output_version(fout)
             RoomExporter.output_timestamp(fout)
 
+            # number of rooms
             fout.write("rooms: {r}\n".format(r=len(self.rooms)))
             # export all rooms
             for room in self.rooms:
