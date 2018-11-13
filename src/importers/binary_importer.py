@@ -10,13 +10,13 @@
 #      Pavel Tisnovsky
 #
 
-"""Importer for drawings stored in a binary format."""
+"""Importer (deserializer) for drawings stored in a binary format."""
 
 import pickle
 
 
 class BinaryImporter:
-    """Importer for drawings stored in a binary format."""
+    """Importer (deserializer) for drawings stored in a binary format."""
 
     def __init__(self, filename):
         """Initialize the importer for drawings stored in binary format."""
