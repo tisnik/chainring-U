@@ -10,11 +10,11 @@
 #      Pavel Tisnovsky
 #
 
-"""Drawing exporter to SVG format."""
+"""Drawing exporter (serializer) to SVG format."""
 
 
 class SvgExporter:
-    """Drawing exporter to SVG format."""
+    """Drawing exporter (serializer) to SVG format."""
 
     def __init__(self, filename, entities):
         """Initialize the exporter, set the filename to be created and a sequence of entities."""
@@ -22,7 +22,7 @@ class SvgExporter:
         self.entities = entities
 
     def export(self):
-        """Perform the export."""
+        """Perform the export (serialization)."""
         # TODO: implement this feature
         #  with open(self.filename, "w") as fout:
         pass
