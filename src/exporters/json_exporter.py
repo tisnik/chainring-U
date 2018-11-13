@@ -10,7 +10,7 @@
 #      Pavel Tisnovsky
 #
 
-"""Drawing exporter to the JSON format."""
+"""Drawing exporter (serializer) to the JSON format."""
 
 from datetime import *
 import json
@@ -21,7 +21,7 @@ from geometry.rescaler import Rescaler
 
 
 class JSONExporter:
-    """Drawing exporter to the JSON format."""
+    """Drawing exporter (serializer) to the JSON format."""
 
     # currently supported versions
     VERSION = 1
@@ -57,7 +57,7 @@ class JSONExporter:
         fout.write("\n")
 
     def to_json(self):
-        """Conversion to JSON."""
+        """Perform conversion to JSON format."""
         bounds = Bounds.computeBounds(self.entities)
         scales = []
 
@@ -94,7 +94,7 @@ class JSONExporter:
         return json.dumps(obj, indent="\t")
 
     def export(self):
-        """Export the whole drawing into the JSON file."""
+        """Export (serialize) the whole drawing into the JSON file."""
         obj = self.to_json()
         with open(self.filename, "w") as fout:
             json.dump(obj, fout, indent="\t")
