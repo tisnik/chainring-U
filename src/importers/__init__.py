@@ -10,4 +10,4 @@
 #      Pavel Tisnovsky
 #
 
-"""Various importers for drawings, rooms etc."""
+"""Various importers (deserializers) for drawings, rooms etc."""
