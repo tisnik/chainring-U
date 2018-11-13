@@ -10,7 +10,7 @@
 #      Pavel Tisnovsky
 #
 
-"""Drawing exporter to structured text format."""
+"""Drawing exporter (serializer) to structured text format."""
 
 from datetime import *
 
@@ -20,7 +20,7 @@ from geometry.rescaler import Rescaler
 
 
 class DrawingExporter:
-    """Drawing exporter to structured text format."""
+    """Drawing exporter (serializer) to structured text format."""
 
     # supported versions:
     # 1 - supports line, circle, arc, text, w/o color, w/o layer
@@ -87,7 +87,7 @@ class DrawingExporter:
 
     # TODO: refactor this function
     def export(self):
-        """Export the whole drawing into the text file."""
+        """Export (serialize) the whole drawing into the text file."""
         with open(self.filename, "w") as fout:
             DrawingExporter.output_version(fout)
 
