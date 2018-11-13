@@ -10,14 +10,14 @@
 #      Pavel Tisnovsky
 #
 
-"""Drawing exporter to CVS."""
+"""Drawing exporter (serializer) to CVS."""
 
 
 class CSVExporter:
-    """Drawing exporter to CVS."""
+    """Drawing exporter (serializer) to CVS."""
 
     def __init__(self, filename, entities):
-        """Initialize the exporter, set the filename to be created and a sequence of entities."""
+        """Initialize the exporter (serializer), set the filename to be created and a sequence of entities."""
         self.filename = filename
         self.entities = entities
 
