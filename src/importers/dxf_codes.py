@@ -10,13 +10,13 @@
 #      Pavel Tisnovsky
 #
 
-"""List of numeric codes used in DXF files."""
+"""List of all supported numeric codes used in DXF files."""
 
 from enum import Enum
 
 
 class DxfCodes:
-    """List of numeric codes used in DXF files."""
+    """List of all supported numeric codes used in DXF files."""
 
     TEXT_STRING = 0
     PRIMARY_TEXT = 1
