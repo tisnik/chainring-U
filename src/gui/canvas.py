@@ -1,3 +1,5 @@
+"""Canvas to display the vector drawing."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -14,6 +16,7 @@ import tkinter
 
 
 class Canvas(tkinter.Canvas):
+    """Canvas to display the vector drawing."""
 
     GRID_SIZE = 50
     CROSS_SIZE = 5
@@ -91,21 +94,19 @@ class Canvas(tkinter.Canvas):
         for entity in entities:
             entity.draw(self, xoffset, yoffset, scale)
 
-
     def draw_rooms(self, rooms, xoffset, yoffset, scale):
         for room in rooms:
             # print(room["room_id"])
             room["canvas_id"] = self.draw_room(room)
-
 
     def draw_new_room_temporary_line(self, x1, y1, x2, y2):
         self.create_line(x1, y1, x2, y2,
                          fill='red', tags="new_room_temporary")
 
     def draw_cross(self, x, y):
-        self.create_line(x-Canvas.CROSS_SIZE, y, x+Canvas.CROSS_SIZE, y,
+        self.create_line(x - Canvas.CROSS_SIZE, y, x + Canvas.CROSS_SIZE, y,
                          fill='red', tags="cross")
-        self.create_line(x, y-Canvas.CROSS_SIZE, x, y+Canvas.CROSS_SIZE,
+        self.create_line(x, y - Canvas.CROSS_SIZE, x, y + Canvas.CROSS_SIZE,
                          fill='red', tags="cross")
 
     def delete_entities_with_tag(self, tag):
@@ -154,7 +155,8 @@ class Canvas(tkinter.Canvas):
     def highlight_room(self, room):
         """Highlight the given room and remove highlight for previously selected one."""
         if self.selected_room_item:
-            self.itemconfig(self.selected_room_item, fill="", activefill="#ffff80", outline="magenta")
+            self.itemconfig(self.selected_room_item, fill="", activefill="#ffff80",
+                            outline="magenta")
         item = room["canvas_id"]
         if item:
             self.selected_room_item = item
