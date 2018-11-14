@@ -1,3 +1,5 @@
+"""Main classes for the Chainring application."""
+
 #
 #  (C) Copyright 2017  Pavel Tisnovsky
 #

@@ -1,3 +1,5 @@
+"""Interface to web service that provide list of rooms and drawing storage."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -16,16 +18,21 @@ from exporters.json_exporter import *
 
 
 class DrawServiceInterface:
+    """Interface to web service that provide list of rooms and drawing storage."""
+
     API_PREFIX = "api/v1"
 
     @staticmethod
     def get_url(address, port):
+        """Get URL prefix to the service."""
         return "http://{address}:{port}".format(address=address, port=port)
 
     def __init__(self, service_url="http://localhost:3000"):
+        """Initialize the interface."""
         self._service_url = service_url
 
     def get(self, endpoint):
+        """Get full URL to selected endpoint."""
         url = "{url}/{api}/{endpoint}".format(url=self._service_url,
                                               api=DrawServiceInterface.API_PREFIX,
                                               endpoint=endpoint)
@@ -33,6 +40,7 @@ class DrawServiceInterface:
         return response.status_code, response.json()
 
     def check_liveness(self):
+        """Check service liveness."""
         try:
             code, data = self.get("liveness")
             if code != 200:
@@ -44,6 +52,7 @@ class DrawServiceInterface:
             return False, repr(e)
 
     def read_version(self):
+        """Read service API version."""
         try:
             code, data = self.get("info")
             if code != 200:
@@ -55,6 +64,7 @@ class DrawServiceInterface:
             return False, None, repr(e)
 
     def read_aoid(self, url, selector, error_message):
+        """Read AOID from the web service."""
         try:
             code, data = self.get(url)
             if code != 200:
@@ -69,28 +79,34 @@ class DrawServiceInterface:
             return None, repr(e)
 
     def read_areals(self, valid_from):
+        """Read list of areals from the web service."""
         url = "areals?valid-from={date}".format(date=valid_from)
         return self.read_aoid(url, "areals", "Seznam areálů je prázdný")
 
     def read_buildings(self, valid_from, aoid):
+        """Read list of buildings from the web service."""
         url = "buildings?valid-from={date}&areal-id={aoid}".format(date=valid_from, aoid=aoid)
         return self.read_aoid(url, "buildings", "Seznam budov je prázdný")
 
     def read_floors(self, valid_from, aoid):
+        """Read list of floors from the web service."""
         url = "floors?valid-from={date}&building-id={aoid}".format(date=valid_from, aoid=aoid)
         return self.read_aoid(url, "floors", "Seznam podlaží je prázdný")
 
     def read_rooms(self, valid_from, aoid):
+        """Read list of rooms from the web service."""
         url = "rooms?valid-from={date}&floor-id={aoid}".format(date=valid_from, aoid=aoid)
         return self.read_aoid(url, "rooms", "Seznam místností je prázdný")
 
     def check_input_data(self, data):
+        """Check the basic structure of data read from web service."""
         return "projects" in data and \
                "buildings" in data and \
                "floors" in data and \
                "drawings" in data
 
     def send_drawing(self, drawing):
+        """Send drawing onto the web service."""
         endpoint = "drawing-data?drawing={id}&format=json".format(id=drawing.drawing_id)
         url = "{url}/{api}/{endpoint}".format(url=self._service_url,
                                               api=DrawServiceInterface.API_PREFIX,
@@ -104,12 +120,14 @@ class DrawServiceInterface:
             if code != 200:
                 return False, "Návratový kód {code}".format(code=code)
             else:
-                message = "Výkres byl uložen pod ID {id} ({b} bajtů)".format(id=drawing.drawing_id, b=len(payload))
+                message = "Výkres byl uložen pod ID {id} ({b} bajtů)".format(
+                    id=drawing.drawing_id, b=len(payload))
                 return True, message
         except Exception as e:
             return False, e
 
     def read_all_drawings(self):
+        """Read list of all drawings from the web service."""
         try:
             code, data = self.get("all-drawings")
             if code != 200:

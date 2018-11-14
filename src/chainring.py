@@ -1,3 +1,5 @@
+"""Entry point to the Chainring application."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
