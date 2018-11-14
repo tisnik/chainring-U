@@ -1,3 +1,5 @@
+"""Room exporter (serializer) to CSV."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -10,10 +12,9 @@
 #      Pavel Tisnovsky
 #
 
-"""Room exporter (serializer) to CSV."""
-
 
 class RoomCSVExporter:
     """Room exporter (serializer) to CVS."""
+
     # TODO: implementation
     pass

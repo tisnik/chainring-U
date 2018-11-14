@@ -1,3 +1,5 @@
+"""Rooms exporter (serializer) to structured text format."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Rooms exporter (serializer) to structured text format."""
 
 from datetime import *
 

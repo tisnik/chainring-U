@@ -1,3 +1,5 @@
+"""Module to export (serialize) whole drawing into a binary file."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Module to export (serialize) whole drawing into a binary file."""
 
 import pickle
 

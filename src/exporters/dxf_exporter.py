@@ -1,3 +1,5 @@
+"""Drawing exporter (serializer) to DXF format."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -10,8 +12,6 @@
 #      Pavel Tisnovsky
 #
 
-"""Drawing exporter (serializer) to DXF format."""
-
 
 class DXFExporter:
     """Drawing exporter (serializer) to DXF format."""
@@ -22,7 +22,7 @@ class DXFExporter:
         self.entities = entities
 
     def export(self):
-        """Perform the export (serialiation)."""
+        """Perform the serialiation of drawing into DXF format."""
         # TODO: implement this feature
         #  with open(self.filename, "w") as fout:
         pass

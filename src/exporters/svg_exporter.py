@@ -1,3 +1,5 @@
+"""Drawing exporter (serializer) to SVG format."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -10,8 +12,6 @@
 #      Pavel Tisnovsky
 #
 
-"""Drawing exporter (serializer) to SVG format."""
-
 
 class SvgExporter:
     """Drawing exporter (serializer) to SVG format."""
@@ -22,7 +22,7 @@ class SvgExporter:
         self.entities = entities
 
     def export(self):
-        """Perform the export (serialization)."""
+        """Perform the serialization into SVG format."""
         # TODO: implement this feature
         #  with open(self.filename, "w") as fout:
         pass

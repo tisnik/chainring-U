@@ -1,3 +1,5 @@
+"""Drawing exporter (serializer) to the JSON format."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -10,7 +12,6 @@
 #      Pavel Tisnovsky
 #
 
-"""Drawing exporter (serializer) to the JSON format."""
 
 from datetime import *
 import json

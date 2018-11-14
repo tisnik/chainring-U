@@ -1,3 +1,5 @@
+"""Various exporters and serializers for drawings, rooms etc."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,5 +11,3 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Various exporters and serializers for drawings, rooms etc."""
