@@ -1,3 +1,5 @@
+"""Class to recompute scale from canvas size and computed bounds."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,9 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-
-"""Class to recompute scale from canvas size and computed bounds."""
 
 
 class Rescaler:

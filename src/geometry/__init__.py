@@ -1,3 +1,5 @@
+"""Geometry related classes and utility functions."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,5 +11,3 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Geometry related classes and utility functions."""

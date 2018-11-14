@@ -1,3 +1,5 @@
+"""Class with various geometry related utility functions."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,9 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-
-"""Class with various geometry related utility functions."""
 
 
 class GeometryUtils:

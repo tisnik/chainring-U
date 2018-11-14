@@ -1,3 +1,5 @@
+"""Module with class that represents bounds of one entity or a larger entity group."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Module with class that represents bounds of one entity or a larger entity group."""
 
 import sys
 
