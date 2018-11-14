@@ -212,7 +212,6 @@ class MainWindow:
                            "Vymazaných místností: {d}").format(i=inserted, d=deleted)
                 messagebox.showinfo("Výsledek synchronizace", message)
 
-
     def import_drawing_command(self, filename):
         pass
 
@@ -248,7 +247,7 @@ class MainWindow:
             filename = None
         if filename is not None:
             if not filename.endswith(".rooms"):
-                filename += ".rooms";
+                filename += ".rooms"
 
             self.rooms_export_filename = filename
             exporter = RoomExporter(filename, self.drawing)
@@ -269,7 +268,7 @@ class MainWindow:
         if filename is None:
             filename = SaveDialogs.save_drawing(self.root)
             if not filename.endswith(".drw"):
-                filename += ".drw";
+                filename += ".drw"
 
         self.export_drawing(filename)
 
@@ -304,7 +303,7 @@ class MainWindow:
         self.export_drawing_command()
 
     def delete_room_command(self, index, value):
-        #print(index, value)
+        # print(index, value)
         if dialog_delete_whole_room(value):
             room = self.drawing.find_room_by_room_id(value)
             if room is not None:
@@ -360,7 +359,7 @@ class MainWindow:
         self.canvas.delete_temporary_entities()
 
         # update left palette
-        r = {"room_id" : room_id,
+        r = {"room_id": room_id,
              "polygon": self.room.polygon_world}
         self.palette.fill_in_room_info(r)
 
@@ -447,7 +446,7 @@ class MainWindow:
                 print(canvas_id)
                 print(xpoints)
                 print(ypoints)
-                r = {"room_id" : room_id,
+                r = {"room_id": room_id,
                      "polygon": self.room.polygon_world}
                 self.palette.fill_in_room_info(r)
                 self.room.polygon_world = []
@@ -547,7 +546,7 @@ class MainWindow:
                               MainWindow.SCALE_UP_FACTOR,
                               MainWindow.SCALE_UP_FACTOR)
         else:
-            self.canvas.scale("all", self.canvas.width/2, self.canvas.height/2,
+            self.canvas.scale("all", self.canvas.width / 2, self.canvas.height / 2,
                               MainWindow.SCALE_UP_FACTOR,
                               MainWindow.SCALE_UP_FACTOR)
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
@@ -561,7 +560,7 @@ class MainWindow:
                               MainWindow.SCALE_DOWN_FACTOR,
                               MainWindow.SCALE_DOWN_FACTOR)
         else:
-            self.canvas.scale("all", self.canvas.width/2, self.canvas.height/2,
+            self.canvas.scale("all", self.canvas.width / 2, self.canvas.height / 2,
                               MainWindow.SCALE_DOWN_FACTOR,
                               MainWindow.SCALE_DOWN_FACTOR)
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
