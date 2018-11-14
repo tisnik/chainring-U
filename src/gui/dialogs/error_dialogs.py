@@ -1,3 +1,5 @@
+"""Various errors dialogs."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -16,5 +18,6 @@ from tkinter import messagebox
 
 
 def error_dialog_drawing_load():
+    """Show dialog when drawing import was not successful."""
     messagebox.showerror("Chyba při načítání výkresu",
                          "Při načítání výkresu došlo k neočekávané chybě")

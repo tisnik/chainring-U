@@ -1,3 +1,5 @@
+"""Implementation of simple 'About' dialog."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -10,13 +12,12 @@
 #      Pavel Tisnovsky
 #
 
-"""Implementation of simple 'About' dialog."""
-
 import tkinter
 
 from tkinter import messagebox
 
 
 def about():
+    """Show 'about' dialog."""
     messagebox.showinfo("O programu",
                         "Integrace CAD výkresů do SAP\n(c) 2017, 2018 eLevel system s.r.o.")

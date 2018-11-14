@@ -1,3 +1,5 @@
+"""Dialogs used to save drawings and rooms."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -16,15 +18,18 @@ from tkinter import filedialog
 
 
 class SaveDialogs:
+    """Dialogs used to save drawings and rooms."""
 
     @staticmethod
     def save_drawing(root):
+        """Display dialog to save drawing."""
         filetypes = [('Výkresy', '*.drw')]
         dialog = filedialog.SaveAs(root, filetypes=filetypes)
         return dialog.show()
 
     @staticmethod
     def save_rooms(root):
+        """Display dialog to save rooms."""
         filetypes = [('Místnosti', '*.rooms')]
         dialog = filedialog.SaveAs(root, filetypes=filetypes)
         return dialog.show()

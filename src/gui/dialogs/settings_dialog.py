@@ -1,3 +1,5 @@
+"""Implementation of application settings dialog."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -14,7 +16,10 @@ import tkinter
 
 
 class SettingsDialog(tkinter.Toplevel):
+    """Implementation of application settings dialog."""
+
     def __init__(self, parent):
+        """Initialize the dialog."""
         tkinter.Toplevel.__init__(self, parent)
         self.title("Nastavení")
 
@@ -76,6 +81,7 @@ class SettingsDialog(tkinter.Toplevel):
         okButton.focus_set()
 
     def ok(self):
+        """Handle Ok button press."""
         print("server address:", self.entryServerAddress.get())
         print("server port:", self.entryServerPort.get())
         print("username:", self.entryLogin.get())

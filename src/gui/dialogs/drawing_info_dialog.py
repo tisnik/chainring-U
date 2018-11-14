@@ -1,3 +1,5 @@
+"""Implementation of dialog with drawing info."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -16,8 +18,10 @@ from entities.drawing_entity_type import *
 
 
 class DrawingInfoDialog(tkinter.Toplevel):
+    """Implementation of dialog with drawing info."""
 
     def __init__(self, parent, drawing):
+        """Initialize the class with configuration dialog."""
         tkinter.Toplevel.__init__(self, parent)
         self.title("Informace o výkresu")
 
@@ -91,24 +95,29 @@ class DrawingInfoDialog(tkinter.Toplevel):
 
     @staticmethod
     def add_label(container, row, column, text):
+        """Add a label to dialog."""
         label = tkinter.Label(container, text=text)
         label.grid(row=row, column=column, sticky="W", padx=5, pady=5)
 
     @staticmethod
     def add_value_widget(container, row, column, value):
+        """Create a widget with value to dialog."""
         widget = DrawingInfoDialog.value_widget(container, value)
         widget.grid(row=row, column=column, sticky="W", padx=5, pady=5)
 
     @staticmethod
     def value_widget(container, value):
+        """Add a widget with value to dialog."""
         widget = tkinter.Entry(container)
         widget.insert(tkinter.END, value)
         widget.configure(state='readonly')
         return widget
 
     def ok(self):
+        """Handle the Ok button press."""
         self.destroy()
 
     @staticmethod
     def compute_sum(drawing_statistic):
+        """Compute summary of all values specified."""
         return sum(drawing_statistic.values())

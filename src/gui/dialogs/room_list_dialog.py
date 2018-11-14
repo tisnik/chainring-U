@@ -1,3 +1,5 @@
+"""Dialog with list of all rooms from drawing."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -15,8 +17,10 @@ from tkinter.scrolledtext import ScrolledText
 
 
 class RoomListDialog(tkinter.Toplevel):
+    """Dialog with list of all rooms from drawing."""
 
     def __init__(self, parent, drawing):
+        """Initialize the dialog."""
         tkinter.Toplevel.__init__(self, parent)
         self.title("Seznam místností")
 
@@ -79,17 +83,21 @@ class RoomListDialog(tkinter.Toplevel):
         okButton.focus_set()
 
     def ok(self):
+        """Handle event when Ok button is pressed."""
         self.destroy()
 
     def add_label(self, row, column, text):
+        """Add a label to dialog."""
         label = tkinter.Label(self, text=text)
         label.grid(row=row, column=column, sticky="W", padx=5, pady=5)
 
     def add_value_widget(self, row, column, value):
+        """Add a widget with value to dialog."""
         widget = self.value_widget(value)
         widget.grid(row=row, column=column, sticky="W", padx=5, pady=5)
 
     def value_widget(self, value):
+        """Create new widget with value."""
         widget = tkinter.Entry(self)
         widget.insert(tkinter.END, value)
         widget.configure(state='readonly')

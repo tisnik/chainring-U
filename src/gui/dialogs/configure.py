@@ -1,3 +1,5 @@
+"""Implementation of simple 'Configure' dialog."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -10,14 +12,13 @@
 #      Pavel Tisnovsky
 #
 
-"""Implementation of simple 'Configure' dialog."""
-
 import tkinter
 
 from tkinter import messagebox
 
 
 def configure(configuration):
+    """Show configuration dialog."""
     msg = "Typ aplikace: {t}\n\nAdresa serveru: {a}\nPort serveru: {p}".format(
         t=configuration.app_type,
         a=configuration.server_address,

@@ -1,3 +1,5 @@
+"""Implementation of help dialog."""
+
 #
 #  (C) Copyright 2017  Pavel Tisnovsky
 #
@@ -16,7 +18,10 @@ from tkinter import messagebox
 
 
 class HelpDialog(tkinter.Toplevel):
+    """Implementation of help dialog."""
+
     def __init__(self, parent):
+        """Initialize the dialog."""
         tkinter.Toplevel.__init__(self, parent)
         self.title("Nápověda")
         self.transient(parent)
@@ -57,7 +62,10 @@ class HelpDialog(tkinter.Toplevel):
         self.protocol("WM_DELETE_WINDOW", self.destroy)
 
     def ok(self):
+        """Handle Ok button press."""
         self.destroy()
 
+
 def help():
+    """Display help dialog on screen."""
     HelpDialog(None)
