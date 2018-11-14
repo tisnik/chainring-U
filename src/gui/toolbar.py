@@ -1,3 +1,5 @@
+"""Toolbar displayed on the main windo."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -19,7 +21,10 @@ from gui.tooltip import Tooltip
 
 
 class Toolbar(tkinter.LabelFrame):
+    """Toolbar displayed on the main windo."""
+
     def __init__(self, parent, main_window, canvas):
+        """Initialize the toolbar."""
         super().__init__(parent, text="Nástroje", padx=5, pady=5)
 
         self.parent = parent
@@ -29,7 +34,7 @@ class Toolbar(tkinter.LabelFrame):
             self, text="Otevřít výkres",
             image=main_window.icons.drawing_load_icon,
             command=main_window.open_drawing_command)
-        
+
         Tooltip(self.button_drawing_load, "Načtení výkresu")
 
         self.button_drawing_save = tkinter.Button(
@@ -137,10 +142,10 @@ class Toolbar(tkinter.LabelFrame):
 
         Tooltip(self.button_new_room_polygon, "Vybrat polyčáru pro místnost")
 
-        #self.button_settings = tkinter.Button(
-        #    self, text="Nastavení",
-        #    image=main_window.icons.properties_icon,
-        #    command=self.show_settings_dialog)
+        # self.button_settings = tkinter.Button(
+        #     self, text="Nastavení",
+        #     image=main_window.icons.properties_icon,
+        #     command=self.show_settings_dialog)
 
         self.button_quit = tkinter.Button(
             self, text="Ukončit",
@@ -193,15 +198,19 @@ class Toolbar(tkinter.LabelFrame):
         self.button_quit.grid(column=24, row=1)
 
     def show_settings_dialog(self):
+        """Show the settings dialog."""
         SettingsDialog(self.parent)
 
     def show_drawing_info_dialog(self):
+        """Show the drawing info dialog."""
         DrawingInfoDialog(self.parent, self.main_window.drawing)
 
     def show_room_list_dialog(self):
+        """Show the room list dialog."""
         RoomListDialog(self.parent, self.main_window.drawing)
 
     def disable_ui_items_for_no_drawing_mode(self):
+        """Disable some buttons when application is set to no-drawing mode."""
         Toolbar.disable_button(self.button_drawing_save)
         Toolbar.disable_button(self.button_file_open)
         Toolbar.disable_button(self.button_file_save)
@@ -219,6 +228,7 @@ class Toolbar(tkinter.LabelFrame):
         Toolbar.disable_button(self.button_new_room_polygon)
 
     def enable_ui_items_for_drawing_mode(self):
+        """Enable some buttons when application is set to drawing mode."""
         Toolbar.enable_button(self.button_drawing_save)
         Toolbar.enable_button(self.button_file_open)
         Toolbar.enable_button(self.button_file_save)
@@ -237,8 +247,10 @@ class Toolbar(tkinter.LabelFrame):
 
     @staticmethod
     def disable_button(button):
+        """Disable specified button on toolbar."""
         button['state'] = 'disabled'
 
     @staticmethod
     def enable_button(button):
+        """Enable specified button on toolbar."""
         button['state'] = 'normal'

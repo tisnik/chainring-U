@@ -1,3 +1,5 @@
+"""Menu bar displayed on the main window."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -23,8 +25,10 @@ from draw_service import DrawServiceInterface
 
 
 class Menubar(tkinter.Menu):
+    """Menu bar displayed on the main window."""
 
     def __init__(self, parent, main_window, canvas):
+        """Initialize the menu bar."""
         super().__init__(tearoff=0)
 
         self.parent = parent
@@ -82,27 +86,27 @@ class Menubar(tkinter.Menu):
         self.rooms.add_separator()
 
         self.rooms.add_command(label="Seznam místností ze SAPu",
-                                  image=main_window.icons.rooms_from_sap,
-                                  compound="left", underline=1,
-                                  command=main_window.import_rooms_from_sap)
+                               image=main_window.icons.rooms_from_sap,
+                               compound="left", underline=1,
+                               command=main_window.import_rooms_from_sap)
 
         self.rooms.add_command(label="Synchronizace místností ze SAPem",
-                                  image=main_window.icons.reload_icon,
-                                  compound="left", underline=1,
-                                  command=main_window.synchronize_rooms_with_sap)
+                               image=main_window.icons.reload_icon,
+                               compound="left", underline=1,
+                               command=main_window.synchronize_rooms_with_sap)
 
         self.edit = tkinter.Menu(self, tearoff=0)
         self.edit.add_command(label="Nakreslit místnost",
                               image=main_window.icons.edit_icon,
                               compound="left", underline=0,
                               command=self.main_window.draw_new_room_command)
-                              #accelerator="Ctrl+N")
+        # accelerator="Ctrl+N")
 
         self.edit.add_command(label="Vybrat polygon pro místnost",
                               image=main_window.icons.rectangle,
                               compound="left", underline=0,
                               command=self.main_window.draw_new_room_command)
-                              #accelerator="Ctrl+P")
+        # accelerator="Ctrl+P")
 
         self.view = tkinter.Menu(self, tearoff=0)
         self.view.add_command(label="Zvětšit",
@@ -136,11 +140,11 @@ class Menubar(tkinter.Menu):
                                accelerator="Ctrl+I")
 
         self.tools.add_separator()
-        #self.tools.add_command(label="Nastavení",
-        #                       image=main_window.icons.properties_icon,
-        #                       compound="left", underline=0,
-        #                       command=self.show_settings_dialog)
-        #self.tools.add_separator()
+        # self.tools.add_command(label="Nastavení",
+        #                        image=main_window.icons.properties_icon,
+        #                        compound="left", underline=0,
+        #                        command=self.show_settings_dialog)
+        # self.tools.add_separator()
         self.tools.add_command(label="Zkontrolovat připojení k serveru",
                                image=main_window.icons.checkbox_icon,
                                compound="left", underline=0,
@@ -181,15 +185,19 @@ class Menubar(tkinter.Menu):
         self.parent.bind('<Control-0>', lambda event: main_window.redraw())
 
     def show_settings_dialog(self):
+        """Show settings dialog."""
         SettingsDialog(self.parent)
 
     def show_drawing_info_dialog(self):
+        """Show drawing info dialog."""
         DrawingInfoDialog(self.parent, self.main_window.drawing)
 
     def show_room_list_dialog(self):
+        """Show room list dialog."""
         RoomListDialog(self.parent, self.main_window.drawing)
 
     def check_server_connectivity(self):
+        """Check the connectivity to server and display results."""
         address = self.main_window.configuration.server_address
         port = self.main_window.configuration.server_port
         if not address:
@@ -207,6 +215,7 @@ class Menubar(tkinter.Menu):
             messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
 
     def check_service_version(self):
+        """Check the version of web service and display results."""
         address = self.main_window.configuration.server_address
         port = self.main_window.configuration.server_port
         if not address:
@@ -224,6 +233,7 @@ class Menubar(tkinter.Menu):
             messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
 
     def disable_ui_items_for_no_drawing_mode(self):
+        """Disable UI (menu) items when the application is set to no drawing mode."""
         Menubar.disable_menu_item(self.filemenu, 1)
         Menubar.disable_menu_item(self.filemenu, 3)
 
@@ -244,9 +254,10 @@ class Menubar(tkinter.Menu):
         Menubar.disable_menu_item(self.view, 5)
 
         Menubar.disable_menu_item(self.tools, 0)
-        #Menubar.disable_menu_item(self.tools, 1)
+        # Menubar.disable_menu_item(self.tools, 1)
 
     def enable_ui_items_for_drawing_mode(self):
+        """Enable UI (menu) items when the application is set to no drawing mode."""
         Menubar.enable_menu_item(self.filemenu, 1)
         Menubar.enable_menu_item(self.filemenu, 3)
 
@@ -267,12 +278,14 @@ class Menubar(tkinter.Menu):
         Menubar.enable_menu_item(self.view, 5)
 
         Menubar.enable_menu_item(self.tools, 0)
-        #Menubar.enable_menu_item(self.tools, 1)
+        # Menubar.enable_menu_item(self.tools, 1)
 
     @staticmethod
     def disable_menu_item(menu, index):
+        """Disable specified menu item."""
         menu.entryconfig(index, state='disabled')
 
     @staticmethod
     def enable_menu_item(menu, index):
+        """Enable specified menu item."""
         menu.entryconfig(index, state='normal')

@@ -1,3 +1,5 @@
+"""All icons used on the GUI."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -44,8 +46,10 @@ import icons.configure
 
 
 class Icons:
+    """All icons used on the GUI."""
 
     def __init__(self):
+        """Initialize all icons and convert them to PhotoImage."""
         self.exit_icon = tkinter.PhotoImage(data=icons.application_exit.icon)
 
         self.drawing_load_icon = tkinter.PhotoImage(data=icons.drawing_load.icon)

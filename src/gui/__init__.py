@@ -1,3 +1,5 @@
+"""Graphical user interface for the Chainring application."""
+
 #
 #  (C) Copyright 2017  Pavel Tisnovsky
 #

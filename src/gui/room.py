@@ -1,3 +1,5 @@
+"""Class representing one room on drawing."""
+
 #
 #  (C) Copyright 2017  Pavel Tisnovsky
 #
@@ -12,17 +14,21 @@
 
 
 class Room:
+    """Class representing one room on drawing."""
 
     def __init__(self):
+        """Initialize the class."""
         self.cleanup()
 
     def cleanup(self):
+        """Perform cleanup for active room."""
         self.last_x = None
         self.last_y = None
         self.polygon_world = []
         self.polygon_canvas = []
 
     def last_point_exist(self):
+        """Check if the last point (entered by user) exists."""
         return self.last_x and self.last_y
 
     def vertexes(self):

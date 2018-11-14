@@ -1,3 +1,5 @@
+"""Status bar displayed in the main window."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -14,15 +16,20 @@ import tkinter
 
 
 class StatusBar(tkinter.Frame):
+    """Status bar displayed in the main window."""
+
     def __init__(self, master):
+        """Initialize the class."""
         tkinter.Frame.__init__(self, master)
         self.label = tkinter.Label(self, bd=1, relief=tkinter.SUNKEN, anchor=tkinter.W)
         self.label.pack(fill=tkinter.X)
 
     def set(self, format, *args):
+        """Set status bar messages."""
         self.label.config(text=format % args)
         self.label.update_idletasks()
 
     def clear(self):
+        """Clear status bar content."""
         self.label.config(text="")
         self.label.update_idletasks()

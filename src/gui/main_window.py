@@ -1,3 +1,5 @@
+"""Main window shown on screen."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -42,11 +44,13 @@ from gui.dialogs.load_dialogs import LoadDialogs
 
 
 class MainWindow:
+    """Main window shown on screen."""
 
     SCALE_UP_FACTOR = 1.1
     SCALE_DOWN_FACTOR = 0.9
 
     def __init__(self, configuration):
+        """Initialize main window."""
         self._drawing = None
         self.root = tkinter.Tk()
         self.root.title("Integrace CAD výkresů do SAP, (c) eLevel system")
@@ -91,6 +95,7 @@ class MainWindow:
         self.edited_room_id = None
 
     def send_drawing_to_server(self):
+        """Send the drawing to server."""
         if self.drawing is None:
             messagebox.showerror("Nastala chyba", "Výkres není aktivní")
             return
@@ -114,27 +119,33 @@ class MainWindow:
             messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
 
     def disable_ui_items_for_no_drawing_mode(self):
+        """Disable all related UI items when the application is set to no drawing mode."""
         self.toolbar.disable_ui_items_for_no_drawing_mode()
         self.menubar.disable_ui_items_for_no_drawing_mode()
 
     def enable_ui_items_for_drawing_mode(self):
+        """Enable all related UI items when the application is set to drawing mode."""
         self.toolbar.enable_ui_items_for_drawing_mode()
         self.menubar.enable_ui_items_for_drawing_mode()
 
     def set_ui_items_for_actual_mode(self):
+        """Enable or disable all related UI items according to current application mode."""
         if self.drawing is None:
             self.disable_ui_items_for_no_drawing_mode()
         else:
             self.enable_ui_items_for_drawing_mode()
 
     def configure_grid(self):
+        """Configure grid on canvas."""
         tkinter.Grid.rowconfigure(self.root, 2, weight=1)
         tkinter.Grid.columnconfigure(self.root, 2, weight=1)
 
     def draw_new_room_command(self, event=None):
+        """Change the application state to draw new room."""
         self.canvas_mode = CanvasMode.DRAW_ROOM
 
     def get_rooms_from_sap(self, rooms_from_sap):
+        """Handle rooms read from SAP."""
         rooms = []
         for r in rooms_from_sap:
             polygon = []
@@ -143,6 +154,7 @@ class MainWindow:
         return rooms
 
     def import_rooms_from_sap(self, event=None):
+        """Import rooms from SAP."""
         if self.drawing.rooms is None or len(self.drawing.rooms) == 0 or dialog_load_rooms_from_sap():
             rooms_from_sap, drawing_id = LoadDialogs.load_rooms_from_sap(self.root, self.configuration)
             if rooms_from_sap is not None:
@@ -165,6 +177,7 @@ class MainWindow:
                 self.add_all_rooms_from_drawing()
 
     def synchronize_rooms_with_sap(self, event=None):
+        """Synchronize rooms with SAP."""
         if self.drawing.rooms is None or len(self.drawing.rooms) == 0 or dialog_synchronize_rooms_with_sap():
             rooms_from_sap, drawing_id = LoadDialogs.load_rooms_from_sap(self.root, self.configuration)
             if rooms_from_sap is not None:
@@ -213,9 +226,11 @@ class MainWindow:
                 messagebox.showinfo("Výsledek synchronizace", message)
 
     def import_drawing_command(self, filename):
+        """Import drawing (empty in this version)."""
         pass
 
     def import_rooms_command(self, event=None):
+        """Handle the command to import rooms."""
         if self.drawing.rooms is None or len(self.drawing.rooms) == 0 or dialog_load_rooms():
             room_file_name = LoadDialogs.load_rooms(None)
             if room_file_name is not None and room_file_name != "" and room_file_name != ():
@@ -234,6 +249,7 @@ class MainWindow:
                 self.add_all_rooms_from_drawing()
 
     def export_rooms_command(self, event=None):
+        """Handle the command to export rooms."""
         filename = self.rooms_export_filename
         if filename is None:
             self.export_rooms_as_command(self)
@@ -242,6 +258,7 @@ class MainWindow:
             exporter.export()
 
     def export_rooms_as_command(self, event=None):
+        """Handle the command to export rooms under different name."""
         filename = SaveDialogs.save_rooms(self.root)
         if filename == "":
             filename = None
@@ -254,6 +271,7 @@ class MainWindow:
             exporter.export()
 
     def export_drawing(self, filename):
+        """Export drawing into DRW or JSON format."""
         if filename:
             # set the new filename
             self.drawing.filename = filename
@@ -264,6 +282,7 @@ class MainWindow:
             # json_exporter.export()
 
     def export_drawing_command(self, event=None):
+        """Handle the command to export drawing."""
         filename = self.drawing.filename
         if filename is None:
             filename = SaveDialogs.save_drawing(self.root)
@@ -273,10 +292,12 @@ class MainWindow:
         self.export_drawing(filename)
 
     def export_drawing_as_command(self, event=None):
+        """Handle the command to export drawing under different name."""
         filename = SaveDialogs.save_drawing(self.root)
         self.export_drawing(filename)
 
     def open_drawing_command(self, event=None):
+        """Handle the command to open drawing."""
         if self.drawing is not None:
             if not dialog_load_new_drawing():
                 return
@@ -300,9 +321,11 @@ class MainWindow:
                 self.set_ui_items_for_actual_mode()
 
     def save_drawing_command(self, event=None):
+        """Handle the command to save drawing."""
         self.export_drawing_command()
 
     def delete_room_command(self, index, value):
+        """Handle the command to delete room from drawing."""
         # print(index, value)
         if dialog_delete_whole_room(value):
             room = self.drawing.find_room_by_room_id(value)
@@ -313,6 +336,7 @@ class MainWindow:
             self.palette.delete_room_from_list(index)
 
     def delete_room_polygon_command(self, index, value):
+        """Handle the command to delete room polygon from drawing."""
         if dialog_delete_room_polygon(value):
             room = self.drawing.find_room_by_room_id(value)
             if room is not None:
@@ -321,6 +345,7 @@ class MainWindow:
             self.palette.fill_in_room_info(room)
 
     def redraw_room_polygon_command(self, index, value):
+        """Redraw specified room polygon."""
         room = self.drawing.find_room_by_room_id(value)
         if room is not None:
             self.canvas.delete_object_with_id(room["canvas_id"])
@@ -329,6 +354,7 @@ class MainWindow:
         self.edited_room_id = value
 
     def select_polygon_for_room(self, index, value):
+        """Select the specified room."""
         room = self.drawing.find_room_by_room_id(value)
         if room is not None:
             self.canvas.delete_object_with_id(room["canvas_id"])
@@ -337,16 +363,20 @@ class MainWindow:
         self.edited_room_id = value
 
     def scroll_start(self, event):
+        """Handle scrolling event (start)."""
         self.canvas.scan_mark(event.x, event.y)
 
     def scroll_move(self, event):
+        """Handle scrolling event (finish)."""
         self.canvas.scan_dragto(event.x, event.y, gain=1)
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def get_nearest_entity(self, x, y):
+        """Find nearest entity to specified coordinates [x, y]."""
         return self.canvas.find_closest(x, y)[0]
 
     def finish_new_room(self):
+        """Finish drawing of new room."""
         canvas_id = self.canvas.draw_new_room(self.room)
         room_id = None
         if self.edited_room_id is None:
@@ -370,6 +400,7 @@ class MainWindow:
         self.room.polygon_canvas = []
 
     def on_right_button_pressed(self, event):
+        """Handle the right mouse button press event."""
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
             vertexes = self.room.vertexes()
             if vertexes == 0:
@@ -385,8 +416,7 @@ class MainWindow:
                 self.finish_new_room()
 
     def entity_with_endpoints(self, item):
-        """Returns the drawing entity for the given canvas item."""
-
+        """Return the drawing entity for the given canvas item."""
         # sanity check
         if item is None:
             return None
@@ -411,6 +441,7 @@ class MainWindow:
         return entity
 
     def on_room_click_listbox(self, room_id):
+        """Handle the left mouse button press on listbox with list of rooms."""
         room = self.drawing.find_room_by_room_id(room_id)
         if room:
             self.palette.enable_all()
@@ -418,6 +449,7 @@ class MainWindow:
             self.canvas.highlight_room(room)
 
     def on_room_click_canvas(self, canvas_object_id):
+        """Handle the left mouse button click onto the canvas."""
         room = self.drawing.find_room_by_canvas_id(canvas_object_id)
         if room:
             self.palette.enable_all()
@@ -426,6 +458,7 @@ class MainWindow:
             self.canvas.highlight_room(room)
 
     def on_polygon_for_room_click_canvas(self, canvas_object_id):
+        """Handle the left mouse button click onto the polygon on canvas."""
         if self.canvas_mode == CanvasMode.SELECT_POLYGON_FOR_ROOM:
             entity = self.drawing.find_entity_by_id(canvas_object_id)
             if entity is not None:
@@ -458,6 +491,7 @@ class MainWindow:
             self.canvas_mode = CanvasMode.VIEW
 
     def draw_new_room_line(self, canvas_x, canvas_y):
+        """Draw new line for room that's being drawn."""
         if self.room.last_point_exist():
             self.canvas.draw_new_room_temporary_line(self.room.last_x,
                                                      self.room.last_y,
@@ -474,6 +508,7 @@ class MainWindow:
             return x2, y2, entity.x2, entity.y2
 
     def add_vertex(self, canvas_x, canvas_y, world_x, world_y):
+        """Add new vertex to polygon."""
         self.canvas.draw_cross(canvas_x, canvas_y)
         self.draw_new_room_line(canvas_x, canvas_y)
         self.room.polygon_canvas.append((canvas_x, canvas_y))
@@ -481,6 +516,7 @@ class MainWindow:
         # self.canvas.itemconfig(item, fill='cyan')
 
     def add_vertex_to_room(self, event):
+        """Add new vertex to room polygon."""
         # get the coordinates before canvas scroll
         x = self.canvas.canvasx(event.x)
         y = self.canvas.canvasy(event.y)
@@ -492,6 +528,7 @@ class MainWindow:
             self.add_vertex(canvas_x, canvas_y, world_x, world_y)
 
     def get_scale(self):
+        """Compute scale from the special entity scale-line."""
         scale_line = self.canvas.find_withtag("scale")[0]
         x1, y1, x2, y2 = self.canvas.coords(scale_line)
         len1 = self.canvas.width
@@ -499,6 +536,7 @@ class MainWindow:
         return 1.0 * len2 / len1, x1, y1
 
     def add_current_vertex_to_room(self, event):
+        """Add current vertex to room."""
         canvas_x = self.canvas.canvasx(event.x)
         canvas_y = self.canvas.canvasy(event.y)
         current_scale, xd, yd = self.get_scale()
@@ -507,6 +545,7 @@ class MainWindow:
         self.add_vertex(canvas_x, canvas_y, world_x, world_y)
 
     def on_left_button_pressed(self, event):
+        """Handle the left mouse button press event."""
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
             # shift key
             shift = (event.state & 0x1) != 0
@@ -520,6 +559,7 @@ class MainWindow:
             self.scroll_start(event)
 
     def on_left_button_drag(self, event):
+        """Handle the left mouse button drag event."""
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
             pass
         elif self.canvas_mode == CanvasMode.SELECT_POLYGON_FOR_ROOM:
@@ -529,6 +569,7 @@ class MainWindow:
 
     # zoom on Windows
     def zoom(self, event):
+        """Handle zoom event on Windows."""
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
             return
         if event.delta > 0:
@@ -539,6 +580,7 @@ class MainWindow:
 
     # zoom on Linux
     def zoom_plus(self, event=None):
+        """Handle zoom plus event on Linux."""
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
             return
         if event:
@@ -553,6 +595,7 @@ class MainWindow:
 
     # zoom on Linux
     def zoom_minus(self, event=None):
+        """Handle zoom minus event on Linux."""
         if self.canvas_mode == CanvasMode.DRAW_ROOM:
             return
         if event:
@@ -566,23 +609,28 @@ class MainWindow:
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def quit(self):
+        """Display message box whether to quit the application."""
         answer = messagebox.askyesno("Skutečně ukončit program?",
                                      "Skutečně ukončit program?")
         if answer:
             self.root.quit()
 
     def show(self):
+        """Display the main window on screen."""
         self.root.mainloop()
 
     @property
     def drawing(self):
+        """Return the current drawing attribute."""
         return self._drawing
 
     @drawing.setter
     def drawing(self, drawing):
+        """Set the current drawing attribute."""
         self._drawing = drawing
 
     def redraw_drawing(self):
+        """Redraw the whole drawing."""
         self.canvas.draw_grid()
         self.canvas.draw_boundary()
         self.canvas.draw_scale_line()
@@ -590,6 +638,7 @@ class MainWindow:
         self.canvas.draw_rooms(self.drawing.rooms, 0, 0, 1)
 
     def redraw(self):
+        """Redraw the whole drawing or display message when drawing does not exist."""
         self.canvas.delete("all")
         if self.drawing is not None:
             self.redraw_drawing()
@@ -597,6 +646,7 @@ class MainWindow:
             self.canvas.draw_empty_drawing_message()
 
     def add_all_rooms_from_drawing(self):
+        """Add all rooms from drawing onto the palette (listbox)."""
         self.palette.remove_all_rooms()
         if self.drawing is not None:
             for room in self.drawing.rooms:

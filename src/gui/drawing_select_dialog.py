@@ -1,3 +1,5 @@
+"""Dialog to select areal, building, floor, and drawing."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -15,8 +17,12 @@ import tkinter
 
 from tkinter import ttk
 
+
 class DrawingSelectDialog(tkinter.Toplevel):
+    """Dialog to select areal, building, floor, and drawing."""
+
     def __init__(self, parent, configuration):
+        """Initialize the dialog."""
         tkinter.Toplevel.__init__(self, parent)
         self.title("Otevřít výkres")
 
@@ -38,4 +44,3 @@ class DrawingSelectDialog(tkinter.Toplevel):
 
         # get the focus
         self.grab_set()
-
