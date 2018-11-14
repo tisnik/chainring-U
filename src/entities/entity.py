@@ -1,3 +1,5 @@
+"""Module with abstract class that represents any two dimensional entity."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Module with abstract class that represents any two dimensional entity."""
 
 
 class Entity:

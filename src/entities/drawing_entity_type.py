@@ -1,3 +1,5 @@
+"""Enumeration with all entity types that can be used in drawings."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Enumeration with all entity types that can be used in drawings."""
 
 
 from enum import Enum

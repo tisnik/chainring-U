@@ -1,3 +1,5 @@
+"""All layers that must be distinguished by the application."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""All layers that must be distinguished by the application."""
 
 
 from enum import Enum

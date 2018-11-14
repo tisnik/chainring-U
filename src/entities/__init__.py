@@ -1,3 +1,5 @@
+"""Graphics entities imported from DXF format and used in drawing."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,7 +11,5 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Graphics entities imported from DXF format and used in drawing."""
 
 # TODO: text entity to work properly

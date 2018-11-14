@@ -1,3 +1,5 @@
+"""Module with class that represents the two dimensional polyline entity."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Module with class that represents the two dimensional polyline entity."""
 
 import sys
 
@@ -66,10 +66,12 @@ class Polyline(Entity):
             points.append(y)
         # special polyline used for selecting room
         if self.layer is not None and self.layer == "CKPOPISM_PLOCHA":
-            new_object = canvas.create_polygon(points, fill="", width=2, activeoutline="red", outline="green")
+            new_object = canvas.create_polygon(points, fill="", width=2, activeoutline="red",
+                                               outline="green")
             self._id = new_object
             canvas.tag_bind(new_object, "<ButtonPress-1>",
-                            lambda event, new_object=new_object: canvas.on_polygon_for_room_click(new_object))
+                            lambda event, new_object=new_object: canvas.on_polygon_for_room_click(
+                                new_object))
         # just a regular polyline
         else:
             self._id = canvas.create_polygon(points, fill="", outline="green")

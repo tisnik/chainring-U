@@ -1,3 +1,5 @@
+"""Module with class that represents the two dimensional line entity."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Module with class that represents the two dimensional line entity."""
 
 
 from entities.entity import Entity
