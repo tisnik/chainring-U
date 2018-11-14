@@ -1,3 +1,5 @@
+"""Importer for rooms stored in a text file."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Importer for rooms stored in a text file."""
 
 import sys
 

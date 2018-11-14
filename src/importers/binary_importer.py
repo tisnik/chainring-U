@@ -1,3 +1,5 @@
+"""Importer (deserializer) for drawings stored in a binary format."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Importer (deserializer) for drawings stored in a binary format."""
 
 import pickle
 

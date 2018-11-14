@@ -1,3 +1,5 @@
+"""Various importers (deserializers) for drawings, rooms etc."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,5 +11,3 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Various importers (deserializers) for drawings, rooms etc."""

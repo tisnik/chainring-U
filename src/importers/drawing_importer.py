@@ -1,3 +1,5 @@
+"""Importer (deserializer) for drawings stored in structured text file."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Importer (deserializer) for drawings stored in structured text file."""
 
 import sys
 
@@ -195,7 +195,8 @@ class DrawingImporter:
         room_id = parts[1]
         vertexes = int(parts[2])
         coordinates = parts[3:]
-        polygon = list((float(coordinates[i * 2]), float(coordinates[i * 2 + 1])) for i in range(vertexes))
+        polygon = list((float(coordinates[i * 2]), float(coordinates[i * 2 + 1]))
+                       for i in range(vertexes))
         last_part = parts[-1]
         # type: drawn from polygon or from series of line vertexes
         if last_part == "P" or last_part == "L":

@@ -1,3 +1,5 @@
+"""Importer for rooms stored in a text file."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""Importer for rooms stored in a text file."""
 
 import sys
 
@@ -82,7 +82,8 @@ class RoomImporter:
         room_id = parts[1]
         vertexes = int(parts[2])
         coordinates = parts[3:]
-        polygon = list((float(coordinates[i*2]), float(coordinates[i*2+1])) for i in range(vertexes))
+        polygon = list((float(coordinates[i * 2]), float(coordinates[i * 2 + 1]))
+                       for i in range(vertexes))
         last_part = parts[-1]
         if last_part == "P" or last_part == "L":
             typ = last_part

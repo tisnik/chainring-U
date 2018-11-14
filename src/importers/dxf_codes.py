@@ -1,3 +1,5 @@
+"""List of all supported numeric codes used in DXF files."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""List of all supported numeric codes used in DXF files."""
 
 from enum import Enum
 

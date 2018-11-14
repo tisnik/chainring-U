@@ -1,3 +1,5 @@
+"""State of the DXF reader finite automata."""
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -9,8 +11,6 @@
 #  Contributors:
 #      Pavel Tisnovsky
 #
-
-"""State of the DXF reader finite automata."""
 
 from enum import Enum
 
