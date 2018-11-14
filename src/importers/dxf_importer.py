@@ -88,6 +88,7 @@ class DxfImporter:
         self.entities = []
 
     def detect_encoding(self):
+        """Detect the encoding of DXF file."""
         encodings = ['utf-8', 'windows-1250', 'windows-1252']
         for e in encodings:
             try:
@@ -135,6 +136,7 @@ class DxfImporter:
                             "BEGINNING".format(c=code))
 
     def process_beginning_section_name_attribute(self, code, data):
+        """Change the state of DXF reader."""
         if data == "HEADER":
             self.state = DxfReaderState.SECTION_HEADER
             print("    section header")
@@ -201,6 +203,7 @@ class DxfImporter:
             # print("        begin block '{b}'".format(b=self.blockName))
 
     def process_section_entities_entity_type(self, code, data):
+        """Change the state according to entity type code read from DXF."""
         self.polyline_points_x = []
         self.polyline_points_y = []
         if data == "LINE":
@@ -238,6 +241,7 @@ class DxfImporter:
                 self.state = DxfReaderState.BEGINNING
 
     def process_entity_type_attribute(self, code, data):
+        """Store the previously read entity and try to process next one."""
         self.statistic[self.entityType] += 1
         self.store_entity()
         self.state = DxfReaderState.SECTION_ENTITIES
@@ -299,6 +303,7 @@ class DxfImporter:
             self.process_entity_type_attribute(code, data)
 
     def store_entity(self):
+        """Store entity read from DXF file."""
         if self.entityType == DrawingEntityType.LINE:
             self.store_line()
         elif self.entityType == DrawingEntityType.CIRCLE:
@@ -313,9 +318,11 @@ class DxfImporter:
             print("unknown entity?")
 
     def store_line(self):
+        """Store line read from DXF file."""
         self.entities.append(Line(self.x1, -self.y1, self.x2, -self.y2, self.color, self.layer))
 
     def store_polyline(self):
+        """Store polyline read from DXF file."""
         for i in range(0, len(self.polyline_points_y)):
             self.polyline_points_y[i] = -self.polyline_points_y[i]
         self.entities.append(Polyline(self.polyline_points_x, self.polyline_points_y, self.color, self.layer))
@@ -323,16 +330,19 @@ class DxfImporter:
         self.polyline_points_y = []
 
     def store_circle(self):
+        """Store circle read from DXF file."""
         if self.mirror == -1:
             print("MIRROR")
             self.x1 = -self.x1
         self.entities.append(Circle(self.x1, -self.y1, self.radius, self.color, self.layer))
 
     def store_arc(self):
+        """Store arc read from DXF file."""
         self.entities.append(Arc(self.x1, -self.y1,
                                  self.radius, self.angle1, self.angle2, self.color, self.layer))
 
     def store_text(self):
+        """Store text read from DXF file."""
         if self.text:
             self.text = self.text.replace("\\U+00B2", u"\u00B2")
         self.entities.append(Text(self.x1, -self.y1, self.text, self.color, self.layer))
