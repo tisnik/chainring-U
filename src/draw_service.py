@@ -78,14 +78,9 @@ class DrawServiceInterface:
         except Exception as e:
             return None, repr(e)
 
-    def read_areals(self, valid_from):
-        """Read list of areals from the web service."""
-        url = "areals?valid-from={date}".format(date=valid_from)
-        return self.read_aoid(url, "areals", "Seznam areálů je prázdný")
-
-    def read_buildings(self, valid_from, aoid):
+    def read_buildings(self, valid_from):
         """Read list of buildings from the web service."""
-        url = "buildings?valid-from={date}&areal-id={aoid}".format(date=valid_from, aoid=aoid)
+        url = "buildings?valid-from={date}".format(date=valid_from)
         return self.read_aoid(url, "buildings", "Seznam budov je prázdný")
 
     def read_floors(self, valid_from, aoid):
