@@ -46,9 +46,8 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         self.id_entry = tkinter.Entry(top_part, width=20, state="readonly", textvariable=self.id)
         self.id_entry.grid(row=1, column=5, sticky="W", padx=5, pady=5)
 
-        listArealsButton = tkinter.Button(top_part, text="Načíst seznam areálů",
-                                          command=self.read_areals)
-        listArealsButton.grid(row=1, column=3, sticky="WE")
+        listBuildingsButton = tkinter.Button(top_part, text="Načíst seznam budov", command=self.read_buildings)
+        listBuildingsButton.grid(row=1, column=3, sticky="WE")
 
     def command_part(self):
         """Bottom part of dialog: buttons."""
@@ -67,23 +66,12 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         middle_part = tkinter.LabelFrame(self, text="Výběr podlaží", padx=5, pady=5)
         middle_part.grid(row=2, column=1, sticky="NWSE")
 
-        label = tkinter.Label(middle_part, text="Areály")
-        label.grid(row=1, column=1, sticky="W", padx=5, pady=5)
         label = tkinter.Label(middle_part, text="Budovy")
-        label.grid(row=1, column=2, sticky="W", padx=5, pady=5)
+        label.grid(row=1, column=1, sticky="W", padx=5, pady=5)
         label = tkinter.Label(middle_part, text="Podlaží")
-        label.grid(row=1, column=3, sticky="W", padx=5, pady=5)
+        label.grid(row=1, column=2, sticky="W", padx=5, pady=5)
         label = tkinter.Label(middle_part, text="Místnosti")
-        label.grid(row=1, column=4, sticky="W", padx=5, pady=5)
-
-        frame1 = tkinter.Frame(middle_part)
-        scrollbar1 = tkinter.Scrollbar(frame1, orient=tkinter.VERTICAL)
-        self.arealList = tkinter.Listbox(frame1, height=20, width=30, yscrollcommand=scrollbar1.set)
-        self.arealList.bind('<<ListboxSelect>>', lambda event: self.on_areal_select(event))
-        scrollbar1.config(command=self.arealList.yview)
-        scrollbar1.pack(side=tkinter.RIGHT, fill=tkinter.Y)
-        self.arealList.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
-        frame1.grid(row=2, column=1, sticky="NWSE")
+        label.grid(row=1, column=3, sticky="W", padx=5, pady=5)
 
         frame2 = tkinter.Frame(middle_part)
         scrollbar2 = tkinter.Scrollbar(frame2, orient=tkinter.VERTICAL)
@@ -93,7 +81,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         scrollbar2.config(command=self.buildingList.yview)
         scrollbar2.pack(side=tkinter.RIGHT, fill=tkinter.Y)
         self.buildingList.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
-        frame2.grid(row=2, column=2, sticky="NWSE")
+        frame2.grid(row=2, column=1, sticky="NWSE")
 
         frame3 = tkinter.Frame(middle_part)
         scrollbar3 = tkinter.Scrollbar(frame3, orient=tkinter.VERTICAL)
@@ -102,7 +90,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         scrollbar3.config(command=self.floorList.yview)
         scrollbar3.pack(side=tkinter.RIGHT, fill=tkinter.Y)
         self.floorList.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
-        frame3.grid(row=2, column=3, sticky="NWSE")
+        frame3.grid(row=2, column=2, sticky="NWSE")
 
         frame4 = tkinter.Frame(middle_part)
         scrollbar4 = tkinter.Scrollbar(frame4, orient=tkinter.VERTICAL)
@@ -110,7 +98,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         scrollbar4.config(command=self.floorList.yview)
         scrollbar4.pack(side=tkinter.RIGHT, fill=tkinter.Y)
         self.roomList.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
-        frame4.grid(row=2, column=4, sticky="NWSE")
+        frame4.grid(row=2, column=3, sticky="NWSE")
 
     def __init__(self, parent, configuration):
         """Initialize the dialog for importing rooms from SAP."""
@@ -121,7 +109,6 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         self.address = self.configuration.server_address
         self.port = self.configuration.server_port
 
-        self.areals = None
         self.buildings = None
         self.floors = None
         self.rooms = None
@@ -161,15 +148,6 @@ class RoomsFromSapDialog(tkinter.Toplevel):
             return int(selection[0])
         return None
 
-    def on_areal_select(self, event):
-        """Handle event when areal is selected from list box."""
-        index = self.list_box_index(event)
-        if index is not None:
-            areal = self.areals[index]
-            if areal and "AOID" in areal:
-                aoid = areal["AOID"]
-                self.read_buildings(aoid)
-
     def on_building_select(self, event):
         """Handle event when building is selected from list box."""
         index = self.list_box_index(event)
@@ -206,26 +184,13 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         """Show error message when server is not responding."""
         messagebox.showerror("Nastala chyba", "Nastala chyba: {e}".format(e=message))
 
-    def read_areals(self):
-        """Read list of areals from SAP."""
-        valid_from = self.calendar.get()
-        if not self.url:
-            self.error_server_address()
-            return
-        data, message = self.drawServiceInterface.read_areals(valid_from)
-        if data:
-            self.areals = data
-            self.fill_in_listbox(self.arealList, data)
-        else:
-            self.error_server_call(message)
-
-    def read_buildings(self, aoid):
+    def read_buildings(self):
         """Read list of buildings from SAP."""
         valid_from = self.calendar.get()
         if not self.url:
             self.error_server_address()
             return
-        data, message = self.drawServiceInterface.read_buildings(valid_from, aoid)
+        data, message = self.drawServiceInterface.read_buildings(valid_from)
         if data:
             self.buildings = data
             self.fill_in_listbox(self.buildingList, data)
