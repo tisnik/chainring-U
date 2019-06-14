@@ -14,6 +14,10 @@
 
 import requests
 
+from platform import node
+from getpass import getuser
+from time import asctime
+
 from exporters.json_exporter import *
 
 
@@ -106,7 +110,11 @@ class DrawServiceInterface:
         url = "{url}/{api}/{endpoint}".format(url=self._service_url,
                                               api=DrawServiceInterface.API_PREFIX,
                                               endpoint=endpoint)
-        json_exporter = JSONExporter("output.json", drawing)
+        hostname = node()
+        username = getuser()
+        created = asctime()
+
+        json_exporter = JSONExporter("output.json", drawing, hostname, username, created)
         payload = json_exporter.as_string()
         try:
             response = requests.post(url, data=payload, timeout=30)
