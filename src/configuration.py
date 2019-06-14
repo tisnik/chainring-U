@@ -51,6 +51,11 @@ class Configuration:
         """Property holding server port."""
         return self.config.getint('service', 'port')
 
+    @property
+    def key(self):
+        """Property holding key."""
+        return self.config.get('user', 'key')
+
     def write(self):
         """Write the configuration back to disk under different name."""
         with open('config2.ini', 'w') as fout:

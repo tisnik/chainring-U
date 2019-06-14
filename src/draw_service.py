@@ -1,7 +1,7 @@
 """Interface to web service that provide list of rooms and drawing storage."""
 
 #
-#  (C) Copyright 2017, 2018  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018, 2019  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -31,9 +31,10 @@ class DrawServiceInterface:
         """Get URL prefix to the service."""
         return "http://{address}:{port}".format(address=address, port=port)
 
-    def __init__(self, service_url="http://localhost:3000"):
+    def __init__(self, service_url="http://localhost:3000", key=""):
         """Initialize the interface."""
         self._service_url = service_url
+        self._user_key = key
 
     def get(self, endpoint):
         """Get full URL to selected endpoint."""
@@ -107,9 +108,10 @@ class DrawServiceInterface:
     def send_drawing(self, drawing):
         """Send drawing onto the web service."""
         endpoint = "drawing-data?drawing={id}&format=json".format(id=drawing.drawing_id)
-        url = "{url}/{api}/{endpoint}".format(url=self._service_url,
-                                              api=DrawServiceInterface.API_PREFIX,
-                                              endpoint=endpoint)
+        url = "{url}/{api}/{endpoint}&key={key}".format(url=self._service_url,
+                                                        api=DrawServiceInterface.API_PREFIX,
+                                                        endpoint=endpoint,
+                                                        key=self._user_key)
         hostname = node()
         username = getuser()
         created = asctime()
@@ -118,8 +120,7 @@ class DrawServiceInterface:
         payload = json_exporter.as_string()
         try:
             response = requests.post(url, data=payload, timeout=30)
-            code, data = self.get("info")
-            print(code, data)
+            code = response.status_code
             if code != 200:
                 return False, "Návratový kód {code}".format(code=code)
             else:

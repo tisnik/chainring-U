@@ -111,7 +111,7 @@ class MainWindow:
             messagebox.showerror("Nastala chyba", "Není nastaven port serveru")
             return
         url = DrawServiceInterface.get_url(address, port)
-        drawServiceInterface = DrawServiceInterface(service_url=url)
+        drawServiceInterface = DrawServiceInterface(service_url=url, key=self.configuration.key)
         status, message = drawServiceInterface.send_drawing(self.drawing)
         if status:
             messagebox.showinfo("Výsledek operace", message)
