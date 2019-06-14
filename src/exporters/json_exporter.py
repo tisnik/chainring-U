@@ -1,7 +1,7 @@
 """Drawing exporter (serializer) to the JSON format."""
 
 #
-#  (C) Copyright 2017, 2018  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018, 2019  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -36,11 +36,14 @@ class JSONExporter:
         [1024, 768]
     ]
 
-    def __init__(self, filename, drawing):
+    def __init__(self, filename, drawing, hostname="", username="", created=""):
         """Initialize the exporter, set the filename to be created and a sequence of entities."""
         self.filename = filename
         self.entities = drawing.entities
         self.rooms = drawing.rooms
+        self.hostname = hostname
+        self.username = username
+        self.created = created
 
     @staticmethod
     def get_timestamp():
@@ -86,6 +89,9 @@ class JSONExporter:
             "rooms_count": len(self.rooms),
             "entities": entities_list,
             "rooms": self.rooms,
+            "hostname": self.hostname,
+            "username": self.username,
+            "created": self.created,
         }
         return obj
 
