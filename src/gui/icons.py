@@ -1,7 +1,7 @@
 """All icons used on the GUI."""
 
 #
-#  (C) Copyright 2017, 2018  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018, 2019  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -21,6 +21,8 @@ import icons.file_save_as
 import icons.drawing_load
 import icons.drawing_save
 import icons.drawing_info
+import icons.save_rooms_csv
+import icons.save_rooms_txt
 import icons.zoom_in
 import icons.zoom_out
 import icons.zoom_original
@@ -82,6 +84,8 @@ class Icons:
         self.properties_icon = tkinter.PhotoImage(data=icons.properties.icon)
         self.drawing_info_icon = tkinter.PhotoImage(
             data=icons.drawing_info.icon)
+        self.save_rooms_as_csv = tkinter.PhotoImage(data=icons.save_rooms_csv.icon)
+        self.save_rooms_as_txt = tkinter.PhotoImage(data=icons.save_rooms_txt.icon)
         self.checkbox_icon = tkinter.PhotoImage(data=icons.checkbox.icon)
         self.service_icon = tkinter.PhotoImage(data=icons.service.icon)
         self.rooms_from_sap = tkinter.PhotoImage(data=icons.rooms_from_sap.icon)
