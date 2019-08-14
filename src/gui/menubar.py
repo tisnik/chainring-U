@@ -1,7 +1,7 @@
 """Menu bar displayed on the main window."""
 
 #
-#  (C) Copyright 2017, 2018  Pavel Tisnovsky
+#  (C) Copyright 2017, 2018, 2019  Pavel Tisnovsky
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +20,9 @@ from gui.dialogs.drawing_info_dialog import DrawingInfoDialog
 from gui.dialogs.help_dialog import *
 from gui.dialogs.settings_dialog import SettingsDialog
 from gui.dialogs.room_list_dialog import RoomListDialog
+from gui.dialogs.save_dialogs import SaveDialogs
+from exporters.room_csv_exporter import RoomCSVExporter
+from exporters.room_txt_exporter import RoomTXTExporter
 
 from draw_service import DrawServiceInterface
 
@@ -65,6 +68,16 @@ class Menubar(tkinter.Menu):
                                compound="left", underline=0,
                                command=self.show_room_list_dialog,
                                accelerator="Ctrl+M")
+
+        self.rooms.add_command(label="Uložit seznam místností do CSV",
+                               image=main_window.icons.save_rooms_as_csv,
+                               compound="left", underline=27,
+                               command=self.show_room_save_dialog_as_csv)
+
+        self.rooms.add_command(label="Uložit seznam místností do textového souboru",
+                               image=main_window.icons.save_rooms_as_txt,
+                               compound="left", underline=27,
+                               command=self.show_room_save_dialog_as_txt)
 
         self.rooms.add_separator()
 
@@ -196,6 +209,20 @@ class Menubar(tkinter.Menu):
         """Show room list dialog."""
         RoomListDialog(self.parent, self.main_window.drawing)
 
+    def show_room_save_dialog_as_csv(self):
+        """Show room save dialog for export to CSV."""
+        filename = SaveDialogs.save_rooms_as_csv(self.parent)
+        if filename:
+            exporter = RoomCSVExporter(filename, self.main_window.drawing)
+            exporter.export()
+
+    def show_room_save_dialog_as_txt(self):
+        """Show room save dialog for export to TXT (text file)."""
+        filename = SaveDialogs.save_rooms_as_txt(self.parent)
+        if filename:
+            exporter = RoomTXTExporter(filename, self.main_window.drawing)
+            exporter.export()
+
     def check_server_connectivity(self):
         """Check the connectivity to server and display results."""
         address = self.main_window.configuration.server_address
@@ -238,11 +265,13 @@ class Menubar(tkinter.Menu):
         Menubar.disable_menu_item(self.filemenu, 3)
 
         Menubar.disable_menu_item(self.rooms, 0)
+        Menubar.disable_menu_item(self.rooms, 1)
         Menubar.disable_menu_item(self.rooms, 2)
-        Menubar.disable_menu_item(self.rooms, 3)
         Menubar.disable_menu_item(self.rooms, 4)
+        Menubar.disable_menu_item(self.rooms, 5)
         Menubar.disable_menu_item(self.rooms, 6)
-        Menubar.disable_menu_item(self.rooms, 7)
+        Menubar.disable_menu_item(self.rooms, 8)
+        Menubar.disable_menu_item(self.rooms, 9)
 
         Menubar.disable_menu_item(self.edit, 0)
         Menubar.disable_menu_item(self.edit, 1)
@@ -262,11 +291,13 @@ class Menubar(tkinter.Menu):
         Menubar.enable_menu_item(self.filemenu, 3)
 
         Menubar.enable_menu_item(self.rooms, 0)
+        Menubar.enable_menu_item(self.rooms, 1)
         Menubar.enable_menu_item(self.rooms, 2)
-        Menubar.enable_menu_item(self.rooms, 3)
         Menubar.enable_menu_item(self.rooms, 4)
+        Menubar.enable_menu_item(self.rooms, 5)
         Menubar.enable_menu_item(self.rooms, 6)
-        Menubar.enable_menu_item(self.rooms, 7)
+        Menubar.enable_menu_item(self.rooms, 8)
+        Menubar.enable_menu_item(self.rooms, 9)
 
         Menubar.enable_menu_item(self.edit, 0)
         Menubar.enable_menu_item(self.edit, 1)
