@@ -51,6 +51,7 @@ class DxfImporter:
             DxfReaderState.ENTITY:
                 DxfImporter.process_entity,
         }
+        self.color = None
 
     def dxf_entry(self, fin):
         """Generate pair dxf_code + dxf_data for each iteration."""
