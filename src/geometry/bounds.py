@@ -49,5 +49,6 @@ class Bounds:
         # initial settings - empty bounds area
         bounds = Bounds()
         for entity in entities:
-            bounds.enlarge(entity.getBounds())
+            if entity.__class__.__name__ != "Arc":
+                bounds.enlarge(entity.getBounds())
         return bounds
