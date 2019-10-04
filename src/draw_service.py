@@ -128,7 +128,7 @@ class DrawServiceInterface:
                     id=drawing.drawing_id, b=len(payload))
                 return True, message
         except Exception as e:
-            return False, e
+            return False, str(e)
 
     def read_all_drawings(self):
         """Read list of all drawings from the web service."""
