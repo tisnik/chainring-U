@@ -28,6 +28,8 @@ class DxfImporter:
 
     def __init__(self, filename):
         """Initialize the importer."""
+        # TODO: make this option fully configurable
+        self.debug = False
         self.filename = filename
         self.state_switcher = {
             DxfReaderState.BEGINNING:
@@ -51,7 +53,7 @@ class DxfImporter:
             DxfReaderState.ENTITY:
                 DxfImporter.process_entity,
         }
-        self.color = None
+        self.color = 0
 
     def dxf_entry(self, fin):
         """Generate pair dxf_code + dxf_data for each iteration."""
@@ -84,7 +86,8 @@ class DxfImporter:
             DrawingEntityType.CIRCLE: 0,
             DrawingEntityType.ARC: 0,
             DrawingEntityType.TEXT: 0,
-            DrawingEntityType.POLYLINE: 0
+            DrawingEntityType.POLYLINE: 0,
+            DrawingEntityType.ATTRIB: 0
         }
         self.entities = []
 
@@ -187,7 +190,8 @@ class DxfImporter:
         if code == DxfCodes.TEXT_STRING:
             if data == "BLOCK":
                 self.state = DxfReaderState.SECTION_BLOCK
-                # print("    block")
+                if self.debug:
+                    print("    block")
             elif data == "ENDSEC":
                 self.state = DxfReaderState.BEGINNING
                 print("    end section blocks")
@@ -201,12 +205,15 @@ class DxfImporter:
         elif code == DxfCodes.NAME:
             self.state = DxfReaderState.SECTION_BLOCK
             self.blockName = data
-            # print("        begin block '{b}'".format(b=self.blockName))
+            if self.debug:
+                print("        begin block '{b}'".format(b=self.blockName))
 
     def process_section_entities_entity_type(self, code, data):
         """Change the state according to entity type code read from DXF."""
         self.polyline_points_x = []
         self.polyline_points_y = []
+        if self.debug:
+            print("Entity", data)
         if data == "LINE":
             self.state = DxfReaderState.ENTITY
             self.entityType = DrawingEntityType.LINE
@@ -222,6 +229,9 @@ class DxfImporter:
         elif data == "MTEXT" or data == "TEXT":
             self.state = DxfReaderState.ENTITY
             self.entityType = DrawingEntityType.TEXT
+        elif data == "ATTRIB":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.ATTRIB
 
     def process_section_entities(self, code, data):
         """Part of the DXF import state machine."""
@@ -248,7 +258,7 @@ class DxfImporter:
         self.state = DxfReaderState.SECTION_ENTITIES
         self.entityType = DrawingEntityType.UNKNOWN
         self.layer = None
-        self.color = None
+        self.color = 0
         self.polyline_points_x = []
         self.polyline_points_y = []
         self.mirror = 1
@@ -267,6 +277,9 @@ class DxfImporter:
         elif data == "MTEXT" or data == "TEXT":
             self.state = DxfReaderState.ENTITY
             self.entityType = DrawingEntityType.TEXT
+        elif data == "ATTRIB":
+            self.state = DxfReaderState.ENTITY
+            self.entityType = DrawingEntityType.ATTRIB
         elif data == "ENDSEC":
             self.state = DxfReaderState.BEGINNING
             self.entityType = DrawingEntityType.UNKNOWN
@@ -315,6 +328,10 @@ class DxfImporter:
             self.store_polyline()
         elif self.entityType == DrawingEntityType.TEXT:
             self.store_text()
+        elif self.entityType == DrawingEntityType.ATTRIB:
+            # TODO: make this layer(s) configurable
+            if self.layer == "CKPOPISM":
+                self.store_text()
         else:
             print("unknown entity?")
 
