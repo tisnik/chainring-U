@@ -29,6 +29,12 @@ import sys
 
 configuration = Configuration()
 #configuration.write()
+try:
+    configuration.check_configuration()
+except Exception as e:
+    error_dialog_wrong_configuration(str(e))
+    sys.exit(1)
+
 
 mainWindow = MainWindow(configuration)
 drawing = None
