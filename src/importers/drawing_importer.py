@@ -20,7 +20,7 @@ from entities.line import *
 from entities.circle import *
 from entities.arc import *
 from entities.text import *
-from entities.polyline import *
+from entities.polyline import Polyline
 
 
 class DrawingImporter:
