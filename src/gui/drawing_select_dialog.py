@@ -15,8 +15,6 @@
 
 import tkinter
 
-from tkinter import ttk
-
 
 class DrawingSelectDialog(tkinter.Toplevel):
     """Dialog to select building, floor, and drawing."""
