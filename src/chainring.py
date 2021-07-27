@@ -14,7 +14,7 @@
 
 from gui.main_window import *
 from importers.dxf_importer import *
-#from importers.binary_importer import *
+# from importers.binary_importer import *
 from importers.drawing_importer import *
 #from exporters.binary_exporter import *
 from exporters.drawing_exporter import *
