@@ -28,7 +28,7 @@ from gui.dialogs.load_dialogs import LoadDialogs
 import sys
 
 configuration = Configuration()
-#configuration.write()
+# configuration.write()
 try:
     configuration.check_configuration()
 except Exception as e:
