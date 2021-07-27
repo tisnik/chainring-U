@@ -15,7 +15,7 @@
 import sys
 
 from drawing import Drawing
-from entities.drawing_entity_type import *
+from entities.drawing_entity_type import DrawingEntityType
 from entities.line import Line
 from entities.circle import Circle
 from entities.arc import Arc
