@@ -60,7 +60,7 @@ class Configuration:
         """Write the configuration back to disk under different name."""
         with open('config2.ini', 'w') as fout:
             self.config.write(fout)
-    
+
     def check_configuration_option(self, section, option):
         """Check one configuration option."""
         if not self.config.has_option(section, option):
