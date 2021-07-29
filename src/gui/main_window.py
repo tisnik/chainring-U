@@ -156,7 +156,8 @@ class MainWindow:
     def import_rooms_from_sap(self, event=None):
         """Import rooms from SAP."""
         if self.drawing.rooms is None or len(self.drawing.rooms) == 0 or dialog_load_rooms_from_sap():
-            rooms_from_sap, drawing_id = LoadDialogs.load_rooms_from_sap(self.root, self.configuration)
+            rooms_from_sap, drawing_id = LoadDialogs.load_rooms_from_sap(self.root,
+                                                                         self.configuration)
             if rooms_from_sap is not None:
                 # process drawing_id
                 if drawing_id is not None:
