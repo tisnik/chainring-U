@@ -46,7 +46,8 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         self.id_entry = tkinter.Entry(top_part, width=20, state="readonly", textvariable=self.id)
         self.id_entry.grid(row=1, column=5, sticky="W", padx=5, pady=5)
 
-        listBuildingsButton = tkinter.Button(top_part, text="Načíst seznam budov", command=self.read_buildings)
+        listBuildingsButton = tkinter.Button(top_part, text="Načíst seznam budov",
+                                             command=self.read_buildings)
         listBuildingsButton.grid(row=1, column=3, sticky="WE")
 
     def command_part(self):
