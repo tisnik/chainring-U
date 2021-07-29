@@ -64,7 +64,8 @@ class Configuration:
     def check_configuration_option(self, section, option):
         """Check one configuration option."""
         if not self.config.has_option(section, option):
-            msg = "V konfiguračním souboru 'config.ini' chybí volba '{}' v sekci '{}'".format(option, section)
+            msg = "V konfiguračním souboru 'config.ini' chybí volba '{}' v sekci '{}'".format(
+                    option, section)
             raise Exception(msg)
 
     def check_configuration(self):
