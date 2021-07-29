@@ -137,7 +137,7 @@ class DrawingImporter:
         """Process command with line entity."""
         try:
             color = int(parts[1])
-        except:
+        except Exception as e:
             color = 0
         layer = parts[2]
         x1 = float(parts[3])
