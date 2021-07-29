@@ -100,7 +100,8 @@ class MainWindow:
             messagebox.showerror("Nastala chyba", "Výkres není aktivní")
             return
         if self.drawing.drawing_id is None:
-            messagebox.showerror("Nastala chyba", "Výkres nemá přiřazen jednoznačný identifikátor (ID)")
+            messagebox.showerror("Nastala chyba",
+                                 "Výkres nemá přiřazen jednoznačný identifikátor (ID)")
             return
         address = self.configuration.server_address
         port = self.configuration.server_port
