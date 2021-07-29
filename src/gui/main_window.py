@@ -162,7 +162,8 @@ class MainWindow:
                 if drawing_id is not None:
                     self.drawing.drawing_id = drawing_id
                 else:
-                    messagebox.showerror("Nastala chyba", "Nelze zjistit jednoznačný identifikátor výkresu")
+                    messagebox.showerror("Nastala chyba",
+                                         "Nelze zjistit jednoznačný identifikátor výkresu")
                 # delete rooms from canvas
                 if self.drawing.rooms is not None:
                     for room in self.drawing.rooms:
