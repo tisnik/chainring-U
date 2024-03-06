@@ -179,7 +179,7 @@ class DrawingImporter:
         """Process command with text entity."""
         try:
             color = int(parts[1])
-        except:
+        except (ValueError, IndexError):
             color = 0
         layer = parts[2]
         x = float(parts[3])
@@ -193,7 +193,7 @@ class DrawingImporter:
         """Process command with polyline entity."""
         try:
             color = int(parts[1])
-        except:
+        except (ValueError, IndexError):
             color = 0
         layer = parts[2]
         vertexes = int(parts[3])
