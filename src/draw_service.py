@@ -12,12 +12,11 @@
 #      Pavel Tisnovsky
 #
 
-import requests
-
-from platform import node
 from getpass import getuser
+from platform import node
 from time import asctime
 
+import requests
 from exporters.json_exporter import *
 
 
