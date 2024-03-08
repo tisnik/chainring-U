@@ -12,7 +12,6 @@
 #      Pavel Tisnovsky
 #
 
-from enum import Enum
 
 
 class DxfCodes:
