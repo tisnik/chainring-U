@@ -368,6 +368,7 @@ class DxfImporter:
 
 
 if __name__ == "__main__":
+    from exporters.drawing_exporter import DrawingExporter
     importer = DxfImporter("Branna_3np.dxf")
     entities, statistic, lines = importer.import_dxf()
     print(lines)
