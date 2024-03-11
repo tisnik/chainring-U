@@ -563,9 +563,8 @@ class MainWindow:
 
     def on_left_button_drag(self, event):
         """Handle the left mouse button drag event."""
-        if self.canvas_mode == CanvasMode.DRAW_ROOM:
-            pass
-        elif self.canvas_mode == CanvasMode.SELECT_POLYGON_FOR_ROOM:
+        if self.canvas_mode == CanvasMode.DRAW_ROOM or \
+                self.canvas_mode == CanvasMode.SELECT_POLYGON_FOR_ROOM:
             pass
         else:
             self.scroll_move(event)
