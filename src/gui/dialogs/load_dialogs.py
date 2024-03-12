@@ -77,7 +77,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         scrollbar2 = tkinter.Scrollbar(frame2, orient=tkinter.VERTICAL)
         self.buildingList = tkinter.Listbox(frame2, height=20, width=30,
                                             yscrollcommand=scrollbar2.set)
-        self.buildingList.bind('<<ListboxSelect>>', lambda event: self.on_building_select(event))
+        self.buildingList.bind("<<ListboxSelect>>", lambda event: self.on_building_select(event))
         scrollbar2.config(command=self.buildingList.yview)
         scrollbar2.pack(side=tkinter.RIGHT, fill=tkinter.Y)
         self.buildingList.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
@@ -86,7 +86,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         frame3 = tkinter.Frame(middle_part)
         scrollbar3 = tkinter.Scrollbar(frame3, orient=tkinter.VERTICAL)
         self.floorList = tkinter.Listbox(frame3, height=20, width=30, yscrollcommand=scrollbar3.set)
-        self.floorList.bind('<<ListboxSelect>>', lambda event: self.on_floor_select(event))
+        self.floorList.bind("<<ListboxSelect>>", lambda event: self.on_floor_select(event))
         scrollbar3.config(command=self.floorList.yview)
         scrollbar3.pack(side=tkinter.RIGHT, fill=tkinter.Y)
         self.floorList.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
@@ -239,15 +239,15 @@ class LoadDialogs:
     @staticmethod
     def load_drawing(root):
         """Dialog shown to select drawing to import."""
-        filetypes = [('Výkresy', '*.drw'),
-                     ('Výkresy z CADu', '*.dxf')]
+        filetypes = [("Výkresy", "*.drw"),
+                     ("Výkresy z CADu", "*.dxf")]
         dialog = filedialog.Open(root, filetypes=filetypes)
         return dialog.show()
 
     @staticmethod
     def load_rooms(root):
         """Dialog shown to select rooms to import from file."""
-        filetypes = [('Místnosti', '*.rooms')]
+        filetypes = [("Místnosti", "*.rooms")]
         dialog = filedialog.Open(root, filetypes=filetypes)
         return dialog.show()
 
