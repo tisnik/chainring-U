@@ -17,10 +17,9 @@ import tkinter
 from draw_service import DrawServiceInterface
 from exporters.room_csv_exporter import RoomCSVExporter
 from exporters.room_txt_exporter import RoomTXTExporter
-from gui.dialogs.about_dialog import *
-from gui.dialogs.configure import *
+from gui.dialogs.about_dialog import about
+from gui.dialogs.configure import configure
 from gui.dialogs.drawing_info_dialog import DrawingInfoDialog
-from gui.dialogs.help_dialog import *
 from gui.dialogs.room_list_dialog import RoomListDialog
 from gui.dialogs.save_dialogs import SaveDialogs
 from gui.dialogs.settings_dialog import SettingsDialog
