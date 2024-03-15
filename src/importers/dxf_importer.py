@@ -87,7 +87,7 @@ class DxfImporter:
             DrawingEntityType.ARC: 0,
             DrawingEntityType.TEXT: 0,
             DrawingEntityType.POLYLINE: 0,
-            DrawingEntityType.ATTRIB: 0
+            DrawingEntityType.ATTRIB: 0,
         }
         self.entities = []
 
