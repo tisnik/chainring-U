@@ -341,7 +341,7 @@ class DxfImporter:
 
     def store_polyline(self):
         """Store polyline read from DXF file."""
-        for i in range(0, len(self.polyline_points_y)):
+        for i in range(len(self.polyline_points_y)):
             self.polyline_points_y[i] = -self.polyline_points_y[i]
         self.entities.append(Polyline(self.polyline_points_x, self.polyline_points_y,
                                       self.color, self.layer))
