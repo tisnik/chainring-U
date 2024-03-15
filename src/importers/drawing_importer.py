@@ -43,7 +43,7 @@ class DrawingImporter:
             "A": DrawingImporter.process_arc,
             "T": DrawingImporter.process_text,
             "R": DrawingImporter.process_room,
-            "P": DrawingImporter.process_polyline
+            "P": DrawingImporter.process_polyline,
         }
 
         self.statistic = {
