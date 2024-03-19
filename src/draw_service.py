@@ -37,9 +37,11 @@ class DrawServiceInterface:
 
     def get(self, endpoint):
         """Get full URL to selected endpoint."""
-        url = "{url}/{api}/{endpoint}".format(url=self._service_url,
-                                              api=DrawServiceInterface.API_PREFIX,
-                                              endpoint=endpoint)
+        url = "{url}/{api}/{endpoint}".format(
+            url=self._service_url,
+            api=DrawServiceInterface.API_PREFIX,
+            endpoint=endpoint,
+        )
         response = requests.get(url, timeout=10)
         return response.status_code, response.json()
 
@@ -89,33 +91,43 @@ class DrawServiceInterface:
 
     def read_floors(self, valid_from, aoid):
         """Read list of floors from the web service."""
-        url = "floors?valid-from={date}&building-id={aoid}".format(date=valid_from, aoid=aoid)
+        url = "floors?valid-from={date}&building-id={aoid}".format(
+            date=valid_from, aoid=aoid
+        )
         return self.read_aoid(url, "floors", "Seznam podlaží je prázdný")
 
     def read_rooms(self, valid_from, aoid):
         """Read list of rooms from the web service."""
-        url = "rooms?valid-from={date}&floor-id={aoid}".format(date=valid_from, aoid=aoid)
+        url = "rooms?valid-from={date}&floor-id={aoid}".format(
+            date=valid_from, aoid=aoid
+        )
         return self.read_aoid(url, "rooms", "Seznam místností je prázdný")
 
     def check_input_data(self, data):
         """Check the basic structure of data read from web service."""
-        return "projects" in data and \
-               "buildings" in data and \
-               "floors" in data and \
-               "drawings" in data
+        return (
+            "projects" in data
+            and "buildings" in data
+            and "floors" in data
+            and "drawings" in data
+        )
 
     def send_drawing(self, drawing):
         """Send drawing onto the web service."""
         endpoint = "drawing-data?drawing={id}&format=json".format(id=drawing.drawing_id)
-        url = "{url}/{api}/{endpoint}&key={key}".format(url=self._service_url,
-                                                        api=DrawServiceInterface.API_PREFIX,
-                                                        endpoint=endpoint,
-                                                        key=self._user_key)
+        url = "{url}/{api}/{endpoint}&key={key}".format(
+            url=self._service_url,
+            api=DrawServiceInterface.API_PREFIX,
+            endpoint=endpoint,
+            key=self._user_key,
+        )
         hostname = node()
         username = getuser()
         created = asctime()
 
-        json_exporter = JSONExporter("output.json", drawing, hostname, username, created)
+        json_exporter = JSONExporter(
+            "output.json", drawing, hostname, username, created
+        )
         payload = json_exporter.as_string()
         try:
             response = requests.post(url, data=payload, timeout=30)
@@ -124,7 +136,8 @@ class DrawServiceInterface:
                 return False, "Návratový kód {code}".format(code=code)
             else:
                 message = "Výkres byl uložen pod ID {id} ({b} bajtů)".format(
-                    id=drawing.drawing_id, b=len(payload))
+                    id=drawing.drawing_id, b=len(payload)
+                )
                 return True, message
         except Exception as e:
             return False, str(e)
