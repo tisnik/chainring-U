@@ -21,7 +21,10 @@ from exporters.drawing_exporter import *
 from exporters.json_exporter import *
 from geometry.bounds import Bounds
 from geometry.rescaler import Rescaler
-from gui.dialogs.error_dialogs import error_dialog_drawing_load, error_dialog_wrong_configuration
+from gui.dialogs.error_dialogs import (
+    error_dialog_drawing_load,
+    error_dialog_wrong_configuration,
+)
 from gui.dialogs.load_dialogs import LoadDialogs
 from gui.main_window import *
 
@@ -56,7 +59,11 @@ drawing = None
 
 if drawing is None:
     drawing_file_name = LoadDialogs.load_drawing(None)
-    if drawing_file_name is not None and drawing_file_name != "" and drawing_file_name != ():
+    if (
+        drawing_file_name is not None
+        and drawing_file_name != ""
+        and drawing_file_name != ()
+    ):
         if drawing_file_name.endswith(".drw"):
             importer = DrawingImporter(drawing_file_name)
             drawing = importer.import_drawing()
