@@ -248,7 +248,6 @@ class MainWindow:
 
     def import_drawing_command(self, filename):
         """Import drawing (empty in this version)."""
-        pass
 
     def import_rooms_command(self, event=None):
         """Handle the command to import rooms."""
