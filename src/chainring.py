@@ -26,7 +26,7 @@ from gui.dialogs.error_dialogs import (
     error_dialog_wrong_configuration,
 )
 from gui.dialogs.load_dialogs import LoadDialogs
-from gui.main_window import *
+from gui.main_window import MainWindow
 
 # from importers.binary_importer import *
 from importers.drawing_importer import DrawingImporter
