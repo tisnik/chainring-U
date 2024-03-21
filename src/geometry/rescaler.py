@@ -17,7 +17,7 @@ class Rescaler:
     """Class to recompute scale from canvas size and computed bounds."""
 
     @staticmethod
-    def computeScale(bounds, width, height):
+    def compute_scale(bounds, width, height):
         """Compute scale from given bounds, width, and height."""
         xdist = bounds.xmax - bounds.xmin
         ydist = bounds.ymax - bounds.ymin
@@ -27,8 +27,8 @@ class Rescaler:
         return -bounds.xmin, -bounds.ymin, scale
 
     @staticmethod
-    def computeScaleForCanvas(bounds, canvas):
+    def compute_scale_for_canvas(bounds, canvas):
         """Compute scale from given bounds and canvas (with width+height)."""
         canvas_width = canvas.winfo_reqwidth()
         canvas_height = canvas.winfo_reqheight()
-        return Rescaler.computeScale(bounds, canvas_width, canvas_height)
+        return Rescaler.compute_scale(bounds, canvas_width, canvas_height)
