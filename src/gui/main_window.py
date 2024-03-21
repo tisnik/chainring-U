@@ -346,8 +346,8 @@ class MainWindow:
             if drawing is None:
                 error_dialog_drawing_load()
             else:
-                bounds = Bounds.computeBounds(drawing.entities)
-                xoffset, yoffset, scale = Rescaler.computeScaleForCanvas(
+                bounds = Bounds.compute_bounds(drawing.entities)
+                xoffset, yoffset, scale = Rescaler.compute_scale_for_canvas(
                     bounds, self.canvas
                 )
                 drawing.rescale(xoffset, yoffset, scale)
@@ -506,7 +506,7 @@ class MainWindow:
                 xpoints = entity.points_x
                 ypoints = entity.points_y
                 self.room.polygon_world = []
-                for i in range(0, len(xpoints)):
+                for i in range(len(xpoints)):
                     self.room.polygon_world.append((xpoints[i], ypoints[i]))
                 canvas_id = self.canvas.draw_new_room(self.room)
 
