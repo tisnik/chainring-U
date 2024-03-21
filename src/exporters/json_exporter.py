@@ -64,12 +64,12 @@ class JSONExporter:
 
     def to_json(self):
         """Perform conversion to JSON format."""
-        bounds = Bounds.computeBounds(self.entities)
+        bounds = Bounds.compute_bounds(self.entities)
         scales = []
 
         # export scales
         for scale in JSONExporter.SCALES:
-            xoffset, yoffset, s = Rescaler.computeScale(bounds, scale[0], scale[1])
+            xoffset, yoffset, s = Rescaler.compute_scale(bounds, scale[0], scale[1])
             scales.append(
                 {
                     "width": scale[0],
