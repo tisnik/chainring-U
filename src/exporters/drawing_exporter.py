@@ -100,12 +100,12 @@ class DrawingExporter:
             DrawingExporter.output_timestamp(fout)
 
             # compute drawing bounds and write them into the file
-            bounds = Bounds.computeBounds(self.entities)
+            bounds = Bounds.compute_bounds(self.entities)
             fout.write("bounds: {b}\n".format(b=bounds))
 
             # compute drawing scales and write them into the file
             for scale in DrawingExporter.SCALES:
-                xoffset, yoffset, s = Rescaler.computeScale(bounds, scale[0], scale[1])
+                xoffset, yoffset, s = Rescaler.compute_scale(bounds, scale[0], scale[1])
                 fout.write("scale: {w} {h} {s}\n".format(w=scale[0], h=scale[1], s=s))
 
             fout.write("entities: {e}\n".format(e=len(self.entities)))
