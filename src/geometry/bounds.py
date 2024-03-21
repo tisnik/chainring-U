@@ -51,5 +51,5 @@ class Bounds:
         bounds = Bounds()
         for entity in entities:
             if entity.__class__.__name__ != "Arc":
-                bounds.enlarge(entity.getBounds())
+                bounds.enlarge(entity.get_bounds())
         return bounds
