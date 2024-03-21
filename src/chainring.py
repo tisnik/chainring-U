@@ -76,9 +76,9 @@ if drawing is None:
                 error_dialog_drawing_load()
 
 if drawing is not None:
-    bounds = Bounds.computeBounds(drawing.entities)
+    bounds = Bounds.compute_bounds(drawing.entities)
     # print(bounds)
-    xoffset, yoffset, scale = Rescaler.computeScaleForCanvas(bounds, main_window.canvas)
+    xoffset, yoffset, scale = Rescaler.compute_scale_for_canvas(bounds, main_window.canvas)
     # print(xoffset, yoffset, scale)
 
     # ex = BinaryExporter("output3.bin", entities)
