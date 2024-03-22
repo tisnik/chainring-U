@@ -55,7 +55,7 @@ class Configuration:
         """Property holding key."""
         return self.config.get("user", "key")
 
-    def write(self):
+    def write(self) -> None:
         """Write the configuration back to disk under different name."""
         with open("config2.ini", "w") as fout:
             self.config.write(fout)
