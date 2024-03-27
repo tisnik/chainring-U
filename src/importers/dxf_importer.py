@@ -21,12 +21,14 @@ from entities.polyline import Polyline
 from entities.text import Text
 from importers.dxf_codes import DxfCodes
 from importers.dxf_reader_state import DxfReaderState
+from io import TextIOWrapper
+from typing import Iterator, Tuple
 
 
 class DxfImporter:
     """Importer for drawings stored in a DXF format."""
 
-    def __init__(self, filename):
+    def __init__(self, filename: str) -> None:
         """Initialize the importer."""
         # TODO: make this option fully configurable
         self.debug = False
@@ -45,7 +47,7 @@ class DxfImporter:
         }
         self.color = 0
 
-    def dxf_entry(self, fin):
+    def dxf_entry(self, fin: TextIOWrapper) -> Iterator[Tuple[int, str]]:
         """Generate pair dxf_code + dxf_data for each iteration."""
         linenumber = 0
         while True:
@@ -65,7 +67,7 @@ class DxfImporter:
             data = line2.strip()
             yield code, data
 
-    def init_import(self):
+    def init_import(self) -> None:
         """Initialize the object state before import."""
         self.state = DxfReaderState.BEGINNING
         self.entity_type = DrawingEntityType.UNKNOWN
@@ -81,7 +83,7 @@ class DxfImporter:
         }
         self.entities = []
 
-    def detect_encoding(self):
+    def detect_encoding(self) -> str:
         """Detect the encoding of DXF file."""
         encodings = ["utf-8", "windows-1250", "windows-1252"]
         for e in encodings:
@@ -97,7 +99,7 @@ class DxfImporter:
                 return e
         return None
 
-    def import_dxf(self):
+    def import_dxf(self) -> Drawing:
         """Import the DXF file and return structure containing all entities."""
         self.init_import()
 
@@ -115,7 +117,7 @@ class DxfImporter:
         # print(self.statistic)
         return Drawing(self.entities, self.statistic, lines)
 
-    def process_beginning(self, code, data):
+    def process_beginning(self, code: int, data: str) -> None:
         """Part of the DXF import state machine."""
         if code == DxfCodes.TEXT_STRING:
             if data == "SECTION":
@@ -129,7 +131,7 @@ class DxfImporter:
         else:
             raise Exception("unknown code {c} for state " "BEGINNING".format(c=code))
 
-    def process_beginning_section_name_attribute(self, code, data):
+    def process_beginning_section_name_attribute(self, code: int, data: str) -> None:
         """Change the state of DXF reader."""
         if data == "HEADER":
             self.state = DxfReaderState.SECTION_HEADER
@@ -154,7 +156,7 @@ class DxfImporter:
                 "unknown data {d} for state " "BEGINNING_SECTION".format(d=data)
             )
 
-    def process_beginning_section(self, code, data):
+    def process_beginning_section(self, code: int, data: str) -> None:
         """Part of the DXF import state machine."""
         if code == DxfCodes.NAME:
             self.process_beginning_section_name_attribute(code, data)
@@ -163,21 +165,21 @@ class DxfImporter:
                 "unknown code {c} for state " "BEGINNING_SECTION".format(c=code)
             )
 
-    def process_section_header(self, code, data):
+    def process_section_header(self, code: int, data: str) -> None:
         """Part of the DXF import state machine."""
         if code == DxfCodes.TEXT_STRING:
             if data == "ENDSEC":
                 self.state = DxfReaderState.BEGINNING
                 print("    end section header")
 
-    def process_section_tables(self, code, data):
+    def process_section_tables(self, code: int, data: str) -> None:
         """Part of the DXF import state machine."""
         if code == DxfCodes.TEXT_STRING:
             if data == "ENDSEC":
                 self.state = DxfReaderState.BEGINNING
                 print("    end section tables")
 
-    def process_section_blocks(self, code, data):
+    def process_section_blocks(self, code: int, data: str) -> None:
         """Part of the DXF import state machine."""
         if code == DxfCodes.TEXT_STRING:
             if data == "BLOCK":
@@ -188,7 +190,7 @@ class DxfImporter:
                 self.state = DxfReaderState.BEGINNING
                 print("    end section blocks")
 
-    def process_section_block(self, code, data):
+    def process_section_block(self, code: int, data: str) -> None:
         """Part of the DXF import state machine."""
         if code == DxfCodes.TEXT_STRING:
             if data == "ENDBLK":
@@ -200,7 +202,7 @@ class DxfImporter:
             if self.debug:
                 print("        begin block '{b}'".format(b=self.blockName))
 
-    def process_section_entities_entity_type(self, code, data):
+    def process_section_entities_entity_type(self, code: int, data: str) -> None:
         """Change the state according to entity type code read from DXF."""
         self.polyline_points_x = []
         self.polyline_points_y = []
@@ -225,12 +227,12 @@ class DxfImporter:
             self.state = DxfReaderState.ENTITY
             self.entityType = DrawingEntityType.ATTRIB
 
-    def process_section_entities(self, code, data):
+    def process_section_entities(self, code: int, data: str) -> None:
         """Part of the DXF import state machine."""
         if code == DxfCodes.TEXT_STRING:
             self.process_section_entities_entity_type(code, data)
 
-    def process_section_objects(self, code, data):
+    def process_section_objects(self, code: int, data: str) -> None:
         """Part of the DXF import state machine."""
         if code == DxfCodes.TEXT_STRING:
             if data == "ENDSEC":
@@ -243,7 +245,7 @@ class DxfImporter:
                 print("    end section classes")
                 self.state = DxfReaderState.BEGINNING
 
-    def process_entity_type_attribute(self, code, data):
+    def process_entity_type_attribute(self, code: int, data: str) -> None:
         """Store the previously read entity and try to process next one."""
         self.statistic[self.entityType] += 1
         self.store_entity()
@@ -277,7 +279,7 @@ class DxfImporter:
             self.entityType = DrawingEntityType.UNKNOWN
             print("    end entities")
 
-    def process_entity(self, code, data):
+    def process_entity(self, code: int, data: str) -> None:
         """Part of the DXF import state machine."""
         if code == DxfCodes.LAYER_NAME:
             self.layer = data.replace(" ", "_")
@@ -308,7 +310,7 @@ class DxfImporter:
         elif code == DxfCodes.TEXT_STRING:
             self.process_entity_type_attribute(code, data)
 
-    def store_entity(self):
+    def store_entity(self) -> None:
         """Store entity read from DXF file."""
         if self.entityType == DrawingEntityType.LINE:
             self.store_line()
@@ -327,13 +329,13 @@ class DxfImporter:
         else:
             print("unknown entity?")
 
-    def store_line(self):
+    def store_line(self) -> None:
         """Store line read from DXF file."""
         self.entities.append(
             Line(self.x1, -self.y1, self.x2, -self.y2, self.color, self.layer)
         )
 
-    def store_polyline(self):
+    def store_polyline(self) -> None:
         """Store polyline read from DXF file."""
         for i in range(len(self.polyline_points_y)):
             self.polyline_points_y[i] = -self.polyline_points_y[i]
@@ -345,7 +347,7 @@ class DxfImporter:
         self.polyline_points_x = []
         self.polyline_points_y = []
 
-    def store_circle(self):
+    def store_circle(self) -> None:
         """Store circle read from DXF file."""
         if self.mirror == -1:
             print("MIRROR")
@@ -354,7 +356,7 @@ class DxfImporter:
             Circle(self.x1, -self.y1, self.radius, self.color, self.layer)
         )
 
-    def store_arc(self):
+    def store_arc(self) -> None:
         """Store arc read from DXF file."""
         self.entities.append(
             Arc(
@@ -368,7 +370,7 @@ class DxfImporter:
             )
         )
 
-    def store_text(self):
+    def store_text(self) -> None:
         """Store text read from DXF file."""
         if self.text:
             self.text = self.text.replace("\\U+00B2", "\u00B2")
