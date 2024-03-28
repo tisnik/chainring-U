@@ -35,7 +35,7 @@ dev = [
 ]
 
 [project]
-name = "Chainring"
+name = "Chainring-U"
 version = "1.0.0"
 description = "Simple CAD written in Python+Tkinter combination with remote storage support"
 authors = []
