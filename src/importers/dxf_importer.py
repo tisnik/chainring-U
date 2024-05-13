@@ -59,7 +59,7 @@ class DxfImporter:
                 linenumber += 1
                 line2 = fin.readline()
             except Exception as e:
-                print("Error on line: {line}".format(line=linenumber))
+                print(f"Error on line: {linenumber}")
                 line2 = ""
             if not line1 or not line2:
                 break
@@ -95,7 +95,7 @@ class DxfImporter:
                 # ok, we expect some errors ;)
                 pass
             else:
-                print("Encoding: {e}".format(e=e))
+                print(f"Encoding: {e}")
                 return e
         return None
 
@@ -129,7 +129,7 @@ class DxfImporter:
         elif code == DxfCodes.COMMENT:
             print(data)
         else:
-            raise Exception("unknown code {c} for state " "BEGINNING".format(c=code))
+            raise Exception(f"unknown code {code} for state " "BEGINNING")
 
     def process_beginning_section_name_attribute(self, code: int, data: str) -> None:
         """Change the state of DXF reader."""
@@ -153,7 +153,7 @@ class DxfImporter:
             print("    section classes")
         else:
             raise Exception(
-                "unknown data {d} for state " "BEGINNING_SECTION".format(d=data)
+                f"unknown data {data} for state " "BEGINNING_SECTION"
             )
 
     def process_beginning_section(self, code: int, data: str) -> None:
@@ -162,7 +162,7 @@ class DxfImporter:
             self.process_beginning_section_name_attribute(code, data)
         else:
             raise Exception(
-                "unknown code {c} for state " "BEGINNING_SECTION".format(c=code)
+                f"unknown code {code} for state " "BEGINNING_SECTION"
             )
 
     def process_section_header(self, code: int, data: str) -> None:
@@ -200,7 +200,7 @@ class DxfImporter:
             self.state = DxfReaderState.SECTION_BLOCK
             self.blockName = data
             if self.debug:
-                print("        begin block '{b}'".format(b=self.blockName))
+                print(f"        begin block '{self.blockName}'")
 
     def process_section_entities_entity_type(self, code: int, data: str) -> None:
         """Change the state according to entity type code read from DXF."""
