@@ -13,12 +13,12 @@
 #
 
 from datetime import datetime
-
-from geometry.bounds import Bounds
-from geometry.rescaler import Rescaler
-from drawing import Drawing
 from io import TextIOWrapper
 from typing import Optional, Union
+
+from drawing import Drawing
+from geometry.bounds import Bounds
+from geometry.rescaler import Rescaler
 
 
 class DrawingExporter:
