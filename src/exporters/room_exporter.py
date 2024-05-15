@@ -14,7 +14,6 @@
 
 from datetime import datetime
 from io import TextIOWrapper
-from typing import Optional, Union
 
 from drawing import Drawing
 
