@@ -13,6 +13,7 @@
 #
 
 import sys
+from typing import Optional
 
 
 class RoomImporter:
@@ -29,10 +30,10 @@ class RoomImporter:
             "R": RoomImporter.process_room,
         }
 
-        self.metadata = {}
-        self.rooms = []
+        self.metadata : dict[str, str] = {}
+        self.rooms : list = []
 
-    def import_rooms(self) -> list[dict[str, str]]:
+    def import_rooms(self) -> Optional[list[dict[str, str]]]:
         """Import the file and return structure containing all entities."""
         try:
             with open(self.filename) as fin:
@@ -53,7 +54,7 @@ class RoomImporter:
         function = self.commands.get(command, RoomImporter.process_unknown_command)
         function(self, parts)
 
-    def process_unknown_command(self, parts):
+    def process_unknown_command(self, parts: list[str]) -> None:
         """Process unknown command(s)."""
         print(f"Unknown command: '{parts[0]}'")
         sys.exit(0)
