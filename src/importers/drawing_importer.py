@@ -13,6 +13,7 @@
 #
 
 import sys
+from typing import Optional
 
 from drawing import Drawing
 from entities.arc import Arc
@@ -53,12 +54,12 @@ class DrawingImporter:
             DrawingEntityType.TEXT: 0,
             DrawingEntityType.POLYLINE: 0,
         }
-        self.metadata = {}
-        self.entities = []
-        self.rooms = []
+        self.metadata : dict[str, str] = {}
+        self.entities : list[Line | Circle | Arc | Text | Polyline] = []
+        self.rooms : list = []
         self.drawing_id = None
 
-    def import_drawing(self) -> Drawing:
+    def import_drawing(self) -> Optional[Drawing]:
         """Import the file and return structure containing all entities."""
         try:
             # read and parse all lines
