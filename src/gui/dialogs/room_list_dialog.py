@@ -19,7 +19,7 @@ from tkinter.scrolledtext import ScrolledText
 class RoomListDialog(tkinter.Toplevel):
     """Dialog with list of all rooms from drawing."""
 
-    def __init__(self, parent, drawing):
+    def __init__(self, parent, drawing) -> None:
         """Initialize the dialog."""
         tkinter.Toplevel.__init__(self, parent)
         self.title("Seznam místností")
@@ -90,12 +90,12 @@ class RoomListDialog(tkinter.Toplevel):
         """Handle event when Ok button is pressed."""
         self.destroy()
 
-    def add_label(self, row, column, text):
+    def add_label(self, row, column, text) -> None:
         """Add a label to dialog."""
         label = tkinter.Label(self, text=text)
         label.grid(row=row, column=column, sticky="W", padx=5, pady=5)
 
-    def add_value_widget(self, row, column, value):
+    def add_value_widget(self, row, column, value) -> None:
         """Add a widget with value to dialog."""
         widget = self.value_widget(value)
         widget.grid(row=row, column=column, sticky="W", padx=5, pady=5)
