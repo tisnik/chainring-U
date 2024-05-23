@@ -22,6 +22,6 @@ def error_dialog_drawing_load() -> None:
     )
 
 
-def error_dialog_wrong_configuration(message):
+def error_dialog_wrong_configuration(message) -> None:
     """Show dialog when configuration is not proper."""
     messagebox.showerror("Chyba konfigurace aplikace", message)
