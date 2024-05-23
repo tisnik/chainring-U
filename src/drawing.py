@@ -16,7 +16,7 @@
 class Drawing:
     """Representation of vector drawing."""
 
-    def __init__(self, entities, statistic, lines=0, metadata=None):
+    def __init__(self, entities, statistic, lines=0, metadata=None) -> None:
         """Initialize the class, setup entities."""
         self._entities = entities
         self._drawing_id = None
@@ -33,7 +33,7 @@ class Drawing:
         return self._entities
 
     @entities.setter
-    def entities(self, entities):
+    def entities(self, entities) -> None:
         """Setter for property holding all entities on drawing."""
         self._entities = entities
 
@@ -43,7 +43,7 @@ class Drawing:
         return self._room_counter
 
     @entities.setter
-    def room_counter(self, new_value):
+    def room_counter(self, new_value) -> None:
         """Setter for property holding room counter."""
         self._room_counter = new_value
 
@@ -53,7 +53,7 @@ class Drawing:
         return self._statistic
 
     @statistic.setter
-    def statistic(self, statistic):
+    def statistic(self, statistic) -> None:
         """Setter for property holding drawing statistic."""
         self._statistic = statistic
 
@@ -63,7 +63,7 @@ class Drawing:
         return self._lines
 
     @lines.setter
-    def lines(self, lines):
+    def lines(self, lines) -> None:
         """Setter for input lines."""
         self._lines = lines
 
@@ -73,7 +73,7 @@ class Drawing:
         return self._metadata
 
     @metadata.setter
-    def metadata(self, metadata):
+    def metadata(self, metadata) -> None:
         """Setter for drawing metadata."""
         self._metadata = metadata
 
@@ -83,7 +83,7 @@ class Drawing:
         return self._rooms
 
     @rooms.setter
-    def rooms(self, rooms):
+    def rooms(self, rooms) -> None:
         """Setter for rooms on drawing."""
         self._rooms = rooms
 
@@ -93,7 +93,7 @@ class Drawing:
         return self._filename
 
     @filename.setter
-    def filename(self, filename):
+    def filename(self, filename) -> None:
         """Setter for drawing filename."""
         self._filename = filename
 
@@ -103,11 +103,11 @@ class Drawing:
         return self._drawing_id
 
     @drawing_id.setter
-    def drawing_id(self, drawing_id):
+    def drawing_id(self, drawing_id) -> None:
         """Setter for property with drawing ID."""
         self._drawing_id = drawing_id
 
-    def rescale(self, xoffset, yoffset, scale):
+    def rescale(self, xoffset, yoffset, scale) -> None:
         """Rescale the drawing by specified offset and scale."""
         for entity in self._entities:
             entity.transform(xoffset, yoffset, scale)
@@ -128,7 +128,7 @@ class Drawing:
         self._room_counter += 1
         return room_id
 
-    def update_room_polygon(self, room_id, canvas_id, polygon, typ="?"):
+    def update_room_polygon(self, room_id, canvas_id, polygon, typ="?") -> None:
         """Update the polygon for specified room."""
         room = self.find_room("room_id", room_id)
         if room is not None:
@@ -154,7 +154,7 @@ class Drawing:
         """Find room for the specified canvas ID."""
         return self.find_room("canvas_id", canvas_id)
 
-    def delete_room(self, room_id):
+    def delete_room(self, room_id) -> None:
         """Delete the whole room."""
         room = self.find_room_by_room_id(room_id)
         if room is not None:
@@ -162,7 +162,7 @@ class Drawing:
             self._rooms.remove(room)
             # print(self._rooms)
 
-    def delete_room_polygon(self, room_id):
+    def delete_room_polygon(self, room_id) -> None:
         """Delete polygon for selected room."""
         print("DELETING ROOM POLYGON")
         room = self.find_room_by_room_id(room_id)
