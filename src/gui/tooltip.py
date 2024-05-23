@@ -42,7 +42,7 @@ class Tooltip:
         if id:
             self.widget.after_cancel(id)
 
-    def showtip(self, event=None):
+    def showtip(self, event=None) -> None:
         """Show the tooltip on screen."""
         x = y = 0
         x, y, cx, cy = self.widget.bbox("insert")
