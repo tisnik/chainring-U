@@ -26,11 +26,11 @@ class DrawServiceInterface:
     API_PREFIX = "api/v1"
 
     @staticmethod
-    def get_url(address, port):
+    def get_url(address, port) -> str:
         """Get URL prefix to the service."""
         return f"http://{address}:{port}"
 
-    def __init__(self, service_url="http://localhost:3000", key=""):
+    def __init__(self, service_url="http://localhost:3000", key="") -> None:
         """Initialize the interface."""
         self._service_url = service_url
         self._user_key = key
