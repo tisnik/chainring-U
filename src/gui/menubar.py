@@ -29,7 +29,7 @@ from gui.dialogs.settings_dialog import SettingsDialog
 class Menubar(tkinter.Menu):
     """Menu bar displayed on the main window."""
 
-    def __init__(self, parent, main_window, canvas):
+    def __init__(self, parent, main_window, canvas) -> None:
         """Initialize the menu bar."""
         super().__init__(tearoff=0)
 
@@ -286,33 +286,33 @@ class Menubar(tkinter.Menu):
         self.parent.bind("<Control-m>", lambda event: self.show_room_list_dialog())
         self.parent.bind("<Control-0>", lambda event: main_window.redraw())
 
-    def show_settings_dialog(self):
+    def show_settings_dialog(self) -> None:
         """Show settings dialog."""
         SettingsDialog(self.parent)
 
-    def show_drawing_info_dialog(self):
+    def show_drawing_info_dialog(self) -> None:
         """Show drawing info dialog."""
         DrawingInfoDialog(self.parent, self.main_window.drawing)
 
-    def show_room_list_dialog(self):
+    def show_room_list_dialog(self) -> None:
         """Show room list dialog."""
         RoomListDialog(self.parent, self.main_window.drawing)
 
-    def show_room_save_dialog_as_csv(self):
+    def show_room_save_dialog_as_csv(self) -> None:
         """Show room save dialog for export to CSV."""
         filename = SaveDialogs.save_rooms_as_csv(self.parent)
         if filename:
             exporter = RoomCSVExporter(filename, self.main_window.drawing)
             exporter.export()
 
-    def show_room_save_dialog_as_txt(self):
+    def show_room_save_dialog_as_txt(self) -> None:
         """Show room save dialog for export to TXT (text file)."""
         filename = SaveDialogs.save_rooms_as_txt(self.parent)
         if filename:
             exporter = RoomTXTExporter(filename, self.main_window.drawing)
             exporter.export()
 
-    def check_server_connectivity(self):
+    def check_server_connectivity(self) -> None:
         """Check the connectivity to server and display results."""
         address = self.main_window.configuration.server_address
         port = self.main_window.configuration.server_port
@@ -332,7 +332,7 @@ class Menubar(tkinter.Menu):
                 "Nastala chyba", f"Nastala chyba: {message}"
             )
 
-    def check_service_version(self):
+    def check_service_version(self) -> None:
         """Check the version of web service and display results."""
         address = self.main_window.configuration.server_address
         port = self.main_window.configuration.server_port
@@ -354,7 +354,7 @@ class Menubar(tkinter.Menu):
                 "Nastala chyba", f"Nastala chyba: {message}"
             )
 
-    def disable_ui_items_for_no_drawing_mode(self):
+    def disable_ui_items_for_no_drawing_mode(self) -> None:
         """Disable UI (menu) items when the application is set to no drawing mode."""
         Menubar.disable_menu_item(self.filemenu, 1)
         Menubar.disable_menu_item(self.filemenu, 3)
@@ -380,7 +380,7 @@ class Menubar(tkinter.Menu):
         Menubar.disable_menu_item(self.tools, 0)
         # Menubar.disable_menu_item(self.tools, 1)
 
-    def enable_ui_items_for_drawing_mode(self):
+    def enable_ui_items_for_drawing_mode(self) -> None:
         """Enable UI (menu) items when the application is set to no drawing mode."""
         Menubar.enable_menu_item(self.filemenu, 1)
         Menubar.enable_menu_item(self.filemenu, 3)
@@ -407,11 +407,11 @@ class Menubar(tkinter.Menu):
         # Menubar.enable_menu_item(self.tools, 1)
 
     @staticmethod
-    def disable_menu_item(menu, index):
+    def disable_menu_item(menu, index) -> None:
         """Disable specified menu item."""
         menu.entryconfig(index, state="disabled")
 
     @staticmethod
-    def enable_menu_item(menu, index):
+    def enable_menu_item(menu, index) -> None:
         """Enable specified menu item."""
         menu.entryconfig(index, state="normal")
