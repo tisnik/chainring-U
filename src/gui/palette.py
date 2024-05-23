@@ -18,7 +18,7 @@ import tkinter
 class Palette(tkinter.LabelFrame):
     """Palette displayed on the left side of main window."""
 
-    def __init__(self, parent, main_window):
+    def __init__(self, parent, main_window) -> None:
         """Initialize the palette."""
         super().__init__(parent, text="Výkres", padx=5, pady=5)
         self.main_window = main_window
@@ -82,21 +82,21 @@ class Palette(tkinter.LabelFrame):
         self.listbox.bind("<<ListboxSelect>>", self.on_room_click)
         self.disable_all()
 
-    def enable_all(self):
+    def enable_all(self) -> None:
         """Enable all buttons on palette."""
         self.button1.config(state="normal")
         self.button2.config(state="normal")
         self.button3.config(state="normal")
         self.button4.config(state="normal")
 
-    def disable_all(self):
+    def disable_all(self) -> None:
         """Disable all buttons on palette."""
         self.button1.config(state="disabled")
         self.button2.config(state="disabled")
         self.button3.config(state="disabled")
         self.button4.config(state="disabled")
 
-    def fill_in_room_info(self, room):
+    def fill_in_room_info(self, room) -> None:
         """Fill in information about the selected room."""
         self.label_id_value["text"] = room["room_id"]
         if room["polygon"] is not None and len(room["polygon"]) > 0:
@@ -110,11 +110,11 @@ class Palette(tkinter.LabelFrame):
             self.button3.config(text="Nakreslit")
             self.button3.config(image=self.main_window.icons.edit_icon)
 
-    def remove_all_rooms(self):
+    def remove_all_rooms(self) -> None:
         """Remove all rooms from listbox."""
         self.listbox.delete(0, tkinter.END)
 
-    def add_new_room(self, canvas_id):
+    def add_new_room(self, canvas_id) -> None:
         """Add a new room onto the listbox."""
         self.listbox.insert(tkinter.END, canvas_id)
         self.button2.config(state="normal")
@@ -136,7 +136,7 @@ class Palette(tkinter.LabelFrame):
                 return index
         return None
 
-    def select_room_in_list(self, room):
+    def select_room_in_list(self, room) -> None:
         """Select room in listbox."""
         if room is not None:
             room_id = room["room_id"]
@@ -150,37 +150,37 @@ class Palette(tkinter.LabelFrame):
         # get(first, last=None)
         # size()
 
-    def on_room_click(self, event):
+    def on_room_click(self, event) -> None:
         """Handle event: room selected on listbox."""
         index, value = self.get_selected_room()
         if value:
             self.main_window.on_room_click_listbox(value)
 
-    def delete_room_command(self):
+    def delete_room_command(self) -> None:
         """Handle event: delete room button pressed."""
         index, value = self.get_selected_room()
         if value:
             self.main_window.delete_room_command(index, value)
 
-    def delete_room_polygon_command(self):
+    def delete_room_polygon_command(self) -> None:
         """Handle event: delete room polygon button pressed."""
         index, value = self.get_selected_room()
         if value:
             self.main_window.delete_room_polygon_command(index, value)
 
-    def redraw_room_polygon_command(self):
+    def redraw_room_polygon_command(self) -> None:
         """Handle event: redraw room polygon command pressed."""
         index, value = self.get_selected_room()
         if value:
             self.main_window.redraw_room_polygon_command(index, value)
 
-    def select_polygon_for_room(self):
+    def select_polygon_for_room(self) -> None:
         """Handle event: select polygon for room."""
         index, value = self.get_selected_room()
         if value:
             self.main_window.select_polygon_for_room(index, value)
 
-    def delete_room_from_list(self, index):
+    def delete_room_from_list(self, index) -> None:
         """Handle event: delete room from list."""
         self.listbox.selection_clear(0, tkinter.END)
         self.listbox.delete(index)
