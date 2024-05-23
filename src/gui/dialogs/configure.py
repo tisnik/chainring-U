@@ -17,7 +17,7 @@ from tkinter import messagebox
 from configuration import Configuration
 
 
-def configure(configuration: Configuration):
+def configure(configuration: Configuration) -> None:
     """Show configuration dialog."""
     msg = f"Typ aplikace: {configuration.app_type}\n\nAdresa serveru: {configuration.server_address}\nPort serveru: {configuration.server_port}"
     messagebox.showinfo("Aktuální konfigurace", msg)
