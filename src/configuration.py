@@ -20,7 +20,7 @@ class Configuration:
 
     CONFIG_FILE_NAME = "config.ini"
 
-    def __init__(self, path="."):
+    def __init__(self, path=".") -> None:
         """Initialize the class."""
         self.config = configparser.ConfigParser()
         self.config.read(path + "/" + Configuration.CONFIG_FILE_NAME)
@@ -60,13 +60,13 @@ class Configuration:
         with open("config2.ini", "w") as fout:
             self.config.write(fout)
 
-    def check_configuration_option(self, section, option):
+    def check_configuration_option(self, section, option) -> None:
         """Check one configuration option."""
         if not self.config.has_option(section, option):
             msg = f"V konfiguračním souboru 'config.ini' chybí volba '{option}' v sekci '{section}'"
             raise Exception(msg)
 
-    def check_configuration(self):
+    def check_configuration(self) -> None:
         """Check the loaded configuration."""
         self.check_configuration_option("ui", "window_width")
         self.check_configuration_option("ui", "window_height")
