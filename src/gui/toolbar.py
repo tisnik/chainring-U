@@ -234,19 +234,19 @@ class Toolbar(tkinter.LabelFrame):
         spacer6.grid(column=23, row=1)
         self.button_quit.grid(column=24, row=1)
 
-    def show_settings_dialog(self):
+    def show_settings_dialog(self) -> None:
         """Show the settings dialog."""
         SettingsDialog(self.parent)
 
-    def show_drawing_info_dialog(self):
+    def show_drawing_info_dialog(self) -> None:
         """Show the drawing info dialog."""
         DrawingInfoDialog(self.parent, self.main_window.drawing)
 
-    def show_room_list_dialog(self):
+    def show_room_list_dialog(self) -> None:
         """Show the room list dialog."""
         RoomListDialog(self.parent, self.main_window.drawing)
 
-    def disable_ui_items_for_no_drawing_mode(self):
+    def disable_ui_items_for_no_drawing_mode(self) -> None:
         """Disable some buttons when application is set to no-drawing mode."""
         Toolbar.disable_button(self.button_drawing_save)
         Toolbar.disable_button(self.button_file_open)
@@ -283,7 +283,7 @@ class Toolbar(tkinter.LabelFrame):
         Toolbar.enable_button(self.button_new_room_polygon)
 
     @staticmethod
-    def disable_button(button):
+    def disable_button(button) -> None:
         """Disable specified button on toolbar."""
         button["state"] = "disabled"
 
