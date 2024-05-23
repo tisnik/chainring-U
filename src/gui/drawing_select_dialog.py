@@ -19,7 +19,7 @@ import tkinter
 class DrawingSelectDialog(tkinter.Toplevel):
     """Dialog to select building, floor, and drawing."""
 
-    def __init__(self, parent, configuration):
+    def __init__(self, parent, configuration) -> None:
         """Initialize the dialog."""
         tkinter.Toplevel.__init__(self, parent)
         self.title("Otevřít výkres")
