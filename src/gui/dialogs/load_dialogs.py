@@ -22,7 +22,7 @@ from draw_service import DrawServiceInterface
 class RoomsFromSapDialog(tkinter.Toplevel):
     """Dialog to import rooms from SAP."""
 
-    def calendar_part(self):
+    def calendar_part(self) -> None:
         """Initialize the dialog."""
         top_part = tkinter.LabelFrame(self, text="Datum platnosti", padx=5, pady=5)
         top_part.grid(row=1, column=1, sticky="NWSE")
@@ -52,7 +52,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         )
         listBuildingsButton.grid(row=1, column=3, sticky="WE")
 
-    def command_part(self):
+    def command_part(self) -> None:
         """Bottom part of dialog: buttons."""
         bottom_part = tkinter.LabelFrame(self, text="Operace", padx=5, pady=5)
         bottom_part.grid(row=3, column=1, sticky="NWSE")
@@ -67,7 +67,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         )
         self.cancelButton.grid(row=5, column=2, sticky="WE")
 
-    def aoid_part(self):
+    def aoid_part(self) -> None:
         """Middle part of dialog: lists of AOIDs."""
         middle_part = tkinter.LabelFrame(self, text="Výběr podlaží", padx=5, pady=5)
         middle_part.grid(row=2, column=1, sticky="NWSE")
@@ -115,7 +115,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         self.roomList.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
         frame4.grid(row=2, column=3, sticky="NWSE")
 
-    def __init__(self, parent, configuration):
+    def __init__(self, parent, configuration) -> None:
         """Initialize the dialog for importing rooms from SAP."""
         tkinter.Toplevel.__init__(self, parent)
 
@@ -163,7 +163,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
             return int(selection[0])
         return None
 
-    def on_building_select(self, event):
+    def on_building_select(self, event) -> None:
         """Handle event when building is selected from list box."""
         index = self.list_box_index(event)
         if index is not None:
@@ -172,7 +172,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
                 aoid = building["AOID"]
                 self.read_floors(aoid)
 
-    def on_floor_select(self, event):
+    def on_floor_select(self, event) -> None:
         """Handle event when floor is selected from list box."""
         index = self.list_box_index(event)
         if index is not None:
@@ -184,22 +184,22 @@ class RoomsFromSapDialog(tkinter.Toplevel):
                 valid_from = self.calendar.get().replace("_", "").replace("-", "")
                 self.id.set(f"{full_id}_{valid_from}")
 
-    def fill_in_listbox(self, listbox, data):
+    def fill_in_listbox(self, listbox, data) -> None:
         """Fill in specified list box with provided data."""
         listbox.delete(0, tkinter.END)
         for item in data:
             val = "{name} ({aoid})".format(name=item["Label"], aoid=item["AOID"])
             listbox.insert(tkinter.END, val)
 
-    def error_server_address(self):
+    def error_server_address(self) -> None:
         """Show error message when server is not configured properly."""
         messagebox.showerror("Nastala chyba", "Není nastavená adresa serveru")
 
-    def error_server_call(self, message):
+    def error_server_call(self, message) -> None:
         """Show error message when server is not responding."""
         messagebox.showerror("Nastala chyba", f"Nastala chyba: {message}")
 
-    def read_buildings(self):
+    def read_buildings(self) -> None:
         """Read list of buildings from SAP."""
         valid_from = self.calendar.get()
         if not self.url:
@@ -212,7 +212,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         else:
             self.error_server_call(message)
 
-    def read_floors(self, aoid):
+    def read_floors(self, aoid) -> None:
         """Read list of floors from SAP."""
         valid_from = self.calendar.get()
         if not self.url:
@@ -225,7 +225,7 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         else:
             self.error_server_call(message)
 
-    def read_rooms(self, aoid):
+    def read_rooms(self, aoid) -> None:
         """Read list of rooms from SAP."""
         valid_from = self.calendar.get()
         if not self.url:
@@ -238,11 +238,11 @@ class RoomsFromSapDialog(tkinter.Toplevel):
         else:
             self.error_server_call(message)
 
-    def ok(self):
+    def ok(self) -> None:
         """Handle the Ok button press."""
         self.destroy()
 
-    def cancel(self):
+    def cancel(self) -> None:
         """Handle the Cancel button press."""
         self.rooms = None
         self.destroy()
