@@ -24,7 +24,7 @@ class StatusBar(tkinter.Frame):
         self.label = tkinter.Label(self, bd=1, relief=tkinter.SUNKEN, anchor=tkinter.W)
         self.label.pack(fill=tkinter.X)
 
-    def set(self, format, *args):
+    def set(self, format, *args) -> None:
         """Set status bar messages."""
         self.label.config(text=format % args)
         self.label.update_idletasks()
