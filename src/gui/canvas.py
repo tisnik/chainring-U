@@ -21,7 +21,7 @@ class Canvas(tkinter.Canvas):
     GRID_SIZE = 50
     CROSS_SIZE = 5
 
-    def __init__(self, parent, width, height, main_window):
+    def __init__(self, parent, width, height, main_window) -> None:
         """Initialize canvas."""
         super().__init__(parent, width=width, height=height, background="white")
         # self.draw_grid(width, height, Canvas.GRID_SIZE)
@@ -33,7 +33,7 @@ class Canvas(tkinter.Canvas):
         self.main_window = main_window
         self.selected_room_item = None
 
-    def draw_empty_drawing_message(self):
+    def draw_empty_drawing_message(self) -> None:
         """Display message when no drawing is opened."""
         self.create_text(
             self.width / 2,
@@ -43,7 +43,7 @@ class Canvas(tkinter.Canvas):
             text="Žádný výkres nebyl načten",
         )
 
-    def draw_grid(self):
+    def draw_grid(self) -> None:
         """Draw rectangular grid onto canvas."""
         for x in range(0, self.width, Canvas.GRID_SIZE):
             self.create_line(x, 0, x, self.height, dash=7, tags="grid")
@@ -54,11 +54,11 @@ class Canvas(tkinter.Canvas):
         else:
             self.hide_grid()
 
-    def draw_scale_line(self):
+    def draw_scale_line(self) -> None:
         """Draw invisible scale line onto canvas."""
         self.create_line(0, 0, self.width, 0, tags="scale", fill="white", width=0)
 
-    def draw_boundary(self):
+    def draw_boundary(self) -> None:
         """Draw drawing boundary onto canvas."""
         self.create_line(
             2,
@@ -78,15 +78,15 @@ class Canvas(tkinter.Canvas):
         else:
             self.hide_boundary()
 
-    def show_grid(self):
+    def show_grid(self) -> None:
         """Show grid on canvas."""
         self.itemconfig("grid", fill="blue")
 
-    def hide_grid(self):
+    def hide_grid(self) -> None:
         """Hide grid on canvas."""
         self.itemconfig("grid", fill="")
 
-    def toggle_grid(self):
+    def toggle_grid(self) -> None:
         """Toggle grid on canvas."""
         self._grid = not self._grid
         if self._grid:
@@ -94,15 +94,15 @@ class Canvas(tkinter.Canvas):
         else:
             self.hide_grid()
 
-    def show_boundary(self):
+    def show_boundary(self) -> None:
         """Show boundary on canvas."""
         self.itemconfig("boundary", fill="red", width=2)
 
-    def hide_boundary(self):
+    def hide_boundary(self) -> None:
         """Hide boundary on canvas."""
         self.itemconfig("boundary", fill="", width=2)
 
-    def toggle_boundary(self):
+    def toggle_boundary(self) -> None:
         """Toggle boundary on canvas."""
         self._boundary = not self._boundary
         if self._boundary:
@@ -110,22 +110,22 @@ class Canvas(tkinter.Canvas):
         else:
             self.hide_boundary()
 
-    def draw_entities(self, entities, xoffset, yoffset, scale):
+    def draw_entities(self, entities, xoffset, yoffset, scale) -> None:
         """Draw all common entities onto canvas."""
         for entity in entities:
             entity.draw(self, xoffset, yoffset, scale)
 
-    def draw_rooms(self, rooms, xoffset, yoffset, scale):
+    def draw_rooms(self, rooms, xoffset, yoffset, scale) -> None:
         """Draw all rooms onto canvas."""
         for room in rooms:
             # print(room["room_id"])
             room["canvas_id"] = self.draw_room(room)
 
-    def draw_new_room_temporary_line(self, x1, y1, x2, y2):
+    def draw_new_room_temporary_line(self, x1, y1, x2, y2) -> None:
         """Draw temporary line for room that is being drawn."""
         self.create_line(x1, y1, x2, y2, fill="red", tags="new_room_temporary")
 
-    def draw_cross(self, x, y):
+    def draw_cross(self, x, y) -> None:
         """Draw small cross for room vertex that is being drawn."""
         self.create_line(
             x - Canvas.CROSS_SIZE, y, x + Canvas.CROSS_SIZE, y, fill="red", tags="cross"
@@ -134,18 +134,18 @@ class Canvas(tkinter.Canvas):
             x, y - Canvas.CROSS_SIZE, x, y + Canvas.CROSS_SIZE, fill="red", tags="cross"
         )
 
-    def delete_entities_with_tag(self, tag):
+    def delete_entities_with_tag(self, tag) -> None:
         """Delete all entities having given tag."""
         items = self.find_withtag(tag)
         for item in items:
             self.delete(item)
 
-    def delete_temporary_entities(self):
+    def delete_temporary_entities(self) -> None:
         """Delete all temporary entities."""
         self.delete_entities_with_tag("cross")
         self.delete_entities_with_tag("new_room_temporary")
 
-    def delete_object_with_id(self, object_id):
+    def delete_object_with_id(self, object_id) -> None:
         """Delete object specified by its ID."""
         self.delete(object_id)
 
@@ -192,15 +192,15 @@ class Canvas(tkinter.Canvas):
         )
         return new_object
 
-    def on_room_click(self, canvas_object_id):
+    def on_room_click(self, canvas_object_id) -> None:
         """Handle event: click on room."""
         self.main_window.on_room_click_canvas(canvas_object_id)
 
-    def on_polygon_for_room_click(self, canvas_object_id):
+    def on_polygon_for_room_click(self, canvas_object_id) -> None:
         """Handle event: click on polygon that belongs to room."""
         self.main_window.on_polygon_for_room_click_canvas(canvas_object_id)
 
-    def highlight_room(self, room):
+    def highlight_room(self, room) -> None:
         """Highlight the given room and remove highlight for previously selected one."""
         if self.selected_room_item:
             self.itemconfig(
