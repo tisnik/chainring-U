@@ -104,7 +104,7 @@ class DrawServiceInterface:
             and "drawings" in data
         )
 
-    def send_drawing(self, drawing):
+    def send_drawing(self, drawing) -> tuple[bool, str]:
         """Send drawing onto the web service."""
         endpoint = f"drawing-data?drawing={drawing.drawing_id}&format=json"
         url = f"{self._service_url}/{DrawServiceInterface.API_PREFIX}/{endpoint}&key={self._user_key}"
