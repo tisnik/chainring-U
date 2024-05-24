@@ -1,5 +1,15 @@
 """Representation of vector drawing."""
 
+
+from typing import Optional
+
+from entities.arc import Arc
+from entities.circle import Circle
+from entities.drawing_entity_type import DrawingEntityType
+from entities.line import Entity, Line
+from entities.polyline import Polyline
+from entities.text import Text
+
 #
 #  (C) Copyright 2017, 2018  Pavel Tisnovsky
 #
@@ -16,14 +26,20 @@
 class Drawing:
     """Representation of vector drawing."""
 
-    def __init__(self, entities, statistic, lines=0, metadata=None) -> None:
+    def __init__(
+        self,
+        entities: list[Line | Arc | Circle | Text | Polyline],
+        statistic: dict[DrawingEntityType, int],
+        lines: int = 0,
+        metadata: None = None,
+    ) -> None:
         """Initialize the class, setup entities."""
         self._entities = entities
         self._drawing_id = None
         self._statistic = statistic
         self._lines = lines
-        self._rooms = []
-        self._metadata = metadata or {}
+        self._rooms: list = []
+        self._metadata: dict[str, str] = metadata or {}
         self._room_counter = 1
         self._filename = None
 
@@ -107,12 +123,12 @@ class Drawing:
         """Setter for property with drawing ID."""
         self._drawing_id = drawing_id
 
-    def rescale(self, xoffset, yoffset, scale) -> None:
+    def rescale(self, xoffset: float, yoffset: float, scale: float) -> None:
         """Rescale the drawing by specified offset and scale."""
         for entity in self._entities:
             entity.transform(xoffset, yoffset, scale)
 
-    def find_entity_by_id(self, entity_id):
+    def find_entity_by_id(self, entity_id: int) -> Optional[Entity]:
         """Find entity by specified ID."""
         for entity in self._entities:
             if entity._id == entity_id:
@@ -128,7 +144,13 @@ class Drawing:
         self._room_counter += 1
         return room_id
 
-    def update_room_polygon(self, room_id, canvas_id, polygon, typ="?") -> None:
+    def update_room_polygon(
+        self,
+        room_id: str,
+        canvas_id: int,
+        polygon: list[tuple[float, float]],
+        typ: str = "?",
+    ) -> None:
         """Update the polygon for specified room."""
         room = self.find_room("room_id", room_id)
         if room is not None:
@@ -139,18 +161,24 @@ class Drawing:
             room["polygon"] = polygon
             room["type"] = typ
 
-    def find_room(self, selector, value):
+    def find_room(
+        self, selector: str, value: int | str
+    ) -> Optional[dict[str, str | list[tuple[float, float]] | int | None]]:
         """Find room for the specified selector and its value."""
         for room in self._rooms:
             if room[selector] == value:
                 return room
         return None
 
-    def find_room_by_room_id(self, canvas_id):
+    def find_room_by_room_id(
+        self, canvas_id: str
+    ) -> Optional[dict[str, str | list[tuple[float, float]] | int | None]]:
         """Find room for the specified room ID."""
         return self.find_room("room_id", canvas_id)
 
-    def find_room_by_canvas_id(self, canvas_id):
+    def find_room_by_canvas_id(
+        self, canvas_id: int
+    ) -> Optional[dict[str, str | list[tuple[float, float]] | int | None]]:
         """Find room for the specified canvas ID."""
         return self.find_room("canvas_id", canvas_id)
 
@@ -162,7 +190,7 @@ class Drawing:
             self._rooms.remove(room)
             # print(self._rooms)
 
-    def delete_room_polygon(self, room_id) -> None:
+    def delete_room_polygon(self, room_id: str) -> None:
         """Delete polygon for selected room."""
         print("DELETING ROOM POLYGON")
         room = self.find_room_by_room_id(room_id)
