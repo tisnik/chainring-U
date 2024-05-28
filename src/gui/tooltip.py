@@ -18,7 +18,7 @@ class Tooltip:
         self.widget.bind("<Enter>", self.enter)
         self.widget.bind("<Leave>", self.leave)
         self.widget.bind("<ButtonPress>", self.leave)
-        self.id = None
+        self.id: Optional[str] = None
         self.tw = None
 
     def enter(self, event: tkinter.Event | None = None) -> None:
