@@ -17,7 +17,7 @@ from platform import node
 from time import asctime
 
 import requests
-from exporters.json_exporter import *
+from exporters.json_exporter import JSONExporter
 
 
 class DrawServiceInterface:
